@@ -1,4 +1,3 @@
-import 'package:mango_test/main.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
