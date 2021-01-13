@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
-class mainBottomNavigationBar {
-  var bottomNavigationBar = BottomAppBar(
+import 'addProductDialog.dart';
+
+Widget mainAppBar(String title) {
+  return AppBar(
+    // backgroundColor: mangoOrange500,
+    automaticallyImplyLeading: false,
+    titleSpacing: 40, //TODO: Maybe erase this.
+    title: Text(title),
+    actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
+  );
+}
+
+Widget bottomNavigationBar(BuildContext context) {
+  return BottomAppBar(
     shape: CircularNotchedRectangle(),
     //example margin
     notchMargin: 8,
@@ -53,16 +64,16 @@ class mainBottomNavigationBar {
       ),
     ]),
   );
-  var FAB = FloatingActionButton(child: Icon(Icons.add), onPressed: () {});
-  var FABLocation = FloatingActionButtonLocation.centerDocked;
 }
 
-Widget mainAppBar(String title) {
-  return AppBar(
-    // backgroundColor: mangoOrange500,
-    automaticallyImplyLeading: false,
-    titleSpacing: 40, //TODO: Maybe erase this.
-    title: Text(title),
-    actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
-  );
+Widget FAB(BuildContext context) {
+  return FloatingActionButton(
+      child: Icon(Icons.add),
+      onPressed: () => showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AddProductDialog();
+          }));
 }
+
+final FABLocation = FloatingActionButtonLocation.centerDocked;

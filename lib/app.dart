@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'login.dart';
-import 'model/assets.dart';
-
+import 'model/appBar.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
 
 class MangoApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mango Demo',
       home: HomePage(),
-      //initialRoute: '/',
+      initialRoute: LOGIN,
       routes: {
-        '/login': (context) => LoginPage(),
+        LOGIN: (context) => LoginPage(),
+        HOME: (context) => HomePage(),
       },
     );
   }
@@ -29,10 +28,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: mainAppBar('Main Page'),
       body: ListView(children: []),
-      bottomNavigationBar: mainBottomNavigationBar().bottomNavigationBar,
-      floatingActionButton: mainBottomNavigationBar().FAB,
-      floatingActionButtonLocation: mainBottomNavigationBar().FABLocation,
+      bottomNavigationBar: bottomNavigationBar(context),
+      floatingActionButton: FAB(context),
+      floatingActionButtonLocation: FABLocation,
     );
   }
 }
-
