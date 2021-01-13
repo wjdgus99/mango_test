@@ -2,7 +2,7 @@ import 'package:mango_test/model/assets.dart';
 import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 
-class homePage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
