@@ -1,8 +1,8 @@
-import 'package:mango_test/main.dart';
+import 'app.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
-class loginPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
