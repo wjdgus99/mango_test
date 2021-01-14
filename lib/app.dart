@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
+import 'package:mango_test/direct_input.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
@@ -116,6 +117,7 @@ class MangoApp extends StatelessWidget {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
         '/chart': (context) => Chart(),
+        '/direct_input': (context) => DirectInput(),
         PROFILE: (context) => Profile(),
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),

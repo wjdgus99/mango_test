@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mango_test/colors.dart';
 
 import 'model/nutrition/chart.dart';
 import 'model/nutrition/series.dart';
@@ -15,22 +16,22 @@ class _NutritionState extends State<Nutrition> {
     Series(
       nutrient: '탄수화물',
       percentage: 48,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '단백질',
       percentage: 73,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '지방',
       percentage: 32,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '당류',
       percentage: 45,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
   ];
 
@@ -38,22 +39,68 @@ class _NutritionState extends State<Nutrition> {
     Series(
       nutrient: '탄수화물',
       percentage: 38,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '단백질',
       percentage: 63,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '지방',
       percentage: 82,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
     Series(
       nutrient: '당류',
       percentage: 15,
-      barColor: charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+  ];
+
+  final List<Series> month_data = [
+    Series(
+      nutrient: '탄수화물',
+      percentage: 48,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '단백질',
+      percentage: 53,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '지방',
+      percentage: 52,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '당류',
+      percentage: 31,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+  ];
+
+  final List<Series> year_data = [
+    Series(
+      nutrient: '탄수화물',
+      percentage: 91,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '단백질',
+      percentage: 63,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '지방',
+      percentage: 82,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
+    ),
+    Series(
+      nutrient: '당류',
+      percentage: 25,
+      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
     ),
   ];
 
@@ -119,8 +166,8 @@ class _NutritionState extends State<Nutrition> {
                   children: <Widget>[
                     Container(child: Chart(data: date_data)),
                     Container(child: Chart(data: week_data)),
-                    Container(child: Center(child: Text('3'))),
-                    Container(child: Center(child: Text('4'))),
+                    Container(child: Chart(data: month_data)),
+                    Container(child: Chart(data: year_data)),
                   ],
                 ),
               ),
