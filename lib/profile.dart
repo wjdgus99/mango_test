@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'model/appBar.dart';
+
+import 'app.dart';
+import 'widget/appBar.dart';
+
 
 class Profile extends StatefulWidget {
   @override
@@ -18,28 +21,29 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar("My Page"),
+      appBar: mainAppBar("프로필"),
       bottomNavigationBar: bottomNavigationBar(context),
       floatingActionButton: FAB(context),
       floatingActionButtonLocation: FABLocation,
       body: Container(
         alignment: Alignment.center,
         child: ListView(
-          padding: EdgeInsets.all(30),
+          padding: EdgeInsets.all(DeviceWidth * 0.1),
           children: <Widget>[
             imageProfile(
                 "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99BC644E5B725CA734"),
             Container(
               alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 15), // 얘는, flexible 할 필요 X
               child: Text(
-                "Account Info",
+                "계정정보",
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(DeviceWidth * 0.04),
                 child: Column(
                   children: <Widget>[
                     TextField(
@@ -47,9 +51,8 @@ class _ProfileState extends State<Profile> {
                       decoration: InputDecoration(hintText: '이메일'),
                     ),
                     TextField(
-                      style: TextStyle(fontFamily: 'Oregano'),
                       controller: _nickNameController,
-                      decoration: InputDecoration(hintText: 'Nickname'),
+                      decoration: InputDecoration(hintText: '닉네임'),
                     ),
                     TextField(
                       controller: _nickNameController,
@@ -59,13 +62,14 @@ class _ProfileState extends State<Profile> {
                 )),
             Container(
               alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(top: 15),
               child: Text(
                 "알림설정",
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(DeviceWidth * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -82,13 +86,10 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     Divider(
+                      height: 0.5,
                       color: Colors.black,
                     ),
                     dropDownMenu(),
-                    Icon(Icons.add)
-                    // Divider(
-                    //   color: Colors.black,
-                    // ),
                   ],
                 )),
           ],

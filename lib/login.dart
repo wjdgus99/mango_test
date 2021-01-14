@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    DeviceWidth = MediaQuery.of(context).size.width;
+    DeviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         body: Center(
       child: Column(

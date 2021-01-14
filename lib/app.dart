@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
-import 'chart.dart';
+import 'model/nutrition/chart.dart';
 import 'home.dart';
 import 'login.dart';
-import 'model/series.dart';
-import 'model/appBar.dart';
+import 'model/nutrition/series.dart';
+import 'widget/appBar.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
 final PROFILE = '/profile';
 final NUTRITION = '/nutrition';
+
+var DeviceHeight;
+var DeviceWidth;
 
 final ThemeData _MangoTheme = _buildMangoTheme();
 
@@ -21,12 +24,12 @@ ThemeData _buildMangoTheme() {
     accentColor: Green400,
     primaryColor: Orange500,
 
-    //  buttonTheme: base.buttonTheme.copyWith(
-    //    buttonColor: Green400,
-    //    colorScheme: base.colorScheme.copyWith(
-    //      secondary: Orange500,
-    //    ),
-    //  ),
+    buttonTheme: base.buttonTheme.copyWith(
+       buttonColor: Green500,
+       colorScheme: base.colorScheme.copyWith(
+        secondary: Orange500,
+       ),
+     ),
     // buttonBarTheme: base.buttonBarTheme.copyWith(
     //   buttonTextTheme: ButtonTextTheme.accent,
     // ),
@@ -62,7 +65,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
         ),
       )
       .apply(
-        fontFamily: 'Oregano',
+        fontFamily: 'NotoSansKR',
       );
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../app.dart';
+
 bool IsBarcode = true;
 
 class AddProductDialog extends StatefulWidget {
@@ -10,8 +12,8 @@ class AddProductDialog extends StatefulWidget {
 class _AddProductDialogState extends State<AddProductDialog> {
   @override
   Widget build(BuildContext context) {
-    var DeviceHeight = MediaQuery.of(context).size.height;
-    var DeviceWidth = MediaQuery.of(context).size.width;
+    // var DeviceHeight = MediaQuery.of(context).size.height;
+    // var DeviceWidth = MediaQuery.of(context).size.width;
 
     return SimpleDialog(
       title: Row(
@@ -54,7 +56,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
             ),
             Spacer(),
             RaisedButton(
-              color: !IsBarcode ? Color(0xff78B437) : Color(0xff979797),
+              // color: !IsBarcode ? Color(0xff78B437) : Color(0xff979797),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30)),
               onPressed: () {
@@ -92,6 +94,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
               flex: 1,
             ),
             ButtonTheme(
+              buttonColor: Theme.of(context).accentColor,
               height: 110 * (DeviceHeight / 641),
               minWidth: 110 * (DeviceWidth / 361),
               child: RaisedButton(
