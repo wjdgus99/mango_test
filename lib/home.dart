@@ -9,34 +9,44 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+final List<Widget> _children = [
+  Refrigerator(),
+  Share(),
+  Nutrition(),
+  Profile()
+];
+
+final List<String> _title = [
+  '나의 냉장고',
+  'Share Page',
+  '영양성분',
+  '마이페이지',
+];
+
+final List<IconData> iconList = <IconData>[
+  Icons.home,
+  Icons.people,
+  Icons.fact_check,
+  Icons.person,
+];
+
+final List<Widget> _appBars = [
+  homeAppBar(),
+  basicAppBar(),
+  basicAppBar(),
+  basicAppBar(),
+];
+
+var _BottomNavIdx = 0;
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Widget> _children = [
-    Refrigerator(),
-    Share(),
-    Nutrition(),
-    Profile()
-  ];
 
-  final List<String> _title = [
-    'Home Page',
-    'Share Page',
-    'Nutrition Page',
-    'Profile Page',
-  ];
 
-  final List<IconData> iconList = <IconData>[
-    Icons.home,
-    Icons.people,
-    Icons.fact_check,
-    Icons.person,
-  ];
-
-  var _BottomNavIdx = 0;
   bool IsBarcode = true;
 
   @override
@@ -48,13 +58,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-          titleSpacing: 40, //TODO: Maybe erase this.
-          title: Text(_title[_BottomNavIdx]),
-          actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
-        ),
+
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 3,
+      child: Scaffold(
+        appBar: _appBars[_BottomNavIdx],
         body: _children[_BottomNavIdx],
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
@@ -62,12 +71,7 @@ class _HomePageState extends State<HomePage> {
               setState(() {
                 showBsheet(context);
               });
-            } /*showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AddProductDialog();
-                }
-                )*/
+            } 
             ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -82,7 +86,8 @@ class _HomePageState extends State<HomePage> {
               _BottomNavIdx = index;
             });
           },
-        ));
+        )),
+    );
   }
 
   void showBsheet(context) {
@@ -223,4 +228,30 @@ class _HomePageState extends State<HomePage> {
           );
         });
   }
+}
+
+Widget basicAppBar() {
+  return AppBar(
+    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+    centerTitle: true,
+    title: Text(_title[_BottomNavIdx]),
+    actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
+  );
+}
+
+Widget homeAppBar() {
+  return AppBar(
+    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+    centerTitle: true,
+    //TODO: Maybe erase this.
+    title: Text(_title[_BottomNavIdx]),
+    actions: [IconButton(icon: Icon(Icons.apps), onPressed: null)],
+    bottom: TabBar(
+      tabs: <Tab>[
+        Tab(text: '냉장',),
+        Tab(text: '냉동',),
+        Tab(text: '실온',),
+      ],
+    ),
+  );
 }
