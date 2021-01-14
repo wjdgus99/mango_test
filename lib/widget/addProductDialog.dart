@@ -33,7 +33,8 @@ void showBottomPopup(context) {
               Container(
                 padding: EdgeInsets.fromLTRB(
                     25 / 361 * DeviceWidth, 0, 30 / 361 * DeviceWidth, 0),
-                child: Text('식품의 바코드 또는 영수증을 촬영해주시면 자동으로 냉장고에 품목을 업로드 해드립니다.'),
+                child: Text('식품의 바코드 또는 영수증을 촬영해주시면 자동으로 냉장고에 품목을 업로드 해드립니다.'
+                ,style: Theme.of(context).textTheme.bodyText2,),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -94,7 +95,7 @@ void showBottomPopup(context) {
                     25 / 361 * DeviceWidth, 0, 30 / 361 * DeviceWidth, 0),
                 child: RaisedButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel'),
+                  child: Text('취소'),
                 ),
               ),
             ],

@@ -31,13 +31,13 @@ ThemeData _buildMangoTheme() {
     cursorColor: Orange500,
 
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: Green500,
+      buttonColor: Grey200,
       colorScheme: base.colorScheme.copyWith(
         secondary: Orange500,
       ),
     ),
-    // buttonBarTheme: base.buttonBarTheme.copyWith(
-    //   buttonTextTheme: ButtonTextTheme.accent,
+    //  buttonBarTheme: base.buttonBarTheme.copyWith(
+    //    buttonTextTheme: ButtonTextTheme.accent,
     // ),
     // primaryIconTheme: base.iconTheme.copyWith(
     //     color: Green400,
@@ -67,16 +67,28 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
           fontSize: 16.0,
           fontWeight: FontWeight.w500,
         ),
-        /* subtitle2: substitle of ListTile */
+        /* subtitle2: substitle of ListTile*/
         subtitle2: base.subtitle2.copyWith(
           fontSize: 12.0,
           fontWeight: FontWeight.normal,
         ),
+        /* headline5: hintText of ProfilePage(subtitle 2_KR)*/
         headline5: base.headline5.copyWith(
           fontSize: 16.0,
-          //fontWeight: FontWeigh,
+          fontWeight: FontWeight.normal,
         ),
-        caption: base.caption.copyWith(
+        /* headline4: dialog title*/
+        headline4: base.headline4.copyWith(
+          fontSize: 24.0,
+          fontWeight: FontWeight.w500,
+        ),
+        /* button: all of button + tabs */
+        button: base.button.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.0,
+        ),
+        /* bodyText2: dialog text */
+        bodyText2: base.button.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
         ),
@@ -88,6 +100,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
       .apply(
         fontFamily: 'NotoSansKR',
         bodyColor: Colors.black,
+        displayColor: Colors.black,
       );
 }
 
