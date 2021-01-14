@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -14,6 +15,12 @@ class _ProfileState extends State<Profile> {
 
   bool isSwitched = true;
   String dropdownValue = 'Option 1';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
