@@ -37,7 +37,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(top: 15), // 얘는, flexible 할 필요 X
               child: Text(
                 "계정정보",
-                style: TextStyle(
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
                   color: Theme.of(context).accentColor,
                 ),
               ),
@@ -48,15 +48,15 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     TextField(
                       controller: _emailController,
-                      decoration: InputDecoration(hintText: '이메일'),
+                      decoration: InputDecoration(hintText: '이메일', hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                     TextField(
                       controller: _nickNameController,
-                      decoration: InputDecoration(hintText: '닉네임'),
+                      decoration: InputDecoration(hintText: '닉네임', hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                     TextField(
                       controller: _nickNameController,
-                      decoration: InputDecoration(hintText: '이름'),
+                      decoration: InputDecoration(hintText: '이름', hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                   ],
                 )),
@@ -65,7 +65,9 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(top: 15),
               child: Text(
                 "알림설정",
-                style: TextStyle(color: Theme.of(context).accentColor),
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  color: Theme.of(context).accentColor,
+                ),
               ),
             ),
             Padding(
@@ -75,7 +77,7 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Expanded(child: Text('유통기한 만료 알림')),
+                        Expanded(child: Text('유통기한 만료 알림',style: Theme.of(context).textTheme.headline5)),
                         Switch(
                             value: isSwitched,
                             onChanged: (value) {
@@ -84,10 +86,6 @@ class _ProfileState extends State<Profile> {
                               });
                             }),
                       ],
-                    ),
-                    Divider(
-                      height: 0.5,
-                      color: Colors.black,
                     ),
                     dropDownMenu(),
                     Divider(
@@ -112,23 +110,23 @@ class _ProfileState extends State<Profile> {
         size: 30,
       ),
       elevation: 16,
-      underline: SizedBox(),
+      underline: DropdownButtonHideUnderline(child: Container()),
       items: <DropdownMenuItem>[
         DropdownMenuItem(
           value: 'Option 1',
-          child: Text('만료 2일전'),
+          child: Text('만료 2일전',style: Theme.of(context).textTheme.headline5),
         ),
         DropdownMenuItem(
           value: 'Option 2',
-          child: Text('만료 3일전'),
+          child: Text('만료 3일전',style: Theme.of(context).textTheme.headline5),
         ),
         DropdownMenuItem(
           value: 'Option 3',
-          child: Text('만료 5일전'),
+          child: Text('만료 5일전',style: Theme.of(context).textTheme.headline5),
         ),
         DropdownMenuItem(
           value: 'Option 4',
-          child: Text('만료 7일전'),
+          child: Text('만료 7일전',style: Theme.of(context).textTheme.headline5),
         ),
       ],
       onChanged: (value) {
