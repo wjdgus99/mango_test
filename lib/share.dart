@@ -8,6 +8,8 @@ class Share extends StatefulWidget {
 class _ShareState extends State<Share> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Text('기획 중'),
+    );
   }
 }
