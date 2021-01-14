@@ -45,7 +45,9 @@ class _AddProductDialogState extends State<AddProductDialog> {
                   borderRadius: BorderRadius.circular(30)),
               onPressed: () {
                 setState(() {
-                  IsBarcode = !IsBarcode;
+                  if (IsBarcode != true) {
+                    IsBarcode = !IsBarcode;
+                  }
                 });
               },
               child: Text('바코드'),
@@ -57,7 +59,9 @@ class _AddProductDialogState extends State<AddProductDialog> {
                   borderRadius: BorderRadius.circular(30)),
               onPressed: () {
                 setState(() {
-                  IsBarcode = !IsBarcode;
+                  if (IsBarcode != false) {
+                    IsBarcode = !IsBarcode;
+                  }
                 });
               },
               child: Text('영수증'),
@@ -93,7 +97,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
               child: RaisedButton(
                 onPressed: () => print('album'),
                 child: Column(
-                  children: [Icon(Icons.photo_album), Text('앨범에서 선택')],
+                  children: [Icon(Icons.perm_media), Text('앨범에서 선택')],
                 ),
               ),
             ),
