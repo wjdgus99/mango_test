@@ -1,4 +1,4 @@
-import 'package:mango_test/model/appBar.dart';
+import 'package:mango_test/widget/appBar.dart';
 import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 
