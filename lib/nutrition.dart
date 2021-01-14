@@ -61,10 +61,7 @@ class _NutritionState extends State<Nutrition> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('내 냉장고 속 영양성분 '),
-        actions: [IconButton(icon: Icon(Icons.share), onPressed: () {})],
-      ),
+      appBar: mainAppBar('내 냉장고 속 영양 성분'),
       body: Container(
         margin: EdgeInsets.all(10),
         child: DefaultTabController(
