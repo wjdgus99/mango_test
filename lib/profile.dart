@@ -31,7 +31,7 @@ class _ProfileState extends State<Profile> {
               child: Text(
                 "계정정보",
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).accentColor,
                 ),
               ),
             ),
@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(top: 15),
               child: Text(
                 "알림설정",
-                style: TextStyle(color: Theme.of(context).primaryColor),
+                style: TextStyle(color: Theme.of(context).accentColor),
               ),
             ),
             Padding(
@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
       value: dropdownValue,
       icon: Icon(
         Icons.arrow_drop_down,
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         size: 30,
       ),
       elevation: 16,

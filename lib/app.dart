@@ -22,8 +22,13 @@ final ThemeData _MangoTheme = _buildMangoTheme();
 ThemeData _buildMangoTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: Green400,
-    primaryColor: Orange500,
+    accentColor: Orange500,
+    primaryColor: Colors.white,
+    hoverColor: Orange500,
+    errorColor: Red200,
+
+    toggleableActiveColor: Orange500,
+    cursorColor: Orange500,
 
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: Green500,
@@ -37,11 +42,11 @@ ThemeData _buildMangoTheme() {
     // primaryIconTheme: base.iconTheme.copyWith(
     //     color: Green400,
     // ),
-    floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Orange500),
-    toggleableActiveColor: Green500,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Orange500,
+      foregroundColor: Colors.black,
+    ),
     textTheme: _buildMangoTextTheme(base.textTheme),
-    cursorColor: Orange500,
     primaryTextTheme: _buildMangoTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildMangoTextTheme(base.accentTextTheme),
     iconTheme: base.iconTheme.copyWith(color: Orange500),
@@ -52,10 +57,25 @@ ThemeData _buildMangoTheme() {
 TextTheme _buildMangoTextTheme(TextTheme base) {
   return base
       .copyWith(
-        headline5: base.headline5.copyWith(
+        /* headline6: Text of AppBar */
+        headline6: base.headline6.copyWith(
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold,
+        ),
+        /* subtitle1: title of ListTile */
+        subtitle1: base.subtitle1.copyWith(
+          fontSize: 16.0,
           fontWeight: FontWeight.w500,
         ),
-        headline6: base.headline6.copyWith(fontSize: 18.0),
+        /* subtitle2: substitle of ListTile */
+        subtitle2: base.subtitle2.copyWith(
+          fontSize: 12.0,
+          fontWeight: FontWeight.normal,
+        ),
+        headline5: base.headline5.copyWith(
+          fontSize: 16.0,
+          //fontWeight: FontWeigh,
+        ),
         caption: base.caption.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14.0,
@@ -67,6 +87,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
       )
       .apply(
         fontFamily: 'NotoSansKR',
+        bodyColor: Colors.black,
       );
 }
 
