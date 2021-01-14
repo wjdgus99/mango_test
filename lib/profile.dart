@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model/assets.dart';
+import 'model/appBar.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -19,9 +19,9 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mainAppBar("My Page"),
-      bottomNavigationBar: mainBottomNavigationBar().bottomNavigationBar,
-      floatingActionButton: mainBottomNavigationBar().FAB,
-      floatingActionButtonLocation: mainBottomNavigationBar().FABLocation,
+      bottomNavigationBar: bottomNavigationBar(context),
+      floatingActionButton: FAB(context),
+      floatingActionButtonLocation: FABLocation,
       body: Container(
         alignment: Alignment.center,
         child: ListView(
