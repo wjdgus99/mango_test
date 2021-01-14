@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:mango_test/nutrition.dart';
+import 'chart.dart';
 import 'home.dart';
 import 'login.dart';
+
+import 'model/assets.dart';
+import 'model/series.dart';
 import 'model/appBar.dart';
 
 final LOGIN = '/login';
@@ -17,6 +21,7 @@ class MangoApp extends StatelessWidget {
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
+        '/chart': (context) => Chart(),
       },
     );
   }
