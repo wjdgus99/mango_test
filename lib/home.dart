@@ -6,11 +6,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar('Home Page'),
-      body: ListView(children: []),
+      appBar: mainAppBar('나의 냉장고'),
+      body: ListView(children: [
+
+      ]),
       bottomNavigationBar: bottomNavigationBar(context),
       floatingActionButton: FAB(context),
       floatingActionButtonLocation: FABLocation,
     );
   }
+
+
+
 }
