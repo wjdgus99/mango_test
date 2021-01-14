@@ -62,7 +62,26 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Oregano
+      fonts:
+        - asset: fonts/Oregano-Italic.ttf
+        - asset: fonts/Oregano-Regular.ttf
+    - family: Noto Sans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+        - asset: fonts/NotoSans-Bold.ttf
+          weight: 500
+    - family: NotoSansKR
+      fonts:
+        - asset: fonts/NotoSansKR-Thin.otf
+        - asset: fonts/NotoSansKR-Black.otf
+        - asset: fonts/NotoSansKR-Medium.otf
+        - asset: fonts/NotoSansKR-Regular.otf
+        - asset: fonts/NotoSansKR-Bold.otf
+        - asset: fonts/NotoSansKR-Light.otf
+          weight: 500
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

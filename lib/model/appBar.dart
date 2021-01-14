@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/app.dart';
 
 import 'addProductDialog.dart';
 
 Widget mainAppBar(String title) {
   return AppBar(
-    // backgroundColor: mangoOrange500,
-    automaticallyImplyLeading: false,
+    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
     titleSpacing: 40, //TODO: Maybe erase this.
     title: Text(title),
     actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
   );
 }
 
+//
+// apps
 Widget bottomNavigationBar(BuildContext context) {
   return BottomAppBar(
     shape: CircularNotchedRectangle(),
@@ -45,7 +47,9 @@ Widget bottomNavigationBar(BuildContext context) {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(icon: Icon(Icons.fact_check), onPressed: null),
+          IconButton(
+              icon: Icon(Icons.fact_check),
+              onPressed: () => Navigator.pushNamed(context, NUTRITION)),
           Container(child: Text('Nutrition')),
         ],
       ),
@@ -55,7 +59,9 @@ Widget bottomNavigationBar(BuildContext context) {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(icon: Icon(Icons.person), onPressed: null),
+          IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () => Navigator.pushNamed(context, PROFILE)),
           Container(child: Text('Account')),
         ],
       ),

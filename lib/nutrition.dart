@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'chart.dart';
-import 'model/assets.dart';
+import 'model/appBar.dart';
 import 'model/series.dart';
 
 class Nutrition extends StatefulWidget {
@@ -133,9 +133,9 @@ class _NutritionState extends State<Nutrition> {
           ),
         ),
       ),
-      bottomNavigationBar: mainBottomNavigationBar().bottomNavigationBar,
-      floatingActionButton: mainBottomNavigationBar().FAB,
-      floatingActionButtonLocation: mainBottomNavigationBar().FABLocation,
+      bottomNavigationBar: bottomNavigationBar(context),
+      floatingActionButton: FAB(context),
+      floatingActionButtonLocation: FABLocation,
     );
   }
 }
