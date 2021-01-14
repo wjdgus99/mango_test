@@ -90,6 +90,10 @@ class _ProfileState extends State<Profile> {
                       color: Colors.black,
                     ),
                     dropDownMenu(),
+                    Divider(
+                      height: 0.5,
+                      color: Colors.black,
+                    ),
                   ],
                 )),
           ],
@@ -108,10 +112,7 @@ class _ProfileState extends State<Profile> {
         size: 30,
       ),
       elevation: 16,
-      underline: Divider(
-        height: 5,
-        color: Colors.black,
-      ),
+      underline: SizedBox(),
       items: <DropdownMenuItem>[
         DropdownMenuItem(
           value: 'Option 1',

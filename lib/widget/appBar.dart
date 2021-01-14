@@ -27,7 +27,7 @@ Widget bottomNavigationBar(BuildContext context) {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconButton(icon: Icon(Icons.home), onPressed: null),
+          IconButton(icon: Icon(Icons.home), onPressed: () => Navigator.pushNamed(context, HOME)),
           Container(child: Text('Home')),
         ],
       ),
