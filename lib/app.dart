@@ -24,12 +24,12 @@ ThemeData _buildMangoTheme() {
     accentColor: Green400,
     primaryColor: Orange500,
 
-    //  buttonTheme: base.buttonTheme.copyWith(
-    //    buttonColor: Green400,
-    //    colorScheme: base.colorScheme.copyWith(
-    //      secondary: Orange500,
-    //    ),
-    //  ),
+    buttonTheme: base.buttonTheme.copyWith(
+       buttonColor: Green500,
+       colorScheme: base.colorScheme.copyWith(
+        secondary: Orange500,
+       ),
+     ),
     // buttonBarTheme: base.buttonBarTheme.copyWith(
     //   buttonTextTheme: ButtonTextTheme.accent,
     // ),
@@ -65,7 +65,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
         ),
       )
       .apply(
-        fontFamily: 'Oregano',
+        fontFamily: 'NotoSansKR',
       );
 }
 

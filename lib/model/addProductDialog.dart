@@ -94,6 +94,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
               flex: 1,
             ),
             ButtonTheme(
+              buttonColor: Theme.of(context).accentColor,
               height: 110 * (DeviceHeight / 641),
               minWidth: 110 * (DeviceWidth / 361),
               child: RaisedButton(
