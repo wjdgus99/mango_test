@@ -8,6 +8,7 @@ import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 import 'app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 final List<Widget> _children = [
   Refrigerator(),
@@ -44,49 +45,51 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+KeyboardVisibilityController keyboardVisibilityController;
+
 class _HomePageState extends State<HomePage> {
-
-
   bool IsBarcode = true;
+  bool keyBoardOpen = false;
 
   @override
   void initState() {
     // TODO: implement initState
     _BottomNavIdx = 0;
+    keyboardVisibilityController = new KeyboardVisibilityController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
       child: Scaffold(
-        appBar: _appBars[_BottomNavIdx],
-        body: _children[_BottomNavIdx],
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
+          resizeToAvoidBottomInset: false,
+          appBar: _appBars[_BottomNavIdx],
+          body: _children[_BottomNavIdx],
+          floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.add),
+              onPressed: () {
+                setState(() {
+                  showBsheet(context);
+                });
+              }),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: AnimatedBottomNavigationBar(
+            activeColor: Color(0xffF3AF4B),
+            inactiveColor: Color.fromARGB(25, 0, 0, 0),
+            icons: iconList,
+            notchSmoothness: NotchSmoothness.softEdge,
+            activeIndex: _BottomNavIdx,
+            gapLocation: GapLocation.center,
+            onTap: (index) {
               setState(() {
-                showBsheet(context);
+                _BottomNavIdx = index;
               });
-            } 
-            ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: AnimatedBottomNavigationBar(
-          activeColor: Color(0xffF3AF4B),
-          inactiveColor: Color.fromARGB(25, 0, 0, 0),
-          icons: iconList,
-          notchSmoothness: NotchSmoothness.softEdge,
-          activeIndex: _BottomNavIdx,
-          gapLocation: GapLocation.center,
-          onTap: (index) {
-            setState(() {
-              _BottomNavIdx = index;
-            });
-          },
-        )),
+            },
+          )),
     );
   }
 
@@ -248,9 +251,15 @@ Widget homeAppBar() {
     actions: [IconButton(icon: Icon(Icons.apps), onPressed: null)],
     bottom: TabBar(
       tabs: <Tab>[
-        Tab(text: '냉장',),
-        Tab(text: '냉동',),
-        Tab(text: '실온',),
+        Tab(
+          text: '냉장',
+        ),
+        Tab(
+          text: '냉동',
+        ),
+        Tab(
+          text: '실온',
+        ),
       ],
     ),
   );
