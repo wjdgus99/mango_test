@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -14,6 +15,12 @@ class _ProfileState extends State<Profile> {
 
   bool isSwitched = true;
   String dropdownValue = 'Option 1';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +48,21 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     TextField(
                       controller: _emailController,
-                      decoration: InputDecoration(hintText: '이메일', hintStyle: Theme.of(context).textTheme.headline5),
+                      decoration: InputDecoration(
+                          hintText: '이메일',
+                          hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                     TextField(
                       controller: _nickNameController,
-                      decoration: InputDecoration(hintText: '닉네임', hintStyle: Theme.of(context).textTheme.headline5),
+                      decoration: InputDecoration(
+                          hintText: '닉네임',
+                          hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                     TextField(
                       controller: _nickNameController,
-                      decoration: InputDecoration(hintText: '이름', hintStyle: Theme.of(context).textTheme.headline5),
+                      decoration: InputDecoration(
+                          hintText: '이름',
+                          hintStyle: Theme.of(context).textTheme.headline5),
                     ),
                   ],
                 )),
@@ -70,7 +83,9 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Expanded(child: Text('유통기한 만료 알림',style: Theme.of(context).textTheme.headline5)),
+                        Expanded(
+                            child: Text('유통기한 만료 알림',
+                                style: Theme.of(context).textTheme.headline5)),
                         Switch(
                             value: isSwitched,
                             onChanged: (value) {
@@ -81,10 +96,6 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                     dropDownMenu(),
-                    Divider(
-                      height: 0.5,
-                      color: Colors.black,
-                    ),
                   ],
                 )),
           ],
@@ -94,39 +105,55 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget dropDownMenu() {
-    return DropdownButton(
-      isExpanded: true,
-      value: dropdownValue,
-      icon: Icon(
-        Icons.arrow_drop_down,
-        color: Theme.of(context).accentColor,
-        size: 30,
+    return Container(
+      height: 60,
+      child: InputDecorator(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton(
+            isExpanded: true,
+            value: dropdownValue,
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: Theme.of(context).accentColor,
+              size: 30,
+            ),
+            // elevation: 16,
+            // underline: DropdownButtonHideUnderline(child: Container()),
+            items: <DropdownMenuItem>[
+              DropdownMenuItem(
+                value: 'Option 1',
+                child: Text('만료 2일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 2',
+                child: Text('만료 3일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 3',
+                child: Text('만료 5일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 4',
+                child: Text('만료 7일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+            ],
+            onChanged: (value) {
+              setState(() {
+                dropdownValue = value;
+              });
+            },
+          ),
+        ),
       ),
-      elevation: 16,
-      underline: DropdownButtonHideUnderline(child: Container()),
-      items: <DropdownMenuItem>[
-        DropdownMenuItem(
-          value: 'Option 1',
-          child: Text('만료 2일전',style: Theme.of(context).textTheme.headline5),
-        ),
-        DropdownMenuItem(
-          value: 'Option 2',
-          child: Text('만료 3일전',style: Theme.of(context).textTheme.headline5),
-        ),
-        DropdownMenuItem(
-          value: 'Option 3',
-          child: Text('만료 5일전',style: Theme.of(context).textTheme.headline5),
-        ),
-        DropdownMenuItem(
-          value: 'Option 4',
-          child: Text('만료 7일전',style: Theme.of(context).textTheme.headline5),
-        ),
-      ],
-      onChanged: (value) {
-        setState(() {
-          dropdownValue = value;
-        });
-      },
     );
   }
 }
