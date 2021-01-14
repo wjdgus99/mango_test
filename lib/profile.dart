@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-
 import 'app.dart';
-import 'widget/appBar.dart';
-
 
 class Profile extends StatefulWidget {
   @override
@@ -21,10 +18,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar("프로필"),
-      bottomNavigationBar: bottomNavigationBar(context),
-      floatingActionButton: FAB(context),
-      floatingActionButtonLocation: FABLocation,
       body: Container(
         alignment: Alignment.center,
         child: ListView(
@@ -69,7 +62,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(DeviceWidth * 0.04),
+                padding: EdgeInsets.all(DeviceWidth * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
