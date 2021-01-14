@@ -31,6 +31,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   animated_bottom_navigation_bar: ^0.2.1
+  modal_bottom_sheet: 1.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,8 @@ flutter:
      - images/파프리카 이미지.png
      - images/bg.png
      - images/f1BMuugVyyM.png
+     - images/logo.png
+     - images/refrigerator.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
