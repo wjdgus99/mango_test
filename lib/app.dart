@@ -13,6 +13,9 @@ final HOME = '/home';
 final PROFILE = '/profile';
 final NUTRITION = '/nutrition';
 
+var DeviceHeight;
+var DeviceWidth;
+
 final ThemeData _MangoTheme = _buildMangoTheme();
 
 ThemeData _buildMangoTheme() {
