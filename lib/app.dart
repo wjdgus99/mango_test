@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
-import 'chart.dart';
+import 'model/nutrition/chart.dart';
 import 'home.dart';
 import 'login.dart';
-import 'model/series.dart';
-import 'model/appBar.dart';
+import 'model/nutrition/series.dart';
+import 'widget/appBar.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
