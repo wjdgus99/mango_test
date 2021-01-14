@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'model/nutrition/chart.dart';
-import 'widget/appBar.dart';
 import 'model/nutrition/series.dart';
 
 class Nutrition extends StatefulWidget {
@@ -61,7 +60,6 @@ class _NutritionState extends State<Nutrition> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mainAppBar('내 냉장고 속 영양 성분'),
       body: Container(
         margin: EdgeInsets.all(10),
         child: DefaultTabController(
@@ -130,9 +128,6 @@ class _NutritionState extends State<Nutrition> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomNavigationBar(context),
-      floatingActionButton: FAB(context),
-      floatingActionButtonLocation: FABLocation,
     );
   }
 }
