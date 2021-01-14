@@ -9,6 +9,7 @@ import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 import 'app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 final List<Widget> _children = [
   Refrigerator(),
@@ -45,13 +46,17 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+KeyboardVisibilityController keyboardVisibilityController;
+
 class _HomePageState extends State<HomePage> {
   bool IsBarcode = true;
+  bool keyBoardOpen = false;
 
   @override
   void initState() {
     // TODO: implement initState
     _BottomNavIdx = 0;
+    keyboardVisibilityController = new KeyboardVisibilityController();
     super.initState();
   }
 
@@ -61,6 +66,7 @@ class _HomePageState extends State<HomePage> {
       initialIndex: 0,
       length: 3,
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: _appBars[_BottomNavIdx],
           body: _children[_BottomNavIdx],
           floatingActionButton: FloatingActionButton(
