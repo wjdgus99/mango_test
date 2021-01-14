@@ -1,7 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mango_test/model/series.dart';
+import 'package:mango_test/model/nutrition/series.dart';
 
 class Chart extends StatelessWidget {
   final List<Series> data;

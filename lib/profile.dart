@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model/appBar.dart';
+import 'widget/appBar.dart';
 
 class Profile extends StatefulWidget {
   @override
