@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
+import 'package:mango_test/share.dart';
 import 'model/nutrition/chart.dart';
 import 'home.dart';
 import 'login.dart';
 import 'model/nutrition/series.dart';
-import 'widget/appBar.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
 final PROFILE = '/profile';
 final NUTRITION = '/nutrition';
+final SHARE = '/share';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -25,11 +26,11 @@ ThemeData _buildMangoTheme() {
     primaryColor: Orange500,
 
     buttonTheme: base.buttonTheme.copyWith(
-       buttonColor: Green500,
-       colorScheme: base.colorScheme.copyWith(
+      buttonColor: Green500,
+      colorScheme: base.colorScheme.copyWith(
         secondary: Orange500,
-       ),
-     ),
+      ),
+    ),
     // buttonBarTheme: base.buttonBarTheme.copyWith(
     //   buttonTextTheme: ButtonTextTheme.accent,
     // ),
@@ -83,6 +84,7 @@ class MangoApp extends StatelessWidget {
         '/chart': (context) => Chart(),
         PROFILE: (context) => Profile(),
         NUTRITION: (context) => Nutrition(),
+        SHARE: (context) => Share(),
       },
     );
   }
