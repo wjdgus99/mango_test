@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-const Orange500 = Color(0xFFEF9D38);
+const Orange500 = Color(0xFFF7C653);
 const Green500 = Color(0xFF78B437);
 const Green400 = Color(0xFFB3D94A);
 const Red500 = Color(0xFFEE7243);

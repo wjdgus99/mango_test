@@ -24,6 +24,8 @@ class Chart extends StatelessWidget {
       series,
       animate: true,
       vertical: false,
+      defaultRenderer: charts.BarRendererConfig(
+          cornerStrategy: const charts.ConstCornerStrategy(30)),
     );
   }
 }
