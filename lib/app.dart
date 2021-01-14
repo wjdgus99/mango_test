@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/profile.dart';
-
+import 'package:mango_test/nutrition.dart';
+import 'chart.dart';
 import 'home.dart';
 import 'login.dart';
+
 import 'model/assets.dart';
+import 'model/series.dart';
+import 'model/appBar.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
 final PROFILE = '/profile';
+
 
 final ThemeData _MangoTheme = _buildMangoTheme();
 
@@ -62,16 +67,19 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
       );
 }
 
+
 class MangoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mango Demo',
+      home: HomePage(),
       theme: _MangoTheme,
-      home: Profile(),
-      //initialRoute: '/',
+      initialRoute: LOGIN,
       routes: {
-        '/login': (context) => LoginPage(),
+        LOGIN: (context) => LoginPage(),
+        HOME: (context) => HomePage(),
+        '/chart': (context) => Chart(),
         '/profile': (context) => Profile(),
       },
     );
@@ -84,9 +92,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: mainAppBar('Main Page'),
       body: ListView(children: []),
-      bottomNavigationBar: mainBottomNavigationBar().bottomNavigationBar,
-      floatingActionButton: mainBottomNavigationBar().FAB,
-      floatingActionButtonLocation: mainBottomNavigationBar().FABLocation,
+      bottomNavigationBar: bottomNavigationBar(context),
+      floatingActionButton: FAB(context),
+      floatingActionButtonLocation: FABLocation,
     );
   }
 }
