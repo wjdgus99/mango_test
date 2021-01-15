@@ -18,12 +18,12 @@ final List<Widget> _children = [
   Profile()
 ];
 
-final List<String> _title = [
-  '나의 냉장고',
-  'Share Page',
-  '영양성분',
-  '마이페이지',
-];
+// final List<String> _title = [
+//   '나의 냉장고',
+//   'Share Page',
+//   '영양성분',
+//   '마이페이지',
+// ];
 
 final List<IconData> iconList = <IconData>[
   Icons.home,
@@ -35,8 +35,8 @@ final List<IconData> iconList = <IconData>[
 final List<Widget> _appBars = [
   homeAppBar(),
   basicAppBar(),
-  basicAppBar(),
-  basicAppBar(),
+  nutritionAppBar(),
+  profileAppBar(),
 ];
 
 var _BottomNavIdx = 0;
@@ -452,7 +452,7 @@ Widget basicAppBar() {
   return AppBar(
     leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
     centerTitle: true,
-    title: Text(_title[_BottomNavIdx]),
+    title: Text('MANGO'),
     actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
   );
 }
@@ -462,7 +462,7 @@ Widget homeAppBar() {
     leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
     centerTitle: true,
     //TODO: Maybe erase this.
-    title: Text(_title[_BottomNavIdx]),
+    title: Text('나의 냉장고'),
     actions: [IconButton(icon: Icon(Icons.apps), onPressed: null)],
     bottom: TabBar(
       indicatorColor: Orange500,
@@ -482,5 +482,36 @@ Widget homeAppBar() {
         ),
       ],
     ),
+  );
+}
+
+Widget profileAppBar() {
+  return AppBar(
+    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+    centerTitle: true,
+    title: Text('마이페이지'),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RaisedButton(
+          color: Orange500,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          onPressed: () => print('Save Profile'),
+          child: Text('저장'),
+        ),
+      )
+    ],
+  );
+}
+
+Widget nutritionAppBar() {
+  return AppBar(
+    centerTitle: true,
+    leading: Text(' '),
+    title: Text('영양성분'),
+    actions: [
+      IconButton(icon: Icon(Icons.share), onPressed: () => print('share'))
+    ],
   );
 }
