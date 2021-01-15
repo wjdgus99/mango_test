@@ -1,10 +1,10 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:mango_test/colors.dart';
+import 'package:mango_test/direct_input.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/share.dart';
-import 'package:mango_test/widget/addProductDialog.dart';
 import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 import 'app.dart';
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(Icons.add),
               onPressed: () {
                 setState(() {
-                  showBsheet(context);
+                  showBottomSheet(context);
                 });
               }),
           floatingActionButtonLocation:
@@ -94,14 +94,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void showBsheet(context) {
+  void showBottomSheet(context) {
     showBarModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 526 / 812 * DeviceHeight,
+            height: 526 * (DeviceHeight / 812),
             child: Padding(
-              padding: EdgeInsets.all(DeviceWidth*0.03),
+              padding: EdgeInsets.fromLTRB(
+                  DeviceWidth * 0.03, 0, DeviceWidth * 0.03, 0),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -123,7 +124,12 @@ class _HomePageState extends State<HomePage> {
                           flex: 14,
                         ),
                         RaisedButton(
-                          onPressed: () => print('insert'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            print('input');
+                            showDirectInput(context);
+                            print('output');
+                          },
                           child: Text('직접입력'),
                         ),
                         Spacer(
@@ -132,11 +138,11 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(
-                      height: 15 * (DeviceHeight / 641),
+                      height: 10 * (DeviceHeight / 812),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(
-                          40 / 361 * DeviceWidth, 0, 40 / 361 * DeviceWidth, 0),
+                      padding: EdgeInsets.fromLTRB(50 * (DeviceWidth / 812), 0,
+                          50 * (DeviceWidth / 812), 0),
                       child: Text(
                         '식품의 바코드 또는 영수증을 촬영해주시면,\n 자동으로 냉장고에 품목을 업로드 해드립니다.',
                         style: Theme.of(context).textTheme.bodyText2,
@@ -144,14 +150,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(
-                      height: 15 * (DeviceHeight / 641),
+                      height: 25 * (812 / DeviceHeight),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         RaisedButton(
-                          color:
-                              IsBarcode ? Color(0xffF7C653) : Grey200,
+                          color: IsBarcode ? Color(0xffF7C653) : Grey200,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
                           onPressed: () {
@@ -159,15 +164,14 @@ class _HomePageState extends State<HomePage> {
                               if (!IsBarcode) {
                                 IsBarcode = true;
                                 Navigator.pop(context);
-                                showBsheet(context);
+                                showBottomSheet(context);
                               }
                             });
                           },
                           child: Text('바코드'),
                         ),
                         RaisedButton(
-                          color:
-                              !IsBarcode ? Color(0xffF7C653) : Grey200,
+                          color: !IsBarcode ? Color(0xffF7C653) : Grey200,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
                           onPressed: () {
@@ -175,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                               if (IsBarcode) {
                                 IsBarcode = false;
                                 Navigator.pop(context);
-                                showBsheet(context);
+                                showBottomSheet(context);
                               }
                             });
                           },
@@ -184,54 +188,48 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(
-                      height: 15 * (DeviceHeight / 641),
+                      height: 40 * (DeviceHeight / 812),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ButtonTheme(
                           buttonColor: Colors.white,
-                          height: 150 * (DeviceHeight / 641),
-                          minWidth: 150 * (DeviceWidth / 361),
+                          height: 150 * (DeviceHeight / 812),
+                          minWidth: 150 * (375 / DeviceWidth),
                           child: RaisedButton(
                             onPressed: () => print('camera'),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [Icon(Icons.photo_camera), Text('촬영하기')],
+                              children: [
+                                Icon(Icons.photo_camera),
+                                Text('촬영하기')
+                              ],
                             ),
                           ),
                         ),
                         ButtonTheme(
                           buttonColor: Colors.white,
-                          height: 150 * (DeviceHeight / 641),
-                          minWidth: 150 * (DeviceWidth / 361),
+                          height: 150 * (DeviceHeight / 812),
+                          minWidth: 150 * (375 / DeviceWidth),
                           child: RaisedButton(
                             onPressed: () => print('album'),
                             child: Column(
-                              children: [Icon(Icons.perm_media), Text('앨범에서 선택')],
+                              children: [
+                                Icon(Icons.perm_media),
+                                Text('앨범에서 선택')
+                              ],
                             ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 20 * (DeviceHeight / 641),
+                      height: 30 * (375 / DeviceHeight),
                     ),
-                    // Container(
-                    //   padding: EdgeInsets.fromLTRB(
-                    //       25 / 361 * DeviceWidth, 0, 30 / 361 * DeviceWidth, 0),
-                    //   width: 334 / 375 * DeviceWidth,
-                    //   color: Color(0xffbbbbbb),
-                    //   child: FlatButton(
-                    //     onPressed: () => Navigator.pop(context),
-                    //     child: Text('취소'),
-                    //   ),
-                    // ),
                     ButtonBar(
-                      // buttonPadding: EdgeInsets.fromLTRB(
-                      //          25 / 361 * DeviceWidth, 0, 30 / 361 * DeviceWidth, 0),
                       buttonMinWidth: 334 / 375 * DeviceWidth,
-                      buttonHeight: 50,
+                      buttonHeight: 48,
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         RaisedButton(
@@ -246,6 +244,207 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         });
+  }
+
+  final TextEditingController _nameController = TextEditingController();
+
+  String dropdownValue = 'Option 1';
+  DateTime selectedDueDate = DateTime.now();
+
+  void showDirectInput(context) {
+    showBarModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  children: [
+                    SizedBox(height: 60),
+                    Row(
+                      children: [
+                        // TODO: Text Style
+                        Expanded(
+                            child: Text(
+                          '품목 입력',
+                          style: TextStyle(color: Colors.black, fontSize: 20),
+                        )),
+                        RaisedButton(onPressed: null, child: Text('재촬영하기')),
+                      ],
+                    ),
+                    SizedBox(height: 40),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 13, 10, 13),
+                        child: Text('품목 1'),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        height: 60,
+                        child: TextField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              hintText: '품목 이름'),
+                        ),
+                      ),
+                    ),
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          height: 60,
+                          width: 120,
+                          child: InputDecorator(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                hint: Text('수량'),
+                                isExpanded: true,
+                                value: dropdownValue,
+                                items: <DropdownMenuItem>[
+                                  DropdownMenuItem(
+                                    value: 'Option 1',
+                                    child: Text('1'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Option 2',
+                                    child: Text('2'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Option 3',
+                                    child: Text('3'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Option 4',
+                                    child: Text('4'),
+                                  ),
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    dropdownValue = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            height: 60,
+                            child: InputDecorator(
+                              decoration: const InputDecoration(
+                                  border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              )),
+                              child: InkWell(
+                                onTap: () => _selectDueDate(context),
+                                child: Row(children: [
+                                  Expanded(
+                                      child: Text(
+                                    '유통기한',
+                                    style: TextStyle(color: Colors.grey),
+                                  )),
+                                  Text(selectedDueDate
+                                      .toString()
+                                      .substring(0, 10)),
+                                  Expanded(
+                                    child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Icon(Icons.calendar_today)),
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(110, 10, 110, 10),
+                  child: RaisedButton(
+                      // color: Orange500, //없으면 초록색 뜬다
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      onPressed: () => print('add product'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(children: [Icon(Icons.add), Text('품목 추가')]),
+                      )),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            onPressed: () => print('Cancel'),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                              child: Text('취소'),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton(
+                            color: Colors.lightGreen,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            // color: Theme.of(context).accentColor,
+                            // color: Colors.lightGreen,
+                            onPressed: () => print('Save'),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(40, 10, 40, 10),
+                              child: Text('저장'),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
+  }
+
+  _selectDueDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDueDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+      initialEntryMode: DatePickerEntryMode.input,
+    );
+    if (picked != null && picked != selectedDueDate)
+      setState(() {
+        selectedDueDate = picked;
+      });
   }
 }
 

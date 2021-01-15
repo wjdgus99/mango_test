@@ -27,10 +27,7 @@ class LoginPage extends StatelessWidget {
                 flex: 1,
               ),
               Container(
-                child: Text(
-                  'MANGO',
-                  style: TextStyle(fontSize: 48, color: Colors.white),
-                ),
+                child: Image.asset('images/appName.png'),
               ),
               Spacer(
                 flex: 1,
