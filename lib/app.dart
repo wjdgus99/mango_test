@@ -37,6 +37,12 @@ ThemeData _buildMangoTheme() {
         secondary: Orange500,
       ),
     ),
+
+    /* show Data Picker */
+    colorScheme: ColorScheme.light().copyWith(
+      primary: Orange500
+    ),
+
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Orange500,
       foregroundColor: Colors.black,

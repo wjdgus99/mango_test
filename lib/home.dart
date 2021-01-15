@@ -18,13 +18,6 @@ final List<Widget> _children = [
   Profile()
 ];
 
-// final List<String> _title = [
-//   '나의 냉장고',
-//   'Share Page',
-//   '영양성분',
-//   '마이페이지',
-// ];
-
 final List<IconData> iconList = <IconData>[
   Icons.home,
   Icons.people,
@@ -51,6 +44,8 @@ KeyboardVisibilityController keyboardVisibilityController;
 class _HomePageState extends State<HomePage> {
   bool IsBarcode = true;
   bool keyBoardOpen = false;
+  String dropdownValue = 'Option 1';
+  DateTime selectedDueDate = DateTime.now();
 
   @override
   void initState() {
@@ -126,9 +121,7 @@ class _HomePageState extends State<HomePage> {
                         RaisedButton(
                           onPressed: () {
                             Navigator.pop(context);
-                            print('input');
                             showDirectInput(context);
-                            print('output');
                           },
                           child: Text('직접입력'),
                         ),
@@ -248,9 +241,6 @@ class _HomePageState extends State<HomePage> {
 
   final TextEditingController _nameController = TextEditingController();
 
-  String dropdownValue = 'Option 1';
-  DateTime selectedDueDate = DateTime.now();
-
   void showDirectInput(context) {
     showBarModalBottomSheet(
         context: context,
@@ -270,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                           '품목 입력',
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         )),
-                        RaisedButton(onPressed: null, child: Text('재촬영하기')),
+                        RaisedButton(onPressed: () {}, child: Text('재촬영하기')),
                       ],
                     ),
                     SizedBox(height: 40),
@@ -309,7 +299,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton(
-                                hint: Text('수량'),
                                 isExpanded: true,
                                 value: dropdownValue,
                                 items: <DropdownMenuItem>[
@@ -410,11 +399,9 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: RaisedButton(
-                            color: Colors.lightGreen,
+                            color: Theme.of(context).accentColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
-                            // color: Theme.of(context).accentColor,
-                            // color: Colors.lightGreen,
                             onPressed: () => print('Save'),
                             child: Padding(
                               padding:
@@ -440,6 +427,7 @@ class _HomePageState extends State<HomePage> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
       initialEntryMode: DatePickerEntryMode.input,
+
     );
     if (picked != null && picked != selectedDueDate)
       setState(() {
