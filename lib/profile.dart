@@ -152,6 +152,38 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget dropDownMenu() {
+    // return DropdownButtonFormField(
+    //   isExpanded: true,
+    //   value: dropdownValue,
+    //   icon: Icon(
+    //     Icons.arrow_drop_down,
+    //     color: Theme.of(context).accentColor,
+    //     size: 30,
+    //   ),
+    //   items: <DropdownMenuItem>[
+    //     DropdownMenuItem(
+    //       value: 'Option 1',
+    //       child: Text('만료 2일전', style: Theme.of(context).textTheme.headline5),
+    //     ),
+    //     DropdownMenuItem(
+    //       value: 'Option 2',
+    //       child: Text('만료 3일전', style: Theme.of(context).textTheme.headline5),
+    //     ),
+    //     DropdownMenuItem(
+    //       value: 'Option 3',
+    //       child: Text('만료 5일전', style: Theme.of(context).textTheme.headline5),
+    //     ),
+    //     DropdownMenuItem(
+    //       value: 'Option 4',
+    //       child: Text('만료 7일전', style: Theme.of(context).textTheme.headline5),
+    //     ),
+    //   ],
+    //   onChanged: (value) {
+    //     setState(() {
+    //       dropdownValue = value;
+    //     });
+    //   },
+    // );
     return Container(
       height: 60,
       child: InputDecorator(

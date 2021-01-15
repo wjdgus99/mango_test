@@ -37,12 +37,6 @@ ThemeData _buildMangoTheme() {
         secondary: Orange500,
       ),
     ),
-    //  buttonBarTheme: base.buttonBarTheme.copyWith(
-    //    buttonTextTheme: ButtonTextTheme.accent,
-    // ),
-    // primaryIconTheme: base.iconTheme.copyWith(
-    //     color: Green400,
-    // ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Orange500,
       foregroundColor: Colors.black,
