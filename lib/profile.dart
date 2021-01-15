@@ -1,7 +1,10 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'app.dart';
-import 'home.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,6 +18,51 @@ class _ProfileState extends State<Profile> {
 
   bool isSwitched = true;
   String dropdownValue = 'Option 1';
+
+  bool uploaded = false;
+  final picker = ImagePicker();
+  File _image;
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        uploaded = true;
+        print('uploaded');
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: <Widget>[
+          CircleAvatar(
+            radius: 80,
+            backgroundImage: uploaded
+                ? Image.file(_image)
+                : AssetImage('images/profile_image.png'),
+            backgroundColor: Colors.white,
+          ),
+          Positioned(
+            top: 25,
+            right: 5,
+            child: Container(
+              width: 40,
+              height: 40,
+              child: FloatingActionButton(
+                onPressed: () => getImage(),
+                child: Icon(Icons.add),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -30,8 +78,7 @@ class _ProfileState extends State<Profile> {
         child: ListView(
           padding: EdgeInsets.all(DeviceWidth * 0.1),
           children: <Widget>[
-            imageProfile(
-                "https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99BC644E5B725CA734"),
+            imageProfile(),
             Container(
               alignment: Alignment.topLeft,
               padding: EdgeInsets.only(top: 15), // 얘는, flexible 할 필요 X
@@ -156,17 +203,4 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-}
-
-Widget imageProfile(String url) {
-  return Center(
-    child: Stack(
-      children: <Widget>[
-        CircleAvatar(
-          radius: 80,
-          backgroundImage: NetworkImage(url),
-        )
-      ],
-    ),
-  );
 }
