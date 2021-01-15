@@ -19,13 +19,6 @@ final List<Widget> _children = [
   Profile()
 ];
 
-// final List<String> _title = [
-//   '나의 냉장고',
-//   'Share Page',
-//   '영양성분',
-//   '마이페이지',
-// ];
-
 final List<IconData> iconList = <IconData>[
   Icons.home,
   Icons.people,
@@ -48,6 +41,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   void initState() {
     // TODO: implement initState
@@ -96,6 +90,7 @@ class _HomePageState extends State<HomePage> {
           return ShowBottomSheet();
         });
   }
+
 }
 
 Widget basicAppBar() {
