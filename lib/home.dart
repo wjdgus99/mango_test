@@ -7,7 +7,7 @@ import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/share.dart';
 import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
-import 'package:mango_test/widget/ShowBottomSheet.dart';
+import 'package:mango_test/widget/addFoodBottomSheet.dart';
 import 'app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -41,7 +41,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -90,7 +89,6 @@ class _HomePageState extends State<HomePage> {
           return ShowBottomSheet();
         });
   }
-
 }
 
 Widget basicAppBar() {
