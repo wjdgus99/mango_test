@@ -1,6 +1,10 @@
 import './food.dart';
 
-class UserRefrigerator{
+class UserRefrigerator {
   String uid;
   List<Food> food;
+
+  UserRefrigerator(String uid) {
+    uid = uid;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/direct_input.dart';
+import 'package:mango_test/model/exampleFood.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/refrigerator.dart';
@@ -11,6 +12,8 @@ import 'package:mango_test/widget/addFoodBottomSheet.dart';
 import 'app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+
+import 'model/food.dart';
 
 final List<Widget> _children = [
   Refrigerator(),
@@ -50,6 +53,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // print('length : ${Foods.length}');
+    //
+    // print('food 1 : ${Foods[0].name}');
+
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
