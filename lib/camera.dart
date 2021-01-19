@@ -12,37 +12,24 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   CameraController _controller;
-  bool isReady = false;
   bool IsBarcode = true;
+
+  final CameraDescription camera = cameras.first;
 
   Future<void> _initializeControllerFuture;
 
   @override
   // ignore: missing_return
-  Future<void> initState() {
+  void initState() {
     // TODO: implement initState
-    setupCameras();
     super.initState();
+
+    _controller = CameraController(camera, ResolutionPreset.medium);
+    _initializeControllerFuture = _controller.initialize();
   }
 
   Future<void> setupCameras() async {
-    try {
-      _controller = CameraController(cameras[0], ResolutionPreset.medium);
-      _initializeControllerFuture =
-          await _controller.initialize().then((value) {
-        if (!mounted) {
-          return;
-        } else {
-          setState(() {
-            isReady = true;
-          });
-        }
-      });
-    } on CameraException catch (_) {
-      setState(() {
-        isReady = false;
-      });
-    }
+    try {} on CameraException catch (_) {}
   }
 
   @override
@@ -54,9 +41,6 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isReady && !_controller.value.isInitialized) {
-      return CircularProgressIndicator();
-    }
     return FutureBuilder(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -65,7 +49,9 @@ class _CameraState extends State<Camera> {
               child: Stack(
                 alignment: Alignment(0, 0.8),
                 children: [
-                  CameraPreview(_controller),
+                  snapshot.connectionState == ConnectionState.done
+                      ? CameraPreview(_controller)
+                      : CircularProgressIndicator(),
                   Align(
                     alignment: Alignment(0.8, -0.6),
                     child: RaisedButton(
