@@ -5,6 +5,11 @@ import '../app.dart';
 import '../colors.dart';
 import '../direct_input.dart';
 
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart' show join;
+import 'package:path_provider/path_provider.dart';
+
 class ShowBottomSheet extends StatefulWidget {
   @override
   _ShowBottomSheetState createState() => _ShowBottomSheetState();
@@ -111,7 +116,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                     height: 150 * (DeviceHeight / 812),
                     minWidth: 150 * (375 / DeviceWidth),
                     child: RaisedButton(
-                      onPressed: () => print('camera'),
+                      onPressed: () => {Navigator.pushNamed(context, CAMERA)},
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [Icon(Icons.photo_camera), Text('촬영하기')],

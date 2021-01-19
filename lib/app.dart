@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/direct_input.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
 import 'model/nutrition/chart.dart';
+
+import 'main.dart';
 import 'home.dart';
 import 'login.dart';
 import 'model/nutrition/series.dart';
@@ -14,6 +17,7 @@ final HOME = '/home';
 final PROFILE = '/profile';
 final NUTRITION = '/nutrition';
 final SHARE = '/share';
+final CAMERA = '/camera';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -27,10 +31,8 @@ ThemeData _buildMangoTheme() {
     primaryColor: Colors.white,
     hoverColor: Orange500,
     errorColor: Red200,
-
     toggleableActiveColor: Orange500,
     cursorColor: Orange500,
-
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: Grey200,
       colorScheme: base.colorScheme.copyWith(
@@ -39,10 +41,7 @@ ThemeData _buildMangoTheme() {
     ),
 
     /* show Data Picker */
-    colorScheme: ColorScheme.light().copyWith(
-      primary: Orange500
-    ),
-
+    colorScheme: ColorScheme.light().copyWith(primary: Orange500),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Orange500,
       foregroundColor: Colors.black,
@@ -121,6 +120,7 @@ class MangoApp extends StatelessWidget {
         PROFILE: (context) => Profile(),
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
+        CAMERA: (context) => Camera(),
       },
     );
   }
