@@ -28,10 +28,6 @@ class _CameraState extends State<Camera> {
     _initializeControllerFuture = _controller.initialize();
   }
 
-  Future<void> setupCameras() async {
-    try {} on CameraException catch (_) {}
-  }
-
   @override
   void dispose() {
     // TODO: implement dispose
