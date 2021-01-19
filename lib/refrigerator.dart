@@ -98,7 +98,9 @@ class _RefrigeratorState extends State<Refrigerator> {
                         });
                       });
                     },
-                    child: Icon(Icons.remove),
+                    child: foods[index].num == 0
+                        ? Icon(Icons.delete_outline)
+                        : Icon(Icons.remove),
                     shape: CircleBorder(
                       side: BorderSide(color: Colors.black),
                     ),
