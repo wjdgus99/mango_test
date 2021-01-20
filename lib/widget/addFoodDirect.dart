@@ -8,29 +8,10 @@ class DirectInput extends StatefulWidget {
 }
 
 class _DirectInputState extends State<DirectInput> {
-  final TextEditingController _nameController = TextEditingController();
-
-  String dropdownValue = 'Option 1';
-  DateTime selectedDueDate = DateTime.now();
-
-  _selectDueDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDueDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2030),
-      initialEntryMode: DatePickerEntryMode.input,
-    );
-    if (picked != null && picked != selectedDueDate)
-      setState(() {
-        selectedDueDate = picked;
-      });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
+    return Scaffold(
+      body: ListView(
         children: <Widget>[
           Column(
             children: [
@@ -59,137 +40,24 @@ class _DirectInputState extends State<DirectInput> {
                   Spacer()
                 ],
               ),
-              SizedBox(
-                height: 32 * (DeviceHeight / 812),
-              ),
               Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding:
-                      EdgeInsets.fromLTRB(29 * (DeviceWidth / 375), 0, 0, 0),
-                  child: Text(
-                    '품목 1',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                    28 * (DeviceWidth / 375), 0, 25 * (DeviceWidth / 375), 0),
-                child: Container(
-                  child: TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        hintText: '품목 이름'),
-                  ),
-                ),
-              ),
-              Row(children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      28 * (DeviceWidth / 375), 0, 9 * (DeviceWidth / 375), 0),
+                  alignment: Alignment.topLeft,
                   child: Container(
-                    height: 60,
-                    width: 120,
-                    child: InputDecorator(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          hint: Text(
-                            '수량',
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                          isExpanded: true,
-                          value: dropdownValue,
-                          items: <DropdownMenuItem>[
-                            DropdownMenuItem(
-                              value: 'Option 1',
-                              child: Text('1'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Option 2',
-                              child: Text('2'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Option 3',
-                              child: Text('3'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'Option 4',
-                              child: Text('4'),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              dropdownValue = value;
-                            });
-                          },
-                        ),
-                      ),
+                    padding: EdgeInsets.only(left: 29 * (DeviceWidth / 376)),
+                    child: Text(
+                      '품목',
+                      style: Theme.of(context).textTheme.subtitle2,
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding:
-                        EdgeInsets.fromLTRB(0, 0, 25 * (DeviceWidth / 375), 0),
-                    child: Container(
-                      height: 60,
-                      child: InputDecorator(
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        )),
-                        child: InkWell(
-                          onTap: () => _selectDueDate(context),
-                          child: Row(children: [
-                            Expanded(
-                                child: Text(
-                              '유통기한',
-                              style: TextStyle(color: Colors.grey),
-                            )),
-                            Text(selectedDueDate.toString().substring(0, 10)),
-                            Expanded(
-                              child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Icon(Icons.calendar_today)),
-                            ),
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ]),
+                  )),
             ],
           ),
-          Container(
-            margin: EdgeInsets.fromLTRB(110, 10, 110, 10),
-            child: RaisedButton(
-                // color: Orange500, //없으면 초록색 뜬다
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                onPressed: () => print('add product'),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(children: [Icon(Icons.add), Text('품목 추가')]),
-                )),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ButtonTheme(
-                    padding: EdgeInsets.all(0.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  child: ButtonTheme(
                     child: RaisedButton(
                       color: Theme.of(context).buttonColor,
                       shape: RoundedRectangleBorder(
@@ -198,23 +66,46 @@ class _DirectInputState extends State<DirectInput> {
                       child: Text('취소'),
                     ),
                   ),
-                  ButtonTheme(
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  child: ButtonTheme(
                     child: RaisedButton(
                       color: Theme.of(context).accentColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      // color: Theme.of(context).accentColor,
-                      // color: Colors.lightGreen,
                       onPressed: () => print('Save'),
                       child: Text('저장'),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           )
         ],
       ),
     );
   }
 }
+
+//
+// final TextEditingController _nameController = TextEditingController();
+//
+// String dropdownValue = 'Option 1';
+// DateTime selectedDueDate = DateTime.now();
+//
+// _selectDueDate(BuildContext context) async {
+//   final DateTime picked = await showDatePicker(
+//     context: context,
+//     initialDate: selectedDueDate,
+//     firstDate: DateTime(2000),
+//     lastDate: DateTime(2030),
+//     initialEntryMode: DatePickerEntryMode.input,
+//   );
+//   if (picked != null && picked != selectedDueDate)
+//     setState(() {
+//       selectedDueDate = picked;
+//     });
+// }
