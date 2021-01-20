@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/model/exampleFood.dart';
+import 'package:mango_test/model/exampleRefrigerator.dart';
 
 import 'app.dart';
 import 'colors.dart';
@@ -11,8 +12,8 @@ class Refrigerator extends StatefulWidget {
 }
 
 class _RefrigeratorState extends State<Refrigerator> {
-  List<Food> Foods = foodRepository.loadFood();
   var Ex1, Ex2;
+  List<Food> Foods = localRefrigerator.loadFood();
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/direct_input.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
+import 'package:mango_test/widget/addFoodDirect.dart';
 import 'model/nutrition/chart.dart';
 
 import 'main.dart';

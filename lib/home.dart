@@ -1,7 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/direct_input.dart';
-import 'package:mango_test/model/exampleFood.dart';
+import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/refrigerator.dart';
