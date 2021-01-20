@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:mango_test/app.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodBottomSheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -18,11 +19,10 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
   CameraController _controller;
-  bool IsBarcode = true;
-
   final CameraDescription camera = cameras.first;
-
   Future<void> _initializeControllerFuture;
+
+  bool IsBarcode = true;
 
   @override
   // ignore: missing_return
@@ -127,8 +127,8 @@ class _CameraState extends State<Camera> {
 
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    showAdditionalInput(context, imagePath);
-                    //TODO: File to List<File>
+                    Navigator.pushNamed(context, ADDINPUT,
+                        arguments: imagePath);
                   } catch (e) {
                     print('Error occurred: $e');
                   }
@@ -144,9 +144,7 @@ class _CameraState extends State<Camera> {
     showBarModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return AdditionalInput(
-            filePath: path,
-          );
+          return AdditionalInput();
         });
   }
 
@@ -161,6 +159,4 @@ class _CameraState extends State<Camera> {
       print(e);
     }
   }
-
-  Future<void> getURL(String path) {}
 }

@@ -49,7 +49,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                     onPressed: () {
                       Navigator.pop(context);
                       print('input');
-                      showDirectInput(context);
+                      Navigator.pushNamed(context, DIRECTINPUT);
                       print('output');
                     },
                     child: Text('직접입력'),

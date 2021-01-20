@@ -3,22 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/app.dart';
 
 class AdditionalInput extends StatefulWidget {
-  final String filePath;
-
-  const AdditionalInput({Key key, this.filePath}) : super(key: key);
-
   @override
-  _AdditionalInputState createState() =>
-      _AdditionalInputState(imagePath: filePath);
+  _AdditionalInputState createState() => _AdditionalInputState();
 }
 
 class _AdditionalInputState extends State<AdditionalInput> {
-  final String imagePath;
-
-  _AdditionalInputState({
-    Key key,
-    @required this.imagePath,
-  }) : super();
+  String imagePath;
 
   final TextEditingController _nameController = TextEditingController();
 
@@ -48,8 +38,10 @@ class _AdditionalInputState extends State<AdditionalInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
+    imagePath = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+      body: ListView(
         children: <Widget>[
           Image.network(imagePath),
           Column(
