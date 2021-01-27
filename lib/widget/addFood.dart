@@ -1,15 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mango_test/app.dart';
 
-class DirectInput extends StatefulWidget {
+class AdditionalInput extends StatefulWidget {
   @override
-  _DirectInputState createState() => _DirectInputState();
+  _AdditionalInputState createState() => _AdditionalInputState();
 }
 
-class _DirectInputState extends State<DirectInput> {
+class _AdditionalInputState extends State<AdditionalInput> {
+  String imagePath;
+
   final TextEditingController _nameController = TextEditingController();
 
   String dropdownValue = 'Option 1';
   DateTime selectedDueDate = DateTime.now();
+  var imagesrc;
 
   _selectDueDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -26,37 +31,66 @@ class _DirectInputState extends State<DirectInput> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ListView(
+    imagePath = ModalRoute.of(context).settings.arguments;
+
+    return Scaffold(
+      body: ListView(
         children: <Widget>[
+          Image.network(imagePath),
           Column(
             children: [
-              SizedBox(height: 60),
+              SizedBox(
+                height: 32 * (DeviceHeight / 812),
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // TODO: Text Style
-                  Expanded(
-                      child: Text(
+                  Spacer(),
+                  Text(
                     '품목 입력',
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                  )),
-                  RaisedButton(onPressed: null, child: Text('재촬영하기')),
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                  Spacer(
+                    flex: 5,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, CAMERA);
+                    },
+                    child: Text(
+                      '재촬영하기',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
+                  Spacer()
                 ],
               ),
-              SizedBox(height: 40),
+              SizedBox(
+                height: 32 * (DeviceHeight / 812),
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 13, 10, 13),
-                  child: Text('품목 1'),
+                  padding:
+                      EdgeInsets.fromLTRB(29 * (DeviceWidth / 375), 0, 0, 0),
+                  child: Text(
+                    '품목 1',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: EdgeInsets.fromLTRB(
+                    28 * (DeviceWidth / 375), 0, 25 * (DeviceWidth / 375), 0),
                 child: Container(
-                  height: 60,
                   child: TextField(
                     controller: _nameController,
                     decoration: InputDecoration(
@@ -69,7 +103,8 @@ class _DirectInputState extends State<DirectInput> {
               ),
               Row(children: [
                 Padding(
-                  padding: const EdgeInsets.all(4.0),
+                  padding: EdgeInsets.fromLTRB(
+                      28 * (DeviceWidth / 375), 0, 9 * (DeviceWidth / 375), 0),
                   child: Container(
                     height: 60,
                     width: 120,
@@ -81,7 +116,10 @@ class _DirectInputState extends State<DirectInput> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          hint: Text('수량'),
+                          hint: Text(
+                            '수량',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
                           isExpanded: true,
                           value: dropdownValue,
                           items: <DropdownMenuItem>[
@@ -114,7 +152,8 @@ class _DirectInputState extends State<DirectInput> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding:
+                        EdgeInsets.fromLTRB(0, 0, 25 * (DeviceWidth / 375), 0),
                     child: Container(
                       height: 60,
                       child: InputDecorator(
@@ -157,37 +196,33 @@ class _DirectInputState extends State<DirectInput> {
                   child: Row(children: [Icon(Icons.add), Text('품목 추가')]),
                 )),
           ),
+          // Image.network(
+          //     'gs://mangotest-68540.appspot.com/01234/2021-01-20 18:14:24.732171.png'),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  ButtonTheme(
+                    padding: EdgeInsets.all(0.0),
                     child: RaisedButton(
+                      color: Theme.of(context).buttonColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
-                      onPressed: () => print('Cancel'),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text('취소'),
-                      ),
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('취소'),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  ButtonTheme(
                     child: RaisedButton(
-                      color: Colors.lightGreen,
+                      color: Theme.of(context).accentColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       // color: Theme.of(context).accentColor,
                       // color: Colors.lightGreen,
                       onPressed: () => print('Save'),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text('저장'),
-                      ),
+                      child: Text('저장'),
                     ),
                   ),
                 ],
