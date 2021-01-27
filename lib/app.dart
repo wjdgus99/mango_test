@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/direct_input.dart';
+import 'package:mango_test/image.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
@@ -27,10 +28,8 @@ ThemeData _buildMangoTheme() {
     primaryColor: Colors.white,
     hoverColor: Orange500,
     errorColor: Red200,
-
     toggleableActiveColor: Orange500,
     cursorColor: Orange500,
-
     buttonTheme: base.buttonTheme.copyWith(
       buttonColor: Grey200,
       colorScheme: base.colorScheme.copyWith(
@@ -39,10 +38,7 @@ ThemeData _buildMangoTheme() {
     ),
 
     /* show Data Picker */
-    colorScheme: ColorScheme.light().copyWith(
-      primary: Orange500
-    ),
-
+    colorScheme: ColorScheme.light().copyWith(primary: Orange500),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Orange500,
       foregroundColor: Colors.black,
@@ -114,7 +110,7 @@ class MangoApp extends StatelessWidget {
       theme: _MangoTheme,
       initialRoute: LOGIN,
       routes: {
-        LOGIN: (context) => LoginPage(),
+        LOGIN: (context) => PickImage(),
         HOME: (context) => HomePage(),
         '/chart': (context) => Chart(),
         '/direct_input': (context) => DirectInput(),
