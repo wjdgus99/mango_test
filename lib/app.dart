@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/direct_input.dart';
 import 'package:mango_test/image.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
+import 'package:mango_test/widget/addFood.dart';
+import 'package:mango_test/widget/addFoodDirect.dart';
 import 'model/nutrition/chart.dart';
+
+import 'main.dart';
 import 'home.dart';
 import 'login.dart';
 import 'model/nutrition/series.dart';
@@ -15,6 +20,9 @@ final HOME = '/home';
 final PROFILE = '/profile';
 final NUTRITION = '/nutrition';
 final SHARE = '/share';
+final CAMERA = '/camera';
+final DIRECTINPUT = '/directInput';
+final ADDINPUT = '/addFood';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -66,7 +74,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
         ),
         /* subtitle2: substitle of ListTile*/
         subtitle2: base.subtitle2.copyWith(
-          fontSize: 12.0,
+          fontSize: 14.0,
           fontWeight: FontWeight.normal,
         ),
         /* headline5: hintText of ProfilePage(subtitle 2_KR)*/
@@ -113,10 +121,12 @@ class MangoApp extends StatelessWidget {
         LOGIN: (context) => PickImage(),
         HOME: (context) => HomePage(),
         '/chart': (context) => Chart(),
-        '/direct_input': (context) => DirectInput(),
+        ADDINPUT: (context) => AdditionalInput(),
+        DIRECTINPUT: (context) => DirectInput(),
         PROFILE: (context) => Profile(),
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
+        CAMERA: (context) => Camera(),
       },
     );
   }

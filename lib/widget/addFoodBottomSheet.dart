@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
 import '../app.dart';
 import '../colors.dart';
-import '../direct_input.dart';
-import '../home.dart';
+
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:path/path.dart' show join;
+import 'package:path_provider/path_provider.dart';
+
+import 'addFoodDirect.dart';
 
 class ShowBottomSheet extends StatefulWidget {
   @override
@@ -45,7 +49,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                     onPressed: () {
                       Navigator.pop(context);
                       print('input');
-                      showDirectInput(context);
+                      Navigator.pushNamed(context, DIRECTINPUT);
                       print('output');
                     },
                     child: Text('직접입력'),
@@ -112,7 +116,7 @@ class _ShowBottomSheetState extends State<ShowBottomSheet> {
                     height: 150 * (DeviceHeight / 812),
                     minWidth: 150 * (375 / DeviceWidth),
                     child: RaisedButton(
-                      onPressed: () => print('camera'),
+                      onPressed: () => {Navigator.pushNamed(context, CAMERA)},
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [Icon(Icons.photo_camera), Text('촬영하기')],
