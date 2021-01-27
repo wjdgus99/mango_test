@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/colors.dart';
 
 class DirectInput extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _DirectInputState extends State<DirectInput> {
                     '품목 입력',
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   )),
-                  RaisedButton(onPressed: null, child: Text('재촬영하기')),
+                  RaisedButton(onPressed: (){}, child: Text('재촬영하기')),
                 ],
               ),
               SizedBox(height: 40),
@@ -178,7 +179,7 @@ class _DirectInputState extends State<DirectInput> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
-                      color: Colors.lightGreen,
+                      color: Orange500,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       // color: Theme.of(context).accentColor,
