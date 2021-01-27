@@ -8,6 +8,8 @@ class DirectInput extends StatefulWidget {
 }
 
 class _DirectInputState extends State<DirectInput> {
+  ScrollController _scrollController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class _DirectInputState extends State<DirectInput> {
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   Spacer(
-                    flex: 5,
+                    flex: 9,
                   ),
                   RaisedButton(
                     onPressed: () {},
@@ -39,6 +41,13 @@ class _DirectInputState extends State<DirectInput> {
                   ),
                   Spacer()
                 ],
+              ),
+              SizedBox(
+                height: 45 * (DeviceHeight / 671),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: Test,
+                ),
               ),
               Align(
                   alignment: Alignment.topLeft,
@@ -51,6 +60,19 @@ class _DirectInputState extends State<DirectInput> {
                   )),
             ],
           ),
+          SizedBox(
+            height: 420 * (DeviceHeight / 671),
+            width: 315 * (DeviceWidth / 376),
+            child: DraggableScrollableSheet(
+                initialChildSize: 0.6,
+                builder: (context, scrollController) {
+                  return SingleChildScrollView(
+                      padding: EdgeInsets.fromLTRB(30 * (DeviceWidth / 376), 0,
+                          30 * (DeviceWidth / 376), 11 * (DeviceHeight / 671)),
+                      controller: _scrollController,
+                      child: Text('test'));
+                }),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -59,11 +81,19 @@ class _DirectInputState extends State<DirectInput> {
                 child: Container(
                   child: ButtonTheme(
                     child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(
+                          60.45 * (DeviceWidth / 361),
+                          14.07 * (DeviceHeight / 671),
+                          60.55 * (DeviceWidth / 361),
+                          18.93 * (DeviceHeight / 671)),
                       color: Theme.of(context).buttonColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       onPressed: () => Navigator.pop(context),
-                      child: Text('취소'),
+                      child: Text(
+                        '취소',
+                        style: Theme.of(context).textTheme.button,
+                      ),
                     ),
                   ),
                 ),
@@ -73,11 +103,19 @@ class _DirectInputState extends State<DirectInput> {
                 child: Container(
                   child: ButtonTheme(
                     child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(
+                          60.45 * (DeviceWidth / 361),
+                          14.07 * (DeviceHeight / 671),
+                          60.55 * (DeviceWidth / 361),
+                          18.93 * (DeviceHeight / 671)),
                       color: Theme.of(context).accentColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       onPressed: () => print('Save'),
-                      child: Text('저장'),
+                      child: Text(
+                        '저장',
+                        style: Theme.of(context).textTheme.button,
+                      ),
                     ),
                   ),
                 ),
@@ -89,6 +127,37 @@ class _DirectInputState extends State<DirectInput> {
     );
   }
 }
+
+List<Widget> Test = <Widget>[
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('one'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('six'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('hundred'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('ten'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('four'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('seven'),
+  ),
+  Container(
+    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text('five'),
+  ),
+];
 
 //
 // final TextEditingController _nameController = TextEditingController();
