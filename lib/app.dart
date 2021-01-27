@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
+import 'package:mango_test/direct_input.dart';
+import 'package:mango_test/image.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
@@ -116,7 +118,7 @@ class MangoApp extends StatelessWidget {
       theme: _MangoTheme,
       initialRoute: LOGIN,
       routes: {
-        LOGIN: (context) => LoginPage(),
+        LOGIN: (context) => PickImage(),
         HOME: (context) => HomePage(),
         '/chart': (context) => Chart(),
         ADDINPUT: (context) => AdditionalInput(),
