@@ -1,5 +1,11 @@
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'app.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+FirebaseAuth auth = FirebaseAuth.instance;
 
 // ignore: camel_case_types
 class LoginPage extends StatelessWidget {
@@ -57,7 +63,9 @@ class LoginPage extends StatelessWidget {
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  onPressed: () => Navigator.pushNamed(context, HOME),
+                  onPressed: () async {
+                    _googleLogin(context);
+                  },
                   icon: Icon(
                     Icons.account_box,
                     size: 24,
@@ -92,5 +100,29 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  Future<void> _googleLogin(context) async {
+    try {
+      UserCredential userCredential;
+      if (kIsWeb) {
+        GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+        userCredential = await auth.signInWithPopup(googleAuthProvider);
+      } else {
+        final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final GoogleAuthCredential googleAuthCredential =
+            GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        userCredential = await auth.signInWithCredential(googleAuthCredential);
+        Navigator.pushNamed(context, HOME);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
