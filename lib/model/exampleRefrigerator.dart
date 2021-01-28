@@ -1,7 +1,11 @@
 import 'food.dart';
 
-class localRefrigerator {
-  String UID;
+class localRefrigerator { //한명의 Refrigerator (흐름: 전체 Refrigerator 목록 중, userID와 해당하는 refriID를가진 친구 COMECOME!)
+  static String RefrigerID = '01x000';
+
+  static String getRefigerID(){
+    return RefrigerID;
+  }
 
   static List<Food> loadFood() {
     List<Food> Foods = <Food>[
