@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/mjTest.dart';
+import 'package:mango_test/login.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodDirect.dart';
 import 'model/nutrition/chart.dart';
-
-import 'main.dart';
 import 'home.dart';
-import 'login.dart';
-import 'model/nutrition/series.dart';
 
 final LOGIN = '/login';
 final HOME = '/home';
@@ -22,6 +19,7 @@ final SHARE = '/share';
 final CAMERA = '/camera';
 final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
+final CHART = '/chart';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -119,7 +117,7 @@ class MangoApp extends StatelessWidget {
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
-        '/chart': (context) => Chart(),
+        CHART: (context) => Chart(),
         ADDINPUT: (context) => AdditionalInput(),
         DIRECTINPUT: (context) => DirectInput(),
         PROFILE: (context) => Profile(),
