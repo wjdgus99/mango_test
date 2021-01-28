@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
+import 'package:mango_test/mjTest.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
@@ -114,7 +115,7 @@ class MangoApp extends StatelessWidget {
       title: 'Mango Demo',
       home: HomePage(),
       theme: _MangoTheme,
-      initialRoute: LOGIN,
+      initialRoute: '/mjTest',
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
@@ -125,6 +126,7 @@ class MangoApp extends StatelessWidget {
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
+        '/mjTest': (context) => mjTest(),
       },
     );
   }

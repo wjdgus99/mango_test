@@ -65,6 +65,7 @@ flutter:
      - images/refrigerator.png
      - images/appName.png
      - images/profile_image.png
+     - images/users/
   fonts:
     - family: Oregano
       fonts:
