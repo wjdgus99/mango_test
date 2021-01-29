@@ -1,3 +1,7 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_design.dart';
+
+import 'package:mango_test/colors.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/friendList.dart';
 import 'package:mango_test/nutrition.dart';
@@ -65,11 +69,9 @@ class _HomePageState extends State<HomePage> {
           _buildOffstageNavigator('nutrition'),
           _buildOffstageNavigator('mypage'),
         ]),
-        // floatingActionButton: FloatingActionButton(
-        //   child: Icon(Icons.add),
-        //   onPressed: () => print('add'),
-        // ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+                  floatingActionButton: _buildFloatingActionButton(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).accentColor,
           unselectedItemColor: Colors.grey[400],
@@ -91,6 +93,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+ Widget _buildFloatingActionButton() {
+    final TextStyle customStyle = TextStyle(inherit: false, color: Colors.black);
+    final icons = [
+      SpeedDialAction(
+        child: Icon(Icons.mode_edit),
+        label: Text('거래 품목 등록', style: customStyle),
+        //backgroundColor: Theme.of(context).accentColor,
+        //foregroundColor: Colors.white,
+      ),
+      SpeedDialAction(child: Icon(Icons.date_range), label: Text('냉장고 품목 등록', style: customStyle)),
+    ];
+
+    return SpeedDialFloatingActionButton(
+      actions: icons,
+      // Make sure one of child widget has Key value to have fade transition if widgets are same type.
+      childOnFold: Icon(Icons.add, key: UniqueKey()),
+      childOnUnfold: Icon(Icons.clear),
+      useRotateAnimation: true,
+      onAction: _onSpeedDialAction,
+    );
+  }
+
+  _onSpeedDialAction(int selectedActionIndex) {
+    print('$selectedActionIndex Selected');
+    if(selectedActionIndex == 0){
+      Navigator.pushNamed(context, ITEMREGIST);
+    }
+  }
+
+
   Widget _buildOffstageNavigator(String tabItem) {
     return Offstage(
       offstage: _currentPage != tabItem,
@@ -100,27 +132,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   // print('length : ${Foods.length}');
   //
   // print('food 1 : ${Foods[0].name}');
-
-  Widget basicAppBar() {
-    return AppBar(
-      leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-      centerTitle: true,
-      title: Text('MANGO'),
-      actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
-    );
-  }
-
-  Widget friendAppBar() {
-    return AppBar(
-      title: Text('친구 목록'),
-      centerTitle: true,
-      actions: [
-        IconButton(
-            icon: Icon(Icons.settings), onPressed: () => print('settings'))
       ],
     );
   }

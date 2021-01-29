@@ -22,7 +22,7 @@ class _RefrigeratorState extends State<Refrigerator> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -45,9 +45,6 @@ class _RefrigeratorState extends State<Refrigerator> {
               Tab(
                 text: '냉동',
               ),
-              Tab(
-                text: '실온',
-              ),
             ],
           ),
         ),
@@ -55,7 +52,6 @@ class _RefrigeratorState extends State<Refrigerator> {
           children: [
             contents(Foods),
             contents(Ex1),
-            contents(Ex2),
           ],
         ),
       ),
