@@ -45,7 +45,7 @@ class _ShareState extends State<Share> {
                         builder: (BuildContext context) => ChatList()));
               }),
           IconButton(
-              icon: Icon(Icons.notifications_none),
+              icon: Icon(Icons.article_outlined),
               onPressed: () {
                 Navigator.push(
                     context,

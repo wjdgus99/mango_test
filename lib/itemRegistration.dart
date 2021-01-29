@@ -18,8 +18,8 @@ class ItemRegistration extends StatelessWidget {
               child: OutlineButton(
                 borderSide: BorderSide(color: Colors.grey),
                 child: Text('+ 품목 추가하기'),
-                onPressed: (){
-
+                onPressed: () {
+                  //TODO: Navigate to itemSelect
                 },
               ),
             ),
