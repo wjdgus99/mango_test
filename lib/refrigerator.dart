@@ -9,19 +9,52 @@ import 'model/food.dart';
 class Refrigerator extends StatefulWidget {
   @override
   _RefrigeratorState createState() => _RefrigeratorState();
+
+  const Refrigerator({Key key}) : super(key: key);
 }
 
 class _RefrigeratorState extends State<Refrigerator> {
-  var Ex1, Ex2;
+  var Ex1 = localRefrigerator.loadFood();
+  var Ex2 = localRefrigerator.loadFood();
   List<Food> Foods = localRefrigerator.loadFood();
 
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      children: [
-        contents(Foods),
-        contents(Ex1),
-      ],
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.menu), onPressed: () => print('menu')),
+          centerTitle: true,
+          title: Text('나의 냉장고'),
+          actions: [
+            IconButton(icon: Icon(Icons.apps), onPressed: () => print('app'))
+          ],
+          bottom: TabBar(
+            indicatorColor: Theme.of(context).accentColor,
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14.0,
+            ),
+            tabs: <Tab>[
+              Tab(
+                text: '냉장',
+              ),
+              Tab(
+                text: '냉동',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            contents(Foods),
+            contents(Ex1),
+          ],
+        ),
+      ),
     );
   }
 
