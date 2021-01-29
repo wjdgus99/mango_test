@@ -25,13 +25,9 @@ class _RefrigeratorState extends State<Refrigerator> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(Icons.menu), onPressed: () => print('menu')),
+          leading: Text(''),
           centerTitle: true,
           title: Text('나의 냉장고'),
-          actions: [
-            IconButton(icon: Icon(Icons.apps), onPressed: () => print('app'))
-          ],
           bottom: TabBar(
             indicatorColor: Theme.of(context).accentColor,
             labelStyle: TextStyle(

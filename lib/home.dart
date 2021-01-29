@@ -11,6 +11,7 @@ import 'package:mango_test/share.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
+import 'itemRegistration.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -136,9 +137,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // print('length : ${Foods.length}');
-  //
-  // print('food 1 : ${Foods[0].name}');
+// print('length : ${Foods.length}');
+//
+// print('food 1 : ${Foods[0].name}');
 }
 // class TabNavigatorRoutes {
 //   static const String root = '/';
@@ -159,7 +160,7 @@ class TabNavigator extends StatelessWidget {
     else if (tabItem == 'share')
       child = Share();
     else if (tabItem == 'add')
-      child = FriendList();
+      child = ItemRegistration();
     else if (tabItem == 'nutrition')
       child = Nutrition();
     else if (tabItem == 'mypage') child = Profile();
