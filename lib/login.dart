@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
-// ignore: camel_case_types
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
