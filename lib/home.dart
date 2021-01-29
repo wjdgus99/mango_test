@@ -1,41 +1,10 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:mango_test/colors.dart';
-import 'package:mango_test/model/exampleRefrigerator.dart';
+import 'package:mango_test/camera.dart';
+import 'package:mango_test/friendList.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/share.dart';
-import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
-import 'package:mango_test/widget/addFoodBottomSheet.dart';
-import 'app.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-
-import 'model/food.dart';
-
-final List<Widget> _children = [
-  Refrigerator(),
-  Share(),
-  Nutrition(),
-  Profile()
-];
-
-final List<IconData> iconList = <IconData>[
-  Icons.home,
-  Icons.people,
-  Icons.fact_check,
-  Icons.person,
-];
-
-final List<Widget> _appBars = [
-  homeAppBar(),
-  basicAppBar(),
-  nutritionAppBar(),
-  profileAppBar(),
-];
-
-var _BottomNavIdx = 0;
 
 class HomePage extends StatefulWidget {
   @override
@@ -43,124 +12,149 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    _BottomNavIdx = 0;
-    super.initState();
+  String _currentPage = 'refrigerator';
+  List<String> pageKeys = [
+    'refrigerator',
+    'share',
+    'add',
+    'nutrition',
+    'mypage'
+  ];
+  Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
+    'refrigerator': GlobalKey<NavigatorState>(),
+    'share': GlobalKey<NavigatorState>(),
+    'add': GlobalKey<NavigatorState>(),
+    'nutrition': GlobalKey<NavigatorState>(),
+    'mypage': GlobalKey<NavigatorState>(),
+  };
+  int _selectedIndex = 0;
+
+  void _selectTab(String tabItem, int index) {
+    if (tabItem == _currentPage) {
+      print('1');
+      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        print('2');
+        _currentPage = pageKeys[index];
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // print('length : ${Foods.length}');
-    //
-    // print('food 1 : ${Foods[0].name}');
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentPage].currentState.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          if (_currentPage != 'refrigerator') {
+            _selectTab('refrigerator', 1);
 
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
+            return false;
+          }
+        }
+        return isFirstRouteInCurrentTab;
+      },
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: _appBars[_BottomNavIdx],
-          body: _children[_BottomNavIdx],
-          floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                setState(() {
-                  showBottomSheet(context);
-                });
-              }),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: AnimatedBottomNavigationBar(
-            activeColor: Color(0xffF3AF4B),
-            inactiveColor: Color.fromARGB(25, 0, 0, 0),
-            icons: iconList,
-            notchSmoothness: NotchSmoothness.softEdge,
-            activeIndex: _BottomNavIdx,
-            gapLocation: GapLocation.center,
-            onTap: (index) {
-              setState(() {
-                _BottomNavIdx = index;
-              });
-            },
-          )),
+        body: Stack(children: [
+          _buildOffstageNavigator('refrigerator'),
+          _buildOffstageNavigator('share'),
+          _buildOffstageNavigator('add'),
+          _buildOffstageNavigator('nutrition'),
+          _buildOffstageNavigator('mypage'),
+        ]),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(Icons.add),
+        //   onPressed: () => print('add'),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Theme.of(context).accentColor,
+          unselectedItemColor: Colors.grey[400],
+          onTap: (int index) {
+            _selectTab(pageKeys[index], index);
+          },
+          currentIndex: _selectedIndex,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: '냉장고'),
+            BottomNavigationBarItem(icon: Icon(Icons.people), label: '나눔 광장'),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: '등록'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart), label: '영양 성분'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: '마이 페이지'),
+          ],
+          type: BottomNavigationBarType.fixed,
+        ),
+      ),
     );
   }
 
-  void showBottomSheet(context) {
-    showBarModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return ShowBottomSheet();
-        });
+  Widget _buildOffstageNavigator(String tabItem) {
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
+  }
+
+  // print('length : ${Foods.length}');
+  //
+  // print('food 1 : ${Foods[0].name}');
+
+  Widget basicAppBar() {
+    return AppBar(
+      leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+      centerTitle: true,
+      title: Text('MANGO'),
+      actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
+    );
+  }
+
+  Widget friendAppBar() {
+    return AppBar(
+      title: Text('친구 목록'),
+      centerTitle: true,
+      actions: [
+        IconButton(
+            icon: Icon(Icons.settings), onPressed: () => print('settings'))
+      ],
+    );
   }
 }
 
-Widget basicAppBar() {
-  return AppBar(
-    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-    centerTitle: true,
-    title: Text('MANGO'),
-    actions: [IconButton(icon: Icon(Icons.share), onPressed: null)],
-  );
-}
+// class TabNavigatorRoutes {
+//   static const String root = '/';
+// static const String detail = '/detail';
+// }
 
-Widget homeAppBar() {
-  return AppBar(
-    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-    centerTitle: true,
-    //TODO: Maybe erase this.
-    title: Text('나의 냉장고'),
-    actions: [IconButton(icon: Icon(Icons.apps), onPressed: null)],
-    bottom: TabBar(
-      indicatorColor: Orange500,
-      labelStyle: TextStyle(
-        fontWeight: FontWeight.w400,
-        fontSize: 14.0,
-      ),
-      tabs: <Tab>[
-        Tab(
-          text: '냉장',
-        ),
-        Tab(
-          text: '냉동',
-        ),
-        Tab(
-          text: '실온',
-        ),
-      ],
-    ),
-  );
-}
+class TabNavigator extends StatelessWidget {
+  TabNavigator({this.navigatorKey, this.tabItem});
 
-Widget profileAppBar() {
-  return AppBar(
-    leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-    centerTitle: true,
-    title: Text('마이페이지'),
-    actions: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: RaisedButton(
-          color: Orange500,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          onPressed: () => print('Save Profile'),
-          child: Text('저장'),
-        ),
-      )
-    ],
-  );
-}
+  final GlobalKey<NavigatorState> navigatorKey;
+  final String tabItem;
 
-Widget nutritionAppBar() {
-  return AppBar(
-    centerTitle: true,
-    leading: Text(' '),
-    title: Text('영양성분'),
-    actions: [
-      IconButton(icon: Icon(Icons.share), onPressed: () => print('share'))
-    ],
-  );
+  @override
+  Widget build(BuildContext context) {
+    Widget child;
+    if (tabItem == 'refrigerator')
+      child = Refrigerator();
+    else if (tabItem == 'share')
+      child = Share();
+    else if (tabItem == 'add')
+      child = FriendList();
+    else if (tabItem == 'nutrition')
+      child = Nutrition();
+    else if (tabItem == 'mypage') child = Profile();
+
+    return Navigator(
+      key: navigatorKey,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(builder: (context) => child);
+      },
+    );
+  }
 }
