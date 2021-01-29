@@ -10,6 +10,8 @@ import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/share.dart';
 import 'package:flutter/material.dart';
 
+import 'app.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -69,9 +71,8 @@ class _HomePageState extends State<HomePage> {
           _buildOffstageNavigator('nutrition'),
           _buildOffstageNavigator('mypage'),
         ]),
-                  floatingActionButton: _buildFloatingActionButton(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: _buildFloatingActionButton(),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).accentColor,
           unselectedItemColor: Colors.grey[400],
@@ -93,8 +94,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
- Widget _buildFloatingActionButton() {
-    final TextStyle customStyle = TextStyle(inherit: false, color: Colors.black);
+  Widget _buildFloatingActionButton() {
+    final TextStyle customStyle =
+        TextStyle(inherit: false, color: Colors.black);
     final icons = [
       SpeedDialAction(
         child: Icon(Icons.mode_edit),
@@ -102,7 +104,9 @@ class _HomePageState extends State<HomePage> {
         //backgroundColor: Theme.of(context).accentColor,
         //foregroundColor: Colors.white,
       ),
-      SpeedDialAction(child: Icon(Icons.date_range), label: Text('냉장고 품목 등록', style: customStyle)),
+      SpeedDialAction(
+          child: Icon(Icons.date_range),
+          label: Text('냉장고 품목 등록', style: customStyle)),
     ];
 
     return SpeedDialFloatingActionButton(
@@ -117,11 +121,10 @@ class _HomePageState extends State<HomePage> {
 
   _onSpeedDialAction(int selectedActionIndex) {
     print('$selectedActionIndex Selected');
-    if(selectedActionIndex == 0){
+    if (selectedActionIndex == 0) {
       Navigator.pushNamed(context, ITEMREGIST);
     }
   }
-
 
   Widget _buildOffstageNavigator(String tabItem) {
     return Offstage(
@@ -135,11 +138,7 @@ class _HomePageState extends State<HomePage> {
   // print('length : ${Foods.length}');
   //
   // print('food 1 : ${Foods[0].name}');
-      ],
-    );
-  }
 }
-
 // class TabNavigatorRoutes {
 //   static const String root = '/';
 // static const String detail = '/detail';
