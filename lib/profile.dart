@@ -9,6 +9,8 @@ import 'app.dart';
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
+
+  const Profile({Key key}) : super(key: key);
 }
 
 class _ProfileState extends State<Profile> {
@@ -66,13 +68,29 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+        centerTitle: true,
+        title: Text('마이페이지'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              onPressed: () => print('Save Profile'),
+              child: Text('저장'),
+            ),
+          )
+        ],
+      ),
       body: Container(
         alignment: Alignment.center,
         child: ListView(

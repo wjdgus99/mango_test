@@ -134,11 +134,11 @@ class LoginPage extends StatelessWidget {
         userCredential = await auth.signInWithPopup(googleAuthProvider);
       } else {
         final google.GoogleSignInAccount googleUser =
-            await google.GoogleSignIn().signIn();
+        await google.GoogleSignIn().signIn();
         final google.GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
+        await googleUser.authentication;
         final GoogleAuthCredential googleAuthCredential =
-            GoogleAuthProvider.credential(
+        GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
@@ -158,7 +158,7 @@ class LoginPage extends StatelessWidget {
           ? await kakao.AuthCodeClient.instance.requestWithTalk()
           : await kakao.AuthCodeClient.instance.request();
       kakao.AccessTokenResponse token =
-          await kakao.AuthApi.instance.issueAccessToken(authCode);
+      await kakao.AuthApi.instance.issueAccessToken(authCode);
       kakao.AccessTokenStore.instance.toStore(token);
 
       if (token.refreshToken == null) {
@@ -177,26 +177,26 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  // Future<void> parseEmailAuth(BuildContext context, String email) async {
-  //   var acs = ActionCodeSettings(
-  //       url: 'https://kauth.kakao.com',
-  //       androidPackageName: 'com.example.mango_test',
-  //       androidInstallApp: true,
-  //       handleCodeInApp: true);
-  //
-  //   auth
-  //       .sendSignInLinkToEmail(email: email, actionCodeSettings: acs)
-  //       .catchError(
-  //           (onError) => print('Error: Sending Email verification $onError'))
-  //       .then((value) {
-  //     print('$value');
-  //   });
-  //
-  // AuthCredential credential = EmailAuthProvider.credentialWithLink(
-  //     email: email, emailLink: 'https://kauth.kakao.com');
-  //
-  // auth.currentUser
-  //     .linkWithCredential(credential)
-  //     .then((value) => Navigator.pushNamed(context, HOME));
-  // }
+// Future<void> parseEmailAuth(BuildContext context, String email) async {
+//   var acs = ActionCodeSettings(
+//       url: 'https://kauth.kakao.com',
+//       androidPackageName: 'com.example.mango_test',
+//       androidInstallApp: true,
+//       handleCodeInApp: true);
+//
+//   auth
+//       .sendSignInLinkToEmail(email: email, actionCodeSettings: acs)
+//       .catchError(
+//           (onError) => print('Error: Sending Email verification $onError'))
+//       .then((value) {
+//     print('$value');
+//   });
+//
+// AuthCredential credential = EmailAuthProvider.credentialWithLink(
+//     email: email, emailLink: 'https://kauth.kakao.com');
+//
+// auth.currentUser
+//     .linkWithCredential(credential)
+//     .then((value) => Navigator.pushNamed(context, HOME));
+// }
 }
