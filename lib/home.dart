@@ -132,12 +132,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  // print('length : ${Foods.length}');
-  //
-  // print('food 1 : ${Foods[0].name}');
-      ],
-    );
-  }
 }
 
 // class TabNavigatorRoutes {
