@@ -38,6 +38,8 @@ dependencies:
   firebase_core: ^0.5.2
   firebase_auth: ^0.18.0+1
   google_sign_in: "^4.5.1"
+  kakao_flutter_sdk: ^0.5.2
+  firebase_dynamic_links: ^0.5.0+11
 
 dev_dependencies:
   flutter_test:
@@ -57,15 +59,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - images/defaultImage.jpg
-     - images/foods/lemon.png
-     - images/foods/paprika.png
-     - images/foods/cucumber.png
-     - images/foods/pepper.png
+     - images/foods/
      - images/logo.png
      - images/refrigerator.png
      - images/appName.png
      - images/profile_image.png
-     - images/users/
+     - images/login/kakao.png
+     - images/users/  
   fonts:
     - family: Oregano
       fonts:
