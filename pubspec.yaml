@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  charts_flutter: ^0.9.0
+
   flutter:
     sdk: flutter
 
@@ -28,6 +30,19 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  animated_bottom_navigation_bar: ^0.2.1
+  modal_bottom_sheet: 1.0.0+1
+  flutter_keyboard_visibility: ^4.0.0
+  image_picker: ^0.6.7+14
+  camera: ^0.5.8+2
+  path: ^1.7.0
+  path_provider: ^1.6.27
+  firebase_storage: ^4.0.0
+  firebase_core: ^0.5.2
+  firebase_auth: ^0.18.0+1
+  google_sign_in: "^4.5.1"
+  kakao_flutter_sdk: ^0.5.2
+  firebase_dynamic_links: ^0.5.0+11
 
 dev_dependencies:
   flutter_test:
@@ -45,8 +60,17 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+     - images/defaultImage.jpg
+     - images/foods/lemon.png
+     - images/foods/paprika.png
+     - images/foods/cucumber.png
+     - images/foods/pepper.png
+     - images/logo.png
+     - images/refrigerator.png
+     - images/appName.png
+     - images/profile_image.png
+     - images/login/kakao.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -60,7 +84,26 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Oregano
+      fonts:
+        - asset: fonts/Oregano-Italic.ttf
+        - asset: fonts/Oregano-Regular.ttf
+    - family: Noto Sans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+        - asset: fonts/NotoSans-Bold.ttf
+          weight: 500
+    - family: NotoSansKR
+      fonts:
+        - asset: fonts/NotoSansKR-Thin.otf
+        - asset: fonts/NotoSansKR-Black.otf
+        - asset: fonts/NotoSansKR-Medium.otf
+        - asset: fonts/NotoSansKR-Regular.otf
+        - asset: fonts/NotoSansKR-Bold.otf
+        - asset: fonts/NotoSansKR-Light.otf
+          weight: 500
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
