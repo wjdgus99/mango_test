@@ -6,8 +6,6 @@ class Food {
   Food(
       {this.foodID,
       this.name,
-      // @required this.shelfLife,
-      // @required this.RegisterDate,
       this.DueDate,
       this.category,
       this.foodimg,
@@ -19,7 +17,7 @@ class Food {
   String name; //제품명
   String category; //음식 종류
   String foodimg; //사진
-  int storelevel;
+  int storelevel; //냉장(0), 냉동(1), 실온(2)
   int DueDate; //남은 기간
   int num; //수량
   DateTime shelfLife; //유통기한
