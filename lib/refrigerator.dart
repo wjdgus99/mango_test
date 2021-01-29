@@ -40,10 +40,10 @@ class _RefrigeratorState extends State<Refrigerator> {
             ),
             tabs: <Tab>[
               Tab(
-                text: '냉장',
+                text: '한눈에보기',
               ),
               Tab(
-                text: '냉동',
+                text: '유통기한',
               ),
             ],
           ),
