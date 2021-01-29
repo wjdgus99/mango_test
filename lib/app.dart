@@ -115,7 +115,7 @@ class MangoApp extends StatelessWidget {
       title: 'Mango Demo',
       home: HomePage(),
       theme: _MangoTheme,
-      initialRoute: LOGIN,
+      initialRoute: '/mjTest',
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
@@ -126,6 +126,7 @@ class MangoApp extends StatelessWidget {
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
+
         FRIENDLIST: (context) => FriendList(),
       },
     );
