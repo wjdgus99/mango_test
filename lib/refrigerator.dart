@@ -21,7 +21,6 @@ class _RefrigeratorState extends State<Refrigerator> {
       children: [
         contents(Foods),
         contents(Ex1),
-        contents(Ex2),
       ],
     );
   }

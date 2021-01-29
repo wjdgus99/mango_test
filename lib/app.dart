@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/mjTest.dart';
+import 'package:mango_test/itemRegistration.dart';
+import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/share.dart';
@@ -22,6 +23,8 @@ final SHARE = '/share';
 final CAMERA = '/camera';
 final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
+final ITEMREGIST = '/itemRegist';
+final ITEMSELECT = '/itemSelect';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -115,7 +118,7 @@ class MangoApp extends StatelessWidget {
       title: 'Mango Demo',
       home: HomePage(),
       theme: _MangoTheme,
-      initialRoute: '/mjTest',
+      initialRoute: LOGIN,
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
@@ -127,6 +130,8 @@ class MangoApp extends StatelessWidget {
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
         '/mjTest': (context) => mjTest(),
+        ITEMREGIST: (context) => ItemRegistration(),
+        ITEMSELECT: (context) => ItemSelect(),
       },
     );
   }

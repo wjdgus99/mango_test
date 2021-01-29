@@ -1,11 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_design.dart';
+
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/nutrition.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/share.dart';
-import 'package:mango_test/login.dart';
 import 'package:flutter/material.dart';
 import 'package:mango_test/widget/addFoodBottomSheet.dart';
 import 'app.dart';
@@ -43,6 +43,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  //SpeedDialController _controller = SpeedDialController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -52,24 +55,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // print('length : ${Foods.length}');
-    //
-    // print('food 1 : ${Foods[0].name}');
 
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: _appBars[_BottomNavIdx],
           body: _children[_BottomNavIdx],
-          floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                setState(() {
-                  showBottomSheet(context);
-                });
-              }),
+          floatingActionButton: _buildFloatingActionButton(),
+          // floatingActionButton: FloatingActionButton(
+          //     child: Icon(Icons.add),
+          //     onPressed: () {
+          //       setState(() {
+          //         showBottomSheet(context);
+          //       });
+          //     }),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: AnimatedBottomNavigationBar(
@@ -88,6 +89,35 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildFloatingActionButton() {
+    final TextStyle customStyle = TextStyle(inherit: false, color: Colors.black);
+    final icons = [
+      SpeedDialAction(
+        child: Icon(Icons.mode_edit),
+        label: Text('거래 품목 등록', style: customStyle),
+        //backgroundColor: Theme.of(context).accentColor,
+        //foregroundColor: Colors.white,
+      ),
+      SpeedDialAction(child: Icon(Icons.date_range), label: Text('냉장고 품목 등록', style: customStyle)),
+    ];
+
+    return SpeedDialFloatingActionButton(
+      actions: icons,
+      // Make sure one of child widget has Key value to have fade transition if widgets are same type.
+      childOnFold: Icon(Icons.add, key: UniqueKey()),
+      childOnUnfold: Icon(Icons.clear),
+      useRotateAnimation: true,
+      onAction: _onSpeedDialAction,
+    );
+  }
+
+  _onSpeedDialAction(int selectedActionIndex) {
+    print('$selectedActionIndex Selected');
+    if(selectedActionIndex == 0){
+      Navigator.pushNamed(context, ITEMREGIST);
+    }
+  }
+
   void showBottomSheet(context) {
     showBarModalBottomSheet(
         context: context,
@@ -95,6 +125,7 @@ class _HomePageState extends State<HomePage> {
           return ShowBottomSheet();
         });
   }
+
 }
 
 Widget basicAppBar() {
@@ -121,13 +152,10 @@ Widget homeAppBar() {
       ),
       tabs: <Tab>[
         Tab(
-          text: '냉장',
+          text: '한눈에보기',
         ),
         Tab(
-          text: '냉동',
-        ),
-        Tab(
-          text: '실온',
+          text: '유통기한',
         ),
       ],
     ),

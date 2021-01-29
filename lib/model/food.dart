@@ -13,7 +13,9 @@ class Food {
       this.foodimg,
       this.storelevel,
       this.num,
-      this.nutrition});
+      this.nutrition,
+      this.isSelected,
+      this.selectedNum,});
 
   String foodID;
   String name; //제품명
@@ -24,6 +26,8 @@ class Food {
   int num; //수량
   DateTime shelfLife; //유통기한
   DateTime registerDate; //등록날짜
-  Nutrient nutrition; //영양정보
+  Nutrient nutrition;//영양정보
+  bool isSelected; //거래품목에 선택되었는
+  int selectedNum;
 
 }
