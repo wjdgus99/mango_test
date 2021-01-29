@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/friendList.dart';
+import 'package:mango_test/itemRegistration.dart';
+import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
@@ -21,7 +23,8 @@ final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
 final CHART = '/chart';
 final FRIENDLIST = '/friendList';
-
+final ITEMREGIST = '/itemRegistration.dart';
+final ITEMSELECT = '/itemSelect';
 var DeviceHeight;
 var DeviceWidth;
 
@@ -127,6 +130,8 @@ class MangoApp extends StatelessWidget {
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
         FRIENDLIST: (context) => FriendList(),
+        ITEMREGIST: (context) => ItemRegistration(),
+        ITEMSELECT: (context) => ItemSelect(),
       },
     );
   }
