@@ -41,6 +41,10 @@ dependencies:
   firebase_core: ^0.5.2
   firebase_auth: ^0.18.0+1
   google_sign_in: "^4.5.1"
+  flutter_search_bar: ^2.1.0
+  tabnavigator: ^0.0.1-dev.7
+
+#  dio: 1.0.0 //search list
 
 dev_dependencies:
   flutter_test:

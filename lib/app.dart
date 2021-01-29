@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
+import 'package:mango_test/friendList.dart';
 import 'package:mango_test/login.dart';
 import 'package:mango_test/profile.dart';
 import 'package:mango_test/nutrition.dart';
@@ -19,6 +20,7 @@ final CAMERA = '/camera';
 final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
 final CHART = '/chart';
+final FRIENDLIST = '/friendList';
 
 var DeviceHeight;
 var DeviceWidth;
@@ -50,8 +52,8 @@ ThemeData _buildMangoTheme() {
     textTheme: _buildMangoTextTheme(base.textTheme),
     primaryTextTheme: _buildMangoTextTheme(base.primaryTextTheme),
     accentTextTheme: _buildMangoTextTheme(base.accentTextTheme),
-    iconTheme: base.iconTheme.copyWith(color: Orange500),
-    primaryIconTheme: base.iconTheme.copyWith(color: Orange500),
+    iconTheme: base.iconTheme.copyWith(color: Black),
+    primaryIconTheme: base.iconTheme.copyWith(color: Black),
   );
 }
 
@@ -73,6 +75,7 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
           fontSize: 14.0,
           fontWeight: FontWeight.normal,
         ),
+
         /* headline5: hintText of ProfilePage(subtitle 2_KR)*/
         headline5: base.headline5.copyWith(
           fontSize: 16.0,
@@ -123,6 +126,7 @@ class MangoApp extends StatelessWidget {
         NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
+        FRIENDLIST: (context) => FriendList(),
       },
     );
   }
