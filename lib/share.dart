@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:mango_test/chatList.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/friendList.dart';
+import 'package:mango_test/history.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -36,10 +38,20 @@ class _ShareState extends State<Share> {
         actions: [
           IconButton(
               icon: Icon(Icons.chat_bubble_outline_outlined),
-              onPressed: () => print('chat list')),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ChatList()));
+              }),
           IconButton(
               icon: Icon(Icons.notifications_none),
-              onPressed: () => print('alarm'))
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => History()));
+              })
         ],
       ),
       body: none
