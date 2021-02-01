@@ -12,7 +12,7 @@ class FriendList extends StatelessWidget {
               icon: Icon(Icons.settings), onPressed: () => print('settings'))
         ],
       ),
-      body: Text('Friend List'),
+      body: ListTile(trailing: Text('Friend List')),
     );
   }
 }
