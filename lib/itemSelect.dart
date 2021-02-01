@@ -11,7 +11,6 @@ class ItemSelect extends StatefulWidget {
 }
 
 class _ItemSelectState extends State<ItemSelect> {
-
   List<Food> Foods = localRefrigerator.loadFood();
   int num = 0;
 
@@ -56,20 +55,20 @@ class _ItemSelectState extends State<ItemSelect> {
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
-                      Image.asset(
-                        '${foods[index].foodimg}',
-                        //width: DeviceWidth * 82 / 375,
-                        //height: DeviceHeight * 67 / 812,
-                        fit: BoxFit.contain,
-                      ),
+                      // Image.asset(
+                      //   '${foods[index].foodimg}',
+                      //   //width: DeviceWidth * 82 / 375,
+                      //   //height: DeviceHeight * 67 / 812,
+                      //   fit: BoxFit.contain,
+                      // ),
                       foods[index].DueDate <= 0
                           ? Positioned(top: 0, left: 5, child: dDate('OVER'))
                           : foods[index].DueDate <= 3
-                          ? Positioned(
-                          top: 0,
-                          left: 5,
-                          child: dDate('D - ${foods[index].DueDate}'))
-                          : SizedBox(),
+                              ? Positioned(
+                                  top: 0,
+                                  left: 5,
+                                  child: dDate('D - ${foods[index].DueDate}'))
+                              : SizedBox(),
                     ],
                   ),
                   Spacer(
@@ -129,37 +128,38 @@ class _ItemSelectState extends State<ItemSelect> {
                       ),
                     ],
                   ),
-                  foods[index].isSelected == false ?
-                  SizedBox(
-                    width: 23,
-                    child: RaisedButton(
-                      shape: CircleBorder(),
-                      color: Colors.grey,
-                      onPressed: (){
-                          setState(() {
-                            num ++;
-                            foods[index].isSelected = true;
-                            foods[index].selectedNum = num;
-                            print(index);
-                          });
-                      },
-                    ),
-                  ) :
-                  SizedBox(
-                    width: 23,
-                    child: RaisedButton(
-                      child: Center(child: Text('${foods[index].selectedNum}')),
-                      shape: CircleBorder(),
-                      color: Theme.of(context).accentColor,
-                      onPressed: (){
-                          setState(() {
-                            num --;
-                            foods[index].isSelected = false;
-                            foods[index].selectedNum = num;
-                          });
-                      },
-                    ),
-                  ),
+                  foods[index].isSelected == false
+                      ? SizedBox(
+                          width: 23,
+                          child: RaisedButton(
+                            shape: CircleBorder(),
+                            color: Colors.grey,
+                            onPressed: () {
+                              setState(() {
+                                num++;
+                                foods[index].isSelected = true;
+                                foods[index].selectedNum = num;
+                                print(index);
+                              });
+                            },
+                          ),
+                        )
+                      : SizedBox(
+                          width: 23,
+                          child: RaisedButton(
+                            child: Center(
+                                child: Text('${foods[index].selectedNum}')),
+                            shape: CircleBorder(),
+                            color: Theme.of(context).accentColor,
+                            onPressed: () {
+                              setState(() {
+                                num--;
+                                foods[index].isSelected = false;
+                                foods[index].selectedNum = num;
+                              });
+                            },
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -191,5 +191,4 @@ class _ItemSelectState extends State<ItemSelect> {
       ),
     );
   }
-
 }
