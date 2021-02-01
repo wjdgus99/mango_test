@@ -10,8 +10,6 @@ class Food {
     // @required this.RegisterDate,
     this.DueDate,
     this.category,
-    // this.foodimg,
-    this.storelevel,
     this.num,
     this.nutrition,
     this.isSelected,
@@ -21,8 +19,6 @@ class Food {
   String foodID;
   String name; //제품명
   String category; //음식 종류
-  // String foodimg; //사진
-  int storelevel;
   int DueDate; //남은 기간
   int num; //수량
   DateTime shelfLife; //유통기한

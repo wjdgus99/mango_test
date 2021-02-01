@@ -11,9 +11,7 @@ class UserRefrigerator {
   }
 
   //TODO: IS - DB에 올릴 때는 Future로 바꿔야 할 듯.
-  void AddProduct(List<Food> foods,List<int> ItemIndexes) {
-
-  }
+  void AddProduct(List<Food> foods, List<int> ItemIndexes) {}
 }
 
 class StorageID {
