@@ -78,12 +78,12 @@ class _RefrigeratorState extends State<Refrigerator> {
                 children: <Widget>[
                   Stack(
                     children: <Widget>[
-                      Image.asset(
-                        '${foods[index].foodimg}',
-                        width: DeviceWidth * 82 / 375,
-                        height: DeviceHeight * 67 / 812,
-                        fit: BoxFit.contain,
-                      ),
+                      // Image.asset(
+                      //   '${foods[index].foodimg}',
+                      //   width: DeviceWidth * 82 / 375,
+                      //   height: DeviceHeight * 67 / 812,
+                      //   fit: BoxFit.contain,
+                      // ),
                       foods[index].DueDate <= 0
                           ? Positioned(top: 0, left: 5, child: dDate('OVER'))
                           : foods[index].DueDate <= 3
