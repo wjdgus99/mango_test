@@ -69,7 +69,8 @@ flutter:
      - images/appName.png
      - images/profile_image.png
      - images/login/kakao.png
-     - images/users/  
+     - images/users/
+     - images/categories/
   fonts:
     - family: Oregano
       fonts:

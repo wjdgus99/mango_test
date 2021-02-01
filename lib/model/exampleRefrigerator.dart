@@ -11,7 +11,6 @@ class localRefrigerator {
   static List<Food> loadFood() {
     List<Food> Foods = <Food>[
       Food(
-        foodID: '0000',
         name: '레몬',
         DueDate: -1,
         num: 1,
@@ -21,7 +20,6 @@ class localRefrigerator {
         selectedNum: 0,
       ),
       Food(
-        foodID: '0001',
         name: '파프리카',
         DueDate: 1,
         num: 3,
@@ -31,7 +29,6 @@ class localRefrigerator {
         selectedNum: 0,
       ),
       Food(
-        foodID: '0002',
         name: '오이',
         DueDate: 7,
         num: 1,
@@ -41,7 +38,6 @@ class localRefrigerator {
         selectedNum: 0,
       ),
       Food(
-        foodID: '0003',
         name: '고추',
         DueDate: 12,
         num: 2,
