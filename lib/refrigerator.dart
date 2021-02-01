@@ -89,6 +89,17 @@ class _RefrigeratorState extends State<Refrigerator> {
             animationDuration: Duration(seconds: 1),
             children: [
               ExpansionPanel(
+                body: Container(
+                  padding: EdgeInsets.all(10),
+                  child:
+                      Text(
+                        'PRICE: 20',
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 18,
+                        ),
+                  ),
+                ),
                 headerBuilder: (BuildContext context, bool isExpanded) {
                   return Container(
                     padding: EdgeInsets.all(10),
@@ -101,18 +112,13 @@ class _RefrigeratorState extends State<Refrigerator> {
                     ),
                   );
                 },
-                body: ListTile(
-                    title: Text('dl'),
-                    subtitle: Text('To delete this panel, tap the trash can icon'),
-                    trailing: Icon(Icons.delete),
-                    onTap: () {
-                    }),
                 isExpanded: items[index].isExpanded,
               )
             ],
-            expansionCallback: (int index, bool isExpanded) {
+            expansionCallback: (int item, bool status) {
               setState(() {
-                items[index].isExpanded = !isExpanded;
+                items[index].isExpanded =
+                items[index].isExpanded;
               });
             },
           );
