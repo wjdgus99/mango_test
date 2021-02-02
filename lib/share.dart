@@ -6,6 +6,9 @@ import 'package:mango_test/friendList.dart';
 import 'package:mango_test/history.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:search_widget/search_widget.dart';
+
+import 'model/food.dart';
 
 class Share extends StatefulWidget {
   @override
@@ -14,10 +17,72 @@ class Share extends StatefulWidget {
   const Share({Key key}) : super(key: key);
 }
 
+class PopupListItemWidget extends StatelessWidget {
+  const PopupListItemWidget(this.item);
+
+  final Food item;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      child: Text(
+        item.name,
+        style: const TextStyle(fontSize: 16),
+      ),
+    );
+  }
+}
+
+class SelectedItemWidget extends StatelessWidget {
+  const SelectedItemWidget(this.selectedItem, this.deleteSelectedItem);
+
+  final Food selectedItem;
+  final VoidCallback deleteSelectedItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 2,
+        horizontal: 4,
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 8,
+                bottom: 8,
+              ),
+              child: Text(
+                selectedItem.name,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.delete_outline, size: 22),
+            color: Colors.grey[700],
+            onPressed: deleteSelectedItem,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _ShareState extends State<Share> {
   bool none = false;
 
   TextEditingController editingController = new TextEditingController();
+
+  List<Food> list = localRefrigerator.loadFood();
+  Food _selectedItem;
+
+  bool _show = true;
 
   @override
   Widget build(BuildContext context) {
@@ -72,17 +137,38 @@ class _ShareState extends State<Share> {
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: [
-                  Container(
-                    height: 55,
-                    child: TextField(
-                      controller: editingController,
-                      decoration: InputDecoration(
-                          labelText: 'Search',
-                          suffix: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)))),
-                    ),
+                  // if (_show)
+                  SearchWidget<Food>(
+                    dataList: list,
+                    hideSearchBoxWhenItemSelected: false,
+                    listContainerHeight: MediaQuery.of(context).size.height / 4,
+                    queryBuilder: (String query, List<Food> list) {
+                      return list
+                          .where((Food item) => item.name
+                              .toLowerCase()
+                              .contains(query.toLowerCase()))
+                          .toList();
+                    },
+                    onItemSelected: (item) {
+                      setState(() {
+                        _selectedItem = item;
+                      });
+                    },
+                    popupListItemBuilder: (Food item) {
+                      return PopupListItemWidget(item);
+                    },
+                    selectedItemBuilder:
+                        (Food selectedItem, deleteSelectedItem) {
+                      return SelectedItemWidget(
+                          selectedItem, deleteSelectedItem);
+                    },
+                    textFieldBuilder: (TextEditingController controller,
+                        FocusNode focusNode) {
+                      return TextField(
+                        controller: controller,
+                        focusNode: focusNode,
+                      );
+                    },
                   ),
                   Container(
                     decoration: BoxDecoration(
