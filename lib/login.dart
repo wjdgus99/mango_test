@@ -134,17 +134,20 @@ class LoginPage extends StatelessWidget {
         userCredential = await auth.signInWithPopup(googleAuthProvider);
       } else {
         final google.GoogleSignInAccount googleUser =
-        await google.GoogleSignIn().signIn();
+            await google.GoogleSignIn().signIn();
         final google.GoogleSignInAuthentication googleAuth =
-        await googleUser.authentication;
+            await googleUser.authentication;
         final GoogleAuthCredential googleAuthCredential =
-        GoogleAuthProvider.credential(
+            GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
 
         userCredential = await auth.signInWithCredential(googleAuthCredential);
-        Navigator.pushNamed(context, HOME);
+
+        print(userCredential.user);
+
+        // Navigator.pushNamed(context, HOME);
       }
     } catch (e) {
       print(e);
@@ -158,7 +161,7 @@ class LoginPage extends StatelessWidget {
           ? await kakao.AuthCodeClient.instance.requestWithTalk()
           : await kakao.AuthCodeClient.instance.request();
       kakao.AccessTokenResponse token =
-      await kakao.AuthApi.instance.issueAccessToken(authCode);
+          await kakao.AuthApi.instance.issueAccessToken(authCode);
       kakao.AccessTokenStore.instance.toStore(token);
 
       if (token.refreshToken == null) {
@@ -167,6 +170,8 @@ class LoginPage extends StatelessWidget {
         kakao.User kakaoUser = await kakao.UserApi.instance.me();
 
         String email = kakaoUser.kakaoAccount.email;
+
+        print(email);
 
         Navigator.pushNamed(context, HOME);
 
