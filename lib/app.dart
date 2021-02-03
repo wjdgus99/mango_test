@@ -28,6 +28,32 @@ final ITEMSELECT = '/itemSelect';
 var DeviceHeight;
 var DeviceWidth;
 
+class MangoApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Mango Demo',
+      home: HomePage(),
+      theme: _MangoTheme,
+      initialRoute: LOGIN,
+      routes: {
+        LOGIN: (context) => LoginPage(),
+        HOME: (context) => HomePage(),
+        CHART: (context) => Chart(),
+        ADDINPUT: (context) => AdditionalInput(),
+        DIRECTINPUT: (context) => DirectInput(),
+        PROFILE: (context) => Profile(),
+        NUTRITION: (context) => Nutrition(),
+        SHARE: (context) => Share(),
+        CAMERA: (context) => Camera(),
+        FRIENDLIST: (context) => FriendList(),
+        ITEMREGIST: (context) => ItemRegistration(),
+        ITEMSELECT: (context) => ItemSelect(),
+      },
+    );
+  }
+}
+
 final ThemeData _MangoTheme = _buildMangoTheme();
 
 ThemeData _buildMangoTheme() {
@@ -109,30 +135,4 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
         bodyColor: Colors.black,
         displayColor: Colors.black,
       );
-}
-
-class MangoApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mango Demo',
-      home: HomePage(),
-      theme: _MangoTheme,
-      initialRoute: LOGIN,
-      routes: {
-        LOGIN: (context) => LoginPage(),
-        HOME: (context) => HomePage(),
-        CHART: (context) => Chart(),
-        ADDINPUT: (context) => AdditionalInput(),
-        DIRECTINPUT: (context) => DirectInput(),
-        PROFILE: (context) => Profile(),
-        NUTRITION: (context) => Nutrition(),
-        SHARE: (context) => Share(),
-        CAMERA: (context) => Camera(),
-        FRIENDLIST: (context) => FriendList(),
-        ITEMREGIST: (context) => ItemRegistration(),
-        ITEMSELECT: (context) => ItemSelect(),
-      },
-    );
-  }
 }

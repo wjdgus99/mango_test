@@ -144,7 +144,10 @@ class LoginPage extends StatelessWidget {
         );
 
         userCredential = await auth.signInWithCredential(googleAuthCredential);
-        Navigator.pushNamed(context, HOME);
+
+        print(userCredential.user);
+
+        // Navigator.pushNamed(context, HOME);
       }
     } catch (e) {
       print(e);

@@ -9,12 +9,12 @@ class UserRefrigerator {
   List<Food> Foods; // IS - Food Lists.
   List<int> StorageAlarm; // IS - [ 0 - 냉장 / 1 - 냉동 / 2 - 실온] 별 알람 일자.
 
-  // IS - 한눈에 보기를 위한 데이터.
+  // IS - 한눈에 보기를 위한 리스트.
   List<Food> _RefrigerationFoods;
   List<Food> _FrozenFoods;
   List<Food> _RoomTempFoods;
 
-  // TODO: IS - 혹시 아래 setter 코드가 안먹으면, comment처리해 놓은 setter로 사용.
+  // TODO: IS - 혹시 아래 setter 코드가 안 먹으면, comment처리해 놓은 setter로 사용.
   // set RefrigerationFoods(List<Food> foods) {
   //   List<Food> temp;
   //
@@ -27,12 +27,30 @@ class UserRefrigerator {
   //   _RefrigerationFoods = temp;
   // }
 
+  // IS - Setter / Getter (한눈에 보기)
   set RefrigerationFoods(List<Food> foods) =>
-      _FrozenFoods.addAll(foods.where((element) => element.storeLevel == 1));
+      _FrozenFoods.addAll(foods.where((element) => element.storeLevel == 0));
   set FrozenFoods(List<Food> foods) =>
       _FrozenFoods.addAll(foods.where((element) => element.storeLevel == 1));
   set RoomTempFoods(List<Food> foods) =>
       _RoomTempFoods.addAll(foods.where((element) => element.storeLevel == 2));
+
+  List<Food> get RefrigerationFoods => _RefrigerationFoods;
+  List<Food> get FrozenFoods => _FrozenFoods;
+  List<Food> get RoomtempFoods => _RoomTempFoods;
+
+  // IS - 유통기한별 보기 리스트 (구매일 기준, 남은 유통기한 기준)
+  List<Food> _RegisterDateFoods;
+  List<Food> _RemainDateFoods;
+
+  // IS - Setter / Getter (유통기한별 보기)
+  set RegisterDateFoods(List<Food> foods) =>
+      _RefrigerationFoods.addAll(foods.where((element) => element.isSelected));
+  set RemainDateFoods(List<Food> foods) =>
+      _RemainDateFoods.addAll(foods.where((element) => !element.isSelected));
+
+  List<Food> get RegisterDateFoods => _RegisterDateFoods;
+  List<Food> get RemainDateFoods => _RemainDateFoods;
 
   //TODO: IS - DB에 올릴 때는 Future로 바꿔야 할 듯(add, update, delete).
   // IS - 등록페이지에서 사용할 Function들(add, update, delete).
@@ -43,6 +61,7 @@ class UserRefrigerator {
           : foods[i].storeLevel == 1
               ? _FrozenFoods.add(foods[i])
               : _RoomTempFoods.add(foods[i]);
+      // IS - DB에는 Foods만, 나머지는 받아와서 분류해주는 식으로. 리던던시 방지.
       Foods.add(foods[i]);
     }
   }
@@ -82,5 +101,30 @@ class UserRefrigerator {
     }
   }
 
-  void SortByDuedate() {}
+  // 등록일 기준 정렬.
+  void SortByRegisterDate(List<Food> foods) =>
+      foods.sort((pre, next) => pre.DueDate.compareTo(next.DueDate));
+
+  //IS - days기준 작은 값들만 리스트로 뽑아옴.
+  //IS - ex) 남은 유통기한 3일 이내 식품: SortByDuedate(RemainDateFoods(),3);
+  void SortByDuedate(List<Food> foods, int days) {
+    List<Food> result = foods.where((element) {
+      element.DueDate = element.shelfLife.difference(DateTime.now()).inDays;
+      return element.DueDate <= days;
+    });
+
+    return result.sort((pre, next) => pre.DueDate.compareTo(next.DueDate));
+  }
+
+  void SortByPurchaseDate(List<Food> foods, int days) {
+    List<Food> result = foods.where((element) {
+      element.DueDate = element.registerDate.difference(DateTime.now()).inDays;
+      return element.DueDate <= days;
+    });
+
+    return result.sort((pre, next) => pre.DueDate.compareTo(next.DueDate));
+  }
+
+  // IS - 원하는 리스트 불러오기 ( e.g. LostFoodList(RegisterDateFood()); )
+  List<Food> LoadFoodList(List<Food> foods) => foods;
 }
