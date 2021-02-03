@@ -24,7 +24,7 @@ final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
 final CHART = '/chart';
 final FRIENDLIST = '/friendList';
-final ITEMREGIST = '/itemRegistration.dart';
+final ITEMREGIST = '/itemRegistration';
 final ITEMSELECT = '/itemSelect';
 final ITEMCREATE = '/itemCreate';
 var DeviceHeight;

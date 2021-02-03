@@ -19,6 +19,7 @@ class _ItemSelectState extends State<ItemSelect> {
     return Scaffold(
       appBar: AppBar(
         title: Text('거래 품목 선택'),
+        centerTitle: true,
         actions: [
           Center(
               child: InkWell(
