@@ -1,4 +1,3 @@
-import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -69,6 +68,9 @@ class _FriendListState extends State<FriendList> {
                   ],
                   cancelButton: CupertinoActionSheetAction(
                     child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 );
                 showCupertinoModalPopup(
