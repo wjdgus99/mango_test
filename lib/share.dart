@@ -17,106 +17,34 @@ class Share extends StatefulWidget {
   const Share({Key key}) : super(key: key);
 }
 
-class PopupListItemWidget extends StatelessWidget {
-  const PopupListItemWidget(this.item);
-
-  final Food item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      child: Text(
-        item.name,
-        style: const TextStyle(fontSize: 16),
-      ),
-    );
-  }
-}
-
-class SelectedItemWidget extends StatelessWidget {
-  const SelectedItemWidget(this.selectedItem, this.deleteSelectedItem);
-
-  final Food selectedItem;
-  final VoidCallback deleteSelectedItem;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          border: Border.all(color: Grey200, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CircleAvatar(
-                radius: 45,
-                backgroundImage: AssetImage('images/foods/paprika.png'),
-                backgroundColor: Colors.white60,
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text('1시간 전'),
-                  ),
-                  Text(
-                    '파프리카 3개',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Text(
-                    '유통기한 2021.12.30',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Text(
-                    '최대한 빨리 나눔합시당~~ ',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Row(
-                    children: [
-                      RaisedButton(
-                        color: Orange100,
-                        child: Icon(Icons.call),
-                        onPressed: () => print('call'),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Grey200)),
-                      ),
-                      RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        child: Icon(Icons.send_rounded),
-                        onPressed: () => print('message'),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Grey200)),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _ShareState extends State<Share> {
   bool none = false;
 
-  TextEditingController editingController = new TextEditingController();
+  var _searchview = new TextEditingController();
+  bool _firstSearch = true;
+  String _query = '';
+
+  List<Food> _nebulae;
+  List<Food> _filterList;
 
   List<Food> list = localRefrigerator.loadFood();
-  Food _selectedItem;
 
-  bool _show = true;
+  void initState() {
+    super.initState();
+    _nebulae = List<Food>();
+    _nebulae = localRefrigerator.loadFood();
+  }
+
+  _ShareState() {
+    _searchview.addListener(() {
+      if (_searchview.text.isEmpty) {
+        setState(() {
+          _firstSearch = true;
+          _query = _searchview.text;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,116 +98,68 @@ class _ShareState extends State<Share> {
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView(
-                children: [
+                children: <Widget>[
                   const SizedBox(height: 16),
-                  if (_show)
-                    SearchWidget<Food>(
-                      dataList: list,
-                      hideSearchBoxWhenItemSelected: true,
-                      listContainerHeight:
-                          MediaQuery.of(context).size.height / 4,
-                      queryBuilder: (String query, List<Food> list) {
-                        return list
-                            .where((Food item) => item.name
-                                .toLowerCase()
-                                .contains(query.toLowerCase()))
-                            .toList();
-                      },
-                      onItemSelected: (item) {
-                        setState(() {
-                          _selectedItem = item;
-                        });
-                      },
-                      popupListItemBuilder: (Food item) {
-                        return PopupListItemWidget(item);
-                      },
-                      selectedItemBuilder:
-                          (Food selectedItem, deleteSelectedItem) {
-                        return SelectedItemWidget(
-                            selectedItem, deleteSelectedItem);
-                      },
-                      textFieldBuilder: (TextEditingController controller,
-                          FocusNode focusNode) {
-                        return TextField(
-                          controller: controller,
-                          focusNode: focusNode,
-                        );
-                      },
-                    ),
-                  RaisedButton(onPressed: () {
-                    setState(() {
-                      _show = !_show;
-                    });
-                  }),
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Grey200, width: 2),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: CircleAvatar(
-                              radius: 45,
-                              backgroundImage:
-                                  AssetImage('images/foods/paprika.png'),
-                              backgroundColor: Colors.white60,
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text('1시간 전'),
-                                ),
-                                Text(
-                                  '파프리카 3개',
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                                Text(
-                                  '유통기한 2021.12.30',
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                ),
-                                Text(
-                                  '최대한 빨리 나눔합시당~~ ',
-                                  style: Theme.of(context).textTheme.subtitle2,
-                                ),
-                                Row(
-                                  children: [
-                                    RaisedButton(
-                                      color: Orange100,
-                                      child: Icon(Icons.call),
-                                      onPressed: () => print('call'),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          side: BorderSide(color: Grey200)),
-                                    ),
-                                    RaisedButton(
-                                      color: Theme.of(context).accentColor,
-                                      child: Icon(Icons.send_rounded),
-                                      onPressed: () => print('message'),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          side: BorderSide(color: Grey200)),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                  _createSearchView(),
+                  _firstSearch ? _createListView() : _performSearch()
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _createSearchView() {
+    return Container(
+      decoration: BoxDecoration(border: Border.all(width: 1)),
+      child: TextField(
+        controller: _searchview,
+        decoration: InputDecoration(
+          hintText: 'search',
+          // hintStyle: TextStyle(color: Colors.grey[300]),
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _createListView() {
+    return Flexible(
+        child: ListView.builder(itemBuilder: (BuildContext context, int index) {
+      return Card(
+        color: Colors.white,
+        elevation: 5.0,
+        child: Container(
+          margin: EdgeInsets.all(15.0),
+          child: Text("${_nebulae[index]}"),
+        ),
+      );
+    }));
+  }
+
+  Widget _performSearch() {
+    _filterList = List<Food>();
+    for (int i = 0; i < _nebulae.length; i++) {
+      var item = _nebulae[i];
+
+      if (item.name.toLowerCase().contains(_query.toLowerCase())) {
+        _filterList.add(item);
+      }
+    }
+    return _createFilteredListView();
+  }
+
+  Widget _createFilteredListView() {
+    return Flexible(
+      child: ListView.builder(itemBuilder: (BuildContext context, int index) {
+        return Card(
+          color: Colors.white,
+          elevation: 5.0,
+          child: Container(
+            margin: EdgeInsets.all(15.0),
+            // child: Text("${_filterList[index]}"),
+          ),
+        );
+      }),
     );
   }
 }
