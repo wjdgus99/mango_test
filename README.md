@@ -18,3 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 ##TODO List
  - 일단 카메라는 하나씩 확인가능. MLKit 확인하고 여러 사물이 한번에 인식 가능하면 기능을 변경해보자.
+ - 특정 시점에서 변수값을 변경할 수 없게 하는 방법? (21.02.03)

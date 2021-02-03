@@ -5,8 +5,9 @@ class Food {
 //보관장소
   Food({
     this.name,
-    // @required this.shelfLife,
-    // @required this.RegisterDate,
+    this.shelfLife,
+    @required this.registerDate,
+    this.purchaseDate,
     this.category,
     this.num,
     this.nutrition,
@@ -24,8 +25,8 @@ class Food {
   DateTime shelfLife; //유통기한
   DateTime registerDate; //등록날짜
   DateTime purchaseDate; // IS - 구매일자.
+  int DueDate; // IS - 유통기한 남은 날짜 or 등록기준 지난 시간. TODO: 유통기한: ShelfLife - PurchaseDate / 등록일자: Now - PurchaseDate
   Nutrient nutrition; //영양정보
   bool isSelected; // IS - 구매일자 vs. 유통기한
   int selectedNum;
-  int DueDate; // IS - 유통기한 남은 날짜 or 등록기준 지난 시간.
 }
