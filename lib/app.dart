@@ -51,6 +51,7 @@ class MangoApp extends StatelessWidget {
         FRIENDLIST: (context) => FriendList(),
         ITEMREGIST: (context) => ItemRegistration(),
         ITEMSELECT: (context) => ItemSelect(),
+        ITEMCREATE: (context) => ItemCreate(),
       },
     );
   }
