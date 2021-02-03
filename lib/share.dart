@@ -43,32 +43,66 @@ class SelectedItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 2,
-        horizontal: 4,
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 8,
-                bottom: 8,
-              ),
-              child: Text(
-                selectedItem.name,
-                style: const TextStyle(fontSize: 14),
+      decoration: BoxDecoration(
+          border: Border.all(color: Grey200, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CircleAvatar(
+                radius: 45,
+                backgroundImage: AssetImage('images/foods/paprika.png'),
+                backgroundColor: Colors.white60,
               ),
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.delete_outline, size: 22),
-            color: Colors.grey[700],
-            onPressed: deleteSelectedItem,
-          ),
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text('1시간 전'),
+                  ),
+                  Text(
+                    '파프리카 3개',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  Text(
+                    '유통기한 2021.12.30',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Text(
+                    '최대한 빨리 나눔합시당~~ ',
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  Row(
+                    children: [
+                      RaisedButton(
+                        color: Orange100,
+                        child: Icon(Icons.call),
+                        onPressed: () => print('call'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Grey200)),
+                      ),
+                      RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        child: Icon(Icons.send_rounded),
+                        onPressed: () => print('message'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Grey200)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -137,39 +171,46 @@ class _ShareState extends State<Share> {
               padding: const EdgeInsets.all(16.0),
               child: ListView(
                 children: [
-                  // if (_show)
-                  SearchWidget<Food>(
-                    dataList: list,
-                    hideSearchBoxWhenItemSelected: false,
-                    listContainerHeight: MediaQuery.of(context).size.height / 4,
-                    queryBuilder: (String query, List<Food> list) {
-                      return list
-                          .where((Food item) => item.name
-                              .toLowerCase()
-                              .contains(query.toLowerCase()))
-                          .toList();
-                    },
-                    onItemSelected: (item) {
-                      setState(() {
-                        _selectedItem = item;
-                      });
-                    },
-                    popupListItemBuilder: (Food item) {
-                      return PopupListItemWidget(item);
-                    },
-                    selectedItemBuilder:
-                        (Food selectedItem, deleteSelectedItem) {
-                      return SelectedItemWidget(
-                          selectedItem, deleteSelectedItem);
-                    },
-                    textFieldBuilder: (TextEditingController controller,
-                        FocusNode focusNode) {
-                      return TextField(
-                        controller: controller,
-                        focusNode: focusNode,
-                      );
-                    },
-                  ),
+                  const SizedBox(height: 16),
+                  if (_show)
+                    SearchWidget<Food>(
+                      dataList: list,
+                      hideSearchBoxWhenItemSelected: true,
+                      listContainerHeight:
+                          MediaQuery.of(context).size.height / 4,
+                      queryBuilder: (String query, List<Food> list) {
+                        return list
+                            .where((Food item) => item.name
+                                .toLowerCase()
+                                .contains(query.toLowerCase()))
+                            .toList();
+                      },
+                      onItemSelected: (item) {
+                        setState(() {
+                          _selectedItem = item;
+                        });
+                      },
+                      popupListItemBuilder: (Food item) {
+                        return PopupListItemWidget(item);
+                      },
+                      selectedItemBuilder:
+                          (Food selectedItem, deleteSelectedItem) {
+                        return SelectedItemWidget(
+                            selectedItem, deleteSelectedItem);
+                      },
+                      textFieldBuilder: (TextEditingController controller,
+                          FocusNode focusNode) {
+                        return TextField(
+                          controller: controller,
+                          focusNode: focusNode,
+                        );
+                      },
+                    ),
+                  RaisedButton(onPressed: () {
+                    setState(() {
+                      _show = !_show;
+                    });
+                  }),
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Grey200, width: 2),
