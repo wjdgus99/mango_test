@@ -1,3 +1,5 @@
+import 'package:charts_flutter/flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
@@ -18,6 +20,22 @@ class _FriendListState extends State<FriendList> {
   User user = localUser.loadUser();
   List<User> friendList = localUserList.loadUserList();
 
+  Widget buildBottomSheet(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          child: Text('편집'),
+        ),
+        Container(
+          child: Text('친구 관리'),
+        ),
+        Container(
+          child: Text('전체 설정'),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +46,34 @@ class _FriendListState extends State<FriendList> {
           IconButton(
               icon: Icon(Icons.person_add_alt), onPressed: () => _topSheet()),
           IconButton(
-              icon: Icon(Icons.settings), onPressed: () => print('settings'))
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                final action = CupertinoActionSheet(
+                  title: Text("Cupertino Action Sheet"),
+                  message: Text("Select any action "),
+                  actions: <Widget>[
+                    CupertinoActionSheetAction(
+                      child: Text("Action 1"),
+                      isDefaultAction: true,
+                      onPressed: () {
+                        print("Action 1 is been clicked");
+                      },
+                    ),
+                    CupertinoActionSheetAction(
+                      child: Text("Action 2"),
+                      isDestructiveAction: true,
+                      onPressed: () {
+                        print("Action 2 is been clicked");
+                      },
+                    )
+                  ],
+                  cancelButton: CupertinoActionSheetAction(
+                    child: Text('Cancel'),
+                  ),
+                );
+                showCupertinoModalPopup(
+                    context: context, builder: (context) => action);
+              })
         ],
       ),
       body: ListView(children: [
