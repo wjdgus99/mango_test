@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ChatList extends StatelessWidget {
+class ChatList extends StatefulWidget {
+  @override
+  _ChatListState createState() => _ChatListState();
+}
+
+class _ChatListState extends State<ChatList> {
+  bool _sort = true;
+
   Widget buildBottomSheet(BuildContext context) {
     return Container(
       child: Column(
@@ -37,7 +44,7 @@ class ChatList extends StatelessWidget {
           InkWell(
             onTap: () {
               showMaterialModalBottomSheet(
-                  // useRootNavigator: true,
+                  useRootNavigator: true,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   context: context,
@@ -83,6 +90,11 @@ class ChatList extends StatelessWidget {
           InkWell(
             onTap: () {
               //TODO: sort by time
+              setState(() {
+                _sort = true;
+                Navigator.pop(context);
+                Navigator.pop(context);
+              });
             },
             child: ListTile(
               title: Text(
@@ -95,6 +107,11 @@ class ChatList extends StatelessWidget {
           InkWell(
             onTap: () {
               //TODO: sort by message cnt
+              setState(() {
+                _sort = false;
+                Navigator.pop(context);
+                Navigator.pop(context);
+              });
             },
             child: ListTile(
               title: Text(
@@ -130,20 +147,43 @@ class ChatList extends StatelessWidget {
                 })
           ],
         ),
-        body: ListView(
-          children: ListTile.divideTiles(context: context, tiles: [
-            _buildChatList(
-              'yg', // user name
-              '친구야 내가 레몬으로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라 ㅎㅎ ', //body content
-              '오전 11:22', //time
-              3, // unread message
-            ),
-            _buildChatList('si', '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라',
-                '오전 11:18', 1),
-            _buildChatList('mj', '인석아 밥해줘....', '오전 11:25', 0),
-            _buildChatList('jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:12', 1),
-          ]).toList(),
-        ));
+        body: _sort
+            ? ListView(
+                children: ListTile.divideTiles(context: context, tiles: [
+                  _buildChatList(
+                      'si',
+                      '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라',
+                      '오전 11:25',
+                      1),
+                  _buildChatList('mj', '인석아 밥해줘....', '오전 11:22', 0),
+                  _buildChatList(
+                      'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:18', 1),
+                  _buildChatList(
+                    'yg', // user name
+                    '친구야 내가 레몬으로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라 ㅎㅎ ', //body content
+                    '오전 11:12', //time
+                    3, // unread message
+                  ),
+                ]).toList(),
+              )
+            : ListView(
+                children: ListTile.divideTiles(context: context, tiles: [
+                  _buildChatList(
+                    'yg', // user name
+                    '친구야 내가 레몬으로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라 ㅎㅎ ', //body content
+                    '오전 11:22', //time
+                    3, // unread message
+                  ),
+                  _buildChatList(
+                      'si',
+                      '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라',
+                      '오전 11:18',
+                      1),
+                  _buildChatList(
+                      'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:12', 1),
+                  _buildChatList('mj', '인석아 밥해줘....', '오전 11:25', 0),
+                ]).toList(),
+              ));
   }
 
   Widget _buildChatList(String user, String text, String time, int message) {
@@ -165,13 +205,14 @@ class ChatList extends StatelessWidget {
         trailing: Column(
           children: [
             Text(time),
-            CircleAvatar(
-              radius: 12,
-              backgroundColor: Colors.red,
-              child: Text(
-                message.toString(),
-              ),
-            )
+            if (message != 0)
+              CircleAvatar(
+                radius: 12,
+                backgroundColor: Colors.red,
+                child: Text(
+                  message.toString(),
+                ),
+              )
           ],
         ),
       ),
