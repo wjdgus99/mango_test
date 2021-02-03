@@ -1,6 +1,116 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ChatList extends StatelessWidget {
+  Widget buildBottomSheet(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(children: [
+            Expanded(
+                child: Divider(
+              indent: 180,
+              endIndent: 135,
+              thickness: 4,
+            )),
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+          ]),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text(
+                '편집',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              showMaterialModalBottomSheet(
+                  // useRootNavigator: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  context: context,
+                  builder: buildBottomSheet2);
+            },
+            child: ListTile(
+              title: Text(
+                '채팅방 정렬',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          // ListTile(
+          //   title: Text('전체 설정'),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildBottomSheet2(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(children: [
+            Expanded(
+                child: Divider(
+              indent: 180,
+              endIndent: 135,
+              thickness: 4,
+            )),
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+          ]),
+          InkWell(
+            onTap: () {
+              //TODO: sort by time
+            },
+            child: ListTile(
+              title: Text(
+                '최신 채팅 순',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              //TODO: sort by message cnt
+            },
+            child: ListTile(
+              title: Text(
+                '안 읽은 채팅 순',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          // ListTile(
+          //   title: Text('전체 설정'),
+          // ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +119,15 @@ class ChatList extends StatelessWidget {
           centerTitle: true,
           actions: [
             IconButton(
-                icon: Icon(Icons.settings), onPressed: () => print('settings'))
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  showMaterialModalBottomSheet(
+                      useRootNavigator: true,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      context: context,
+                      builder: buildBottomSheet);
+                })
           ],
         ),
         body: ListView(

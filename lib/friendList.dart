@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:mango_test/model/exampleRefrigerator.dart';
+import 'package:mango_test/manageFriend.dart';
 import 'package:mango_test/model/exampleUserList.dart';
-import 'model/food.dart';
 
 import 'package:mango_test/model/exampleUser.dart';
 import 'model/user.dart';
 
 import 'package:top_sheet/top_sheet.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class FriendList extends StatefulWidget {
   @override
@@ -20,18 +19,56 @@ class _FriendListState extends State<FriendList> {
   List<User> friendList = localUserList.loadUserList();
 
   Widget buildBottomSheet(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          child: Text('편집'),
-        ),
-        Container(
-          child: Text('친구 관리'),
-        ),
-        Container(
-          child: Text('전체 설정'),
-        ),
-      ],
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(children: [
+            Expanded(
+                child: Divider(
+              indent: 180,
+              endIndent: 135,
+              thickness: 4,
+            )),
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+          ]),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text(
+                '편집',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => ManageFriend()));
+            },
+            child: ListTile(
+              title: Text(
+                '친구 관리',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          // ListTile(
+          //   title: Text('전체 설정'),
+          // ),
+        ],
+      ),
     );
   }
 
@@ -47,34 +84,12 @@ class _FriendListState extends State<FriendList> {
           IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                final action = CupertinoActionSheet(
-                  title: Text("Cupertino Action Sheet"),
-                  message: Text("Select any action "),
-                  actions: <Widget>[
-                    CupertinoActionSheetAction(
-                      child: Text("Action 1"),
-                      isDefaultAction: true,
-                      onPressed: () {
-                        print("Action 1 is been clicked");
-                      },
-                    ),
-                    CupertinoActionSheetAction(
-                      child: Text("Action 2"),
-                      isDestructiveAction: true,
-                      onPressed: () {
-                        print("Action 2 is been clicked");
-                      },
-                    )
-                  ],
-                  cancelButton: CupertinoActionSheetAction(
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
-                showCupertinoModalPopup(
-                    context: context, builder: (context) => action);
+                showMaterialModalBottomSheet(
+                    useRootNavigator: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    context: context,
+                    builder: buildBottomSheet);
               })
         ],
       ),
