@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/friendList.dart';
+import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemRegistration.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
@@ -25,7 +26,7 @@ final CHART = '/chart';
 final FRIENDLIST = '/friendList';
 final ITEMREGIST = '/itemRegistration';
 final ITEMSELECT = '/itemSelect';
-
+final ITEMCREATE = '/itemCreate';
 var DeviceHeight;
 var DeviceWidth;
 
@@ -119,7 +120,7 @@ class MangoApp extends StatelessWidget {
       title: 'Mango Demo',
       home: HomePage(),
       theme: _MangoTheme,
-      initialRoute: LOGIN,
+      initialRoute: ITEMCREATE,
       routes: {
         LOGIN: (context) => LoginPage(),
         HOME: (context) => HomePage(),
@@ -133,6 +134,7 @@ class MangoApp extends StatelessWidget {
         FRIENDLIST: (context) => FriendList(),
         ITEMREGIST: (context) => ItemRegistration(),
         ITEMSELECT: (context) => ItemSelect(),
+        ITEMCREATE: (context) => ItemCreate(),
       },
     );
   }
