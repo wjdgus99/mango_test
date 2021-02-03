@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/friendList.dart';
+import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemRegistration.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
@@ -23,8 +24,9 @@ final DIRECTINPUT = '/directInput';
 final ADDINPUT = '/addFood';
 final CHART = '/chart';
 final FRIENDLIST = '/friendList';
-final ITEMREGIST = '/itemRegistration.dart';
+final ITEMREGIST = '/itemRegistration';
 final ITEMSELECT = '/itemSelect';
+final ITEMCREATE = '/itemCreate';
 var DeviceHeight;
 var DeviceWidth;
 
