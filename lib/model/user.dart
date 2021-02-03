@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class User with ChangeNotifier {
-  User(this.UserID,this.RefrigerID,this.Image,this.Name,this.SharedList);
+  User(this.UserID, this.RefrigerID, this.Image, this.Name, this.SharedList);
 
   String UserID; //유저 UID
   String RefrigerID; // 유저의 냉장고 ID
