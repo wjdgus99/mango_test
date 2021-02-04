@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
+import 'package:mango_test/itemCreate.dart';
+import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/model/exampleFood.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -9,6 +11,21 @@ import 'app.dart';
 import 'colors.dart';
 import 'model/RefryItem.dart';
 import 'model/food.dart';
+
+List<RefryItem> items = <RefryItem>[
+  RefryItem(
+    expandedValue: '1',
+    headerValue: '냉장',
+  ),
+  RefryItem(
+    expandedValue: '2',
+    headerValue: '냉동',
+  ),
+  RefryItem(
+    expandedValue: '3',
+    headerValue: '실온',
+  ),
+];
 
 class Refrigerator extends StatefulWidget {
   @override
@@ -20,22 +37,10 @@ class Refrigerator extends StatefulWidget {
 class _RefrigeratorState extends State<Refrigerator> {
   var Ex1 = localRefrigerator.loadFood();
   List<Food> Foods = localRefrigerator.loadFood();
-  bool isAllFold = false;
-
-  List<RefryItem> items = <RefryItem>[
-    RefryItem(
-      expandedValue: '1',
-      headerValue: '냉장',
-    ),
-    RefryItem(
-      expandedValue: '2',
-      headerValue: '냉동',
-    ),
-    RefryItem(
-      expandedValue: '3',
-      headerValue: '실온',
-    ),
-  ];
+  bool isAllFold = false; //mj: 모두 접기 버튼 누름 확인
+  bool isEdited = false; //mj: 선택버튼 누름 확인
+  int foldNum = 0; //mj: 접혀있는 개
+  int num = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,7 @@ class _RefrigeratorState extends State<Refrigerator> {
         body: TabBarView(
           children: [
             showTap1(Foods),
-            contents(Ex1),
+            showTap2(Foods),
           ],
         ),
       ),
@@ -77,37 +82,86 @@ class _RefrigeratorState extends State<Refrigerator> {
     return Column(
       children: <Widget>[
         Container(
-            height: DeviceHeight * 0.07,
             padding: EdgeInsets.all(DeviceWidth * 0.04),
             child: Row(
               children: [
                 Expanded(child: Text('전체 ${foods.length}개')),
-                isAllFold == true
-                    ? InkWell(
-                        child: Text('모두 펼치기'),
-                        onTap: () {
-                          setState(() {
-                            isAllFold = false;
-                            items.forEach((element) {element.isExpanded = true;});
-                          });
-                        },
+                isEdited == false
+                    ? Row(
+                        children: <Widget>[
+                          isAllFold == true
+                              ? InkWell(
+                                  child: Text('모두 펼치기'),
+                                  onTap: () {
+                                    setState(() {
+                                      isAllFold = false;
+                                      foldNum = 0;
+                                      items.forEach((element) {
+                                        element.isExpanded = true;
+                                      });
+                                    });
+                                  },
+                                )
+                              : InkWell(
+                                  child: Text('모두 접기'),
+                                  onTap: () {
+                                    setState(() {
+                                      isAllFold = true;
+                                      foldNum = items.length;
+                                      items.forEach((element) {
+                                        element.isExpanded = false;
+                                      });
+                                    });
+                                  },
+                                ),
+                          SizedBox(
+                            width: DeviceWidth * 0.05,
+                          ),
+                          InkWell(
+                            child: Text('선택 ✓'),
+                            onTap: () {
+                              setState(() {
+                                isEdited = true;
+                                isAllFold = false;
+                                items.forEach((element) {
+                                  element.isExpanded = true;
+                                });
+                              });
+                            },
+                          ),
+                        ],
                       )
-                    : InkWell(
-                        child: Text('모두 접기'),
-                        onTap: () {
-                          setState(() {
-                            isAllFold = true;
-                            items.forEach((element) {element.isExpanded = false;});
-                          });
-                        },
+                    : Row(
+                        children: <Widget>[
+                          InkWell(
+                            child: Text('수정'),
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            width: DeviceWidth * 0.05,
+                          ),
+                          InkWell(
+                            child: Text('삭제'),
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            width: DeviceWidth * 0.05,
+                          ),
+                          InkWell(
+                            child: Text('완료'),
+                            onTap: () {
+                              setState(() {
+                                isEdited = false;
+                              });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ItemCreate()));
+                            },
+                          ),
+                        ],
                       ),
-                SizedBox(
-                  width: DeviceWidth * 0.05,
-                ),
-                InkWell(
-                  child: Text('선택 ✓'),
-                  onTap: () {},
-                ),
               ],
             )),
         Expanded(
@@ -115,34 +169,116 @@ class _RefrigeratorState extends State<Refrigerator> {
             //padding: EdgeInsets.all(DeviceWidth * 0.05),
             itemCount: 3,
             itemBuilder: (BuildContext context, int index) {
-              return ExpansionPanelList(
-                animationDuration: Duration(seconds: 1),
-                children: [
-                  ExpansionPanel(
-                    body: contents(foods),
-                    headerBuilder: (BuildContext context, bool isExpanded) {
-                      return Container(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          items[index].headerValue,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      );
-                    },
-                    isExpanded: items[index].isExpanded,
-                  )
+              return ExpansionTile(
+                key: GlobalKey(),
+                title: Text('${items[index].headerValue}'),
+                initiallyExpanded: items[index].isExpanded,
+                children: <Widget>[
+                  contents(foods),
                 ],
-                expansionCallback: (int item, bool status) {
+                onExpansionChanged: ((newState) {
                   setState(() {
                     items[index].isExpanded = !items[index].isExpanded;
+                    if (items[index].isExpanded == false)
+                      foldNum++;
+                    else
+                      foldNum--;
+                    if (foldNum == items.length)
+                      isAllFold = true;
+                    else if (foldNum == 0) isAllFold = false;
                   });
-                },
+                }),
               );
+              // return ExpansionPanelList(
+              //   animationDuration: Duration(seconds: 1),
+              //   children: [
+              //     ExpansionPanel(
+              //       body: contents(foods),
+              //       headerBuilder: (BuildContext context, bool isExpanded) {
+              //         return Container(
+              //           padding: EdgeInsets.all(10),
+              //           child: Text(
+              //             items[index].headerValue,
+              //             style: TextStyle(
+              //               fontSize: 18,
+              //             ),
+              //           ),
+              //         );
+              //       },
+              //       isExpanded: items[index].isExpanded,
+              //     )
+              //   ],
+              //   expansionCallback: (int item, bool status) {
+              //     setState(() {
+              //       items[index].isExpanded = !items[index].isExpanded;
+              //       if (items[index].isExpanded == false)
+              //         foldNum++;
+              //       else
+              //         foldNum--;
+              //       if (foldNum == items.length)
+              //         isAllFold = true;
+              //       else if (foldNum == 0) isAllFold = false;
+              //     });
+              //   },
+              // );
             },
           ),
         ),
+      ],
+    );
+  }
+
+  Widget showTap2(List<Food> foods) {
+    return Column(
+      children: <Widget>[
+        Container(
+          width: DeviceWidth,
+          height: DeviceHeight * 0.15,
+          color: Theme.of(context).errorColor,
+        ),
+        Container(
+            padding: EdgeInsets.all(DeviceWidth * 0.04),
+            child: Row(
+              children: [
+                Expanded(child: Text('전체 ${foods.length}개')),
+                isEdited == false
+                    ? InkWell(
+                        child: Text('선택 ✓'),
+                        onTap: () {
+                          setState(() {
+                            isEdited = true;
+                          });
+                        },
+                      )
+                    : Row(
+                        children: <Widget>[
+                          InkWell(
+                            child: Text('수정'),
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            width: DeviceWidth * 0.05,
+                          ),
+                          InkWell(
+                            child: Text('삭제'),
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            width: DeviceWidth * 0.05,
+                          ),
+                          InkWell(
+                            child: Text('완료'),
+                            onTap: () {
+                              setState(() {
+                                isEdited = false;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+              ],
+            )),
+        Expanded(child: contents(foods)),
       ],
     );
   }
@@ -154,74 +290,118 @@ class _RefrigeratorState extends State<Refrigerator> {
       return Container(
         height: DeviceHeight * 0.5, //mj: ListView 내의 ListView = Height가 정해진다.
         child: ListView.separated(
-          padding: EdgeInsets.all(DeviceWidth * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: DeviceWidth * 0.05),
           itemCount: foods.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: DeviceHeight * 87 / 812,
-              decoration: BoxDecoration(
-                color: foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
-                border: Border.all(
-                  color: Color(0xFFF9F8F6),
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-              ),
-              child: Center(
-                child: Row(
-                  children: <Widget>[
-                    Stack(
+            return Stack(
+              children: [
+                Container(
+                  height: DeviceHeight * 87 / 812,
+                  decoration: BoxDecoration(
+                    color:
+                        foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
+                    border: Border.all(
+                      color: Color(0xFFF9F8F6),
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
+                    ),
+                  ),
+                  child: Center(
+                    child: Row(
                       children: <Widget>[
-                        Image.asset(
-                          'images/foods/lemon.png',
-                          width: DeviceWidth * 82 / 375,
-                          height: DeviceHeight * 67 / 812,
-                          fit: BoxFit.contain,
-                        ),
-                        foods[index].DueDate <= 0
-                            ? Positioned(top: 0, left: 5, child: dDate('OVER'))
-                            : foods[index].DueDate <= 3
+                        Stack(
+                          children: <Widget>[
+                            Image.asset(
+                              'images/foods/lemon.png',
+                              width: DeviceWidth * 82 / 375,
+                              height: DeviceHeight * 67 / 812,
+                              fit: BoxFit.contain,
+                            ),
+                            foods[index].DueDate <= 0
                                 ? Positioned(
-                                    top: 0,
-                                    left: 5,
-                                    child: dDate('D - ${foods[index].DueDate}'))
-                                : SizedBox(),
+                                    top: 0, left: 5, child: dDate('OVER'))
+                                : foods[index].DueDate <= 3
+                                    ? Positioned(
+                                        top: 0,
+                                        left: 5,
+                                        child: dDate(
+                                            'D - ${foods[index].DueDate}'))
+                                    : SizedBox(),
+                          ],
+                        ),
+                        Spacer(
+                          flex: 1,
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.only(top: DeviceHeight * 20 / 812),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                '${foods[index].name}',
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                              Text(
+                                '21년 01월 07일 까지',
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(
+                          flex: 3,
+                        ),
+                        InkWell(
+                            child: Text('${foods[index].num} ▾'),
+                            onTap: () {
+                              showCupertinoPicker(index);
+                            }),
+                        Spacer(
+                          flex: 1,
+                        ),
                       ],
                     ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: DeviceHeight * 20 / 812),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '${foods[index].name}',
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          Text(
-                            '21년 01월 07일 까지',
-                            style: Theme.of(context).textTheme.subtitle2,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacer(
-                      flex: 3,
-                    ),
-                    InkWell(
-                        child: Text('${foods[index].num} ▾'),
-                        onTap: () {
-                          showCupertinoPicker(index);
-                        }),
-                    Spacer(
-                      flex: 1,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                isEdited == true
+                    ? Positioned(
+                        top: -5,
+                        right: 8,
+                        child: SizedBox(
+                          width: 18,
+                          child: Stack(
+                            children: [
+                              RaisedButton(
+                                shape: CircleBorder(),
+                                color: foods[index].isSelected == false
+                                    ? Colors.grey
+                                    : Theme.of(context).accentColor,
+                                onPressed: () {
+                                  setState(() {
+                                    if (foods[index].isSelected == false) {
+                                      num++;
+                                      foods[index].isSelected = true;
+                                      foods[index].selectedNum = num;
+                                      print(index);
+                                    } else {
+                                      num--;
+                                      foods[index].isSelected = false;
+                                      foods[index].selectedNum = num;
+                                    }
+                                  });
+                                },
+                              ),
+                              foods[index].isSelected == false
+                                  ? SizedBox()
+                                  : Text('${foods[index].selectedNum}'),
+                            ],
+                          ),
+                        ),
+                      )
+                    : SizedBox(),
+              ],
             );
           },
           separatorBuilder: (BuildContext context, int index) => const SizedBox(
@@ -259,24 +439,39 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   Future<dynamic> showCupertinoPicker(int index) {
     return showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(10.0),
+          topRight: const Radius.circular(10.0),
+        )),
         context: context,
         builder: (BuildContext builder) {
           return Container(
             height: DeviceHeight * 0.3,
-            child: CupertinoPicker(
-              itemExtent: 32,
-              onSelectedItemChanged: (int newValue) {
-                setState(() {
-                  Foods[index].num = newValue + 1;
-                });
-              },
-              children: List<Widget>.generate(20, (int index) {
-                return Text(
-                  (++index).toString(),
-                );
-              }),
-              scrollController:
-                  FixedExtentScrollController(initialItem: Foods[index].num),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text('수량'),
+                ),
+                Expanded(
+                  child: CupertinoPicker(
+                    itemExtent: 32,
+                    onSelectedItemChanged: (int newValue) {
+                      setState(() {
+                        Foods[index].num = newValue + 1;
+                      });
+                    },
+                    children: List<Widget>.generate(20, (int index) {
+                      return Text(
+                        (++index).toString(),
+                      );
+                    }),
+                    scrollController: FixedExtentScrollController(
+                        initialItem: Foods[index].num),
+                  ),
+                ),
+              ],
             ),
           );
         });
