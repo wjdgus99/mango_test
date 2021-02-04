@@ -3,11 +3,11 @@ import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_d
 
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/camera.dart';
-import 'package:mango_test/friendList.dart';
+import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/nutrition.dart';
-import 'package:mango_test/profile.dart';
+import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/refrigerator.dart';
-import 'package:mango_test/share.dart';
+import 'package:mango_test/Share/share.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';

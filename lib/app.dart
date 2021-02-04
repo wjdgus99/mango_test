@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/friendList.dart';
+import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemRegistration.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
-import 'package:mango_test/profile.dart';
+import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/nutrition.dart';
-import 'package:mango_test/share.dart';
+import 'package:mango_test/Share/share.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodDirect.dart';
 import 'model/nutrition/chart.dart';

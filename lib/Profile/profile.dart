@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mango_test/model/user.dart' as localUser;
 import 'package:provider/provider.dart';
 
-import 'app.dart';
+import '../app.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -194,31 +194,29 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget imageProfile(localUser.User user) {
-    return Center(
-      child: Stack(
-        children: <Widget>[
-          CircleAvatar(
-            radius: 80,
-            //TODO: Need To change - get from storage.
-            backgroundImage: AssetImage(
-                /*user.Image*/
-                'images/profile_image.png'),
-            backgroundColor: Colors.white,
-          ),
-          Positioned(
-            top: 25,
-            right: 5,
-            child: Container(
-              width: 40,
-              height: 40,
-              child: FloatingActionButton(
-                onPressed: () => getImage(),
-                child: Icon(Icons.add),
-              ),
+    return Stack(
+      children: <Widget>[
+        CircleAvatar(
+          radius: 45,
+          //TODO: Need To change - get from storage.
+          backgroundImage: AssetImage(
+              /*user.Image*/
+              'images/profile_image.png'),
+          backgroundColor: Colors.white,
+        ),
+        Positioned(
+          top: 5,
+          left: 60,
+          child: Container(
+            width: 30,
+            height: 30,
+            child: FloatingActionButton(
+              onPressed: () => getImage(),
+              child: Icon(Icons.add),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

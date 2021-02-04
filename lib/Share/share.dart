@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mango_test/chatList.dart';
+import 'package:mango_test/Chat/chatList.dart';
 import 'package:mango_test/colors.dart';
-import 'package:mango_test/friendList.dart';
-import 'package:mango_test/history.dart';
+import 'package:mango_test/Friend/friendList.dart';
+import 'package:mango_test/Share/history.dart';
 import 'package:mango_test/main.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:search_widget/search_widget.dart';
 
-import 'model/food.dart';
+import '../model/food.dart';
 
 class Share extends StatefulWidget {
   @override
@@ -65,7 +65,7 @@ class _ShareState extends State<Share> {
                           builder: (BuildContext context) => ChatList()));
                 }),
             IconButton(
-                icon: Icon(Icons.article_outlined),
+                icon: Icon(Icons.notifications_none),
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -113,7 +113,7 @@ class _ShareState extends State<Share> {
                     CircleAvatar(
                       radius: 45,
                       backgroundImage: AssetImage('images/foods/$food.png'),
-                      backgroundColor: Colors.lightGreenAccent[100],
+                      backgroundColor: Colors.grey[200],
                     ),
                     Positioned(
                       left: 50,
