@@ -1,18 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mango_test/refrigerator.dart';
 
 import './food.dart';
 
-class UserRefrigerator {
+class UserRefrigerator extends ChangeNotifier {
   String _RefrigeratorID;
+
+  set RefrigeratorID(String RID) {
+    _RefrigeratorID = RID;
+    notifyListeners();
+  }
+
   String get RefrigeratorID => _RefrigeratorID;
 
-  List<Food> Foods; // IS - Food Lists.
+  List<Food> Foods = [Food()]; // IS - Food Lists.
   List<int> StorageAlarm; // IS - [ 0 - 냉장 / 1 - 냉동 / 2 - 실온] 별 알람 일자.
 
   // IS - 한눈에 보기를 위한 리스트.
-  List<Food> _RefrigerationFoods;
-  List<Food> _FrozenFoods;
-  List<Food> _RoomTempFoods;
+  List<Food> _RefrigerationFoods = [Food()];
+  List<Food> _FrozenFoods = [Food()];
+  List<Food> _RoomTempFoods = [Food()];
 
   // TODO: IS - 혹시 아래 setter 코드가 안 먹으면, comment처리해 놓은 setter로 사용.
   // set RefrigerationFoods(List<Food> foods) {
@@ -28,8 +35,8 @@ class UserRefrigerator {
   // }
 
   // IS - Setter / Getter (한눈에 보기)
-  set RefrigerationFoods(List<Food> foods) =>
-      _FrozenFoods.addAll(foods.where((element) => element.storeLevel == 0));
+  set RefrigerationFoods(List<Food> foods) => _RefrigerationFoods.addAll(
+      foods.where((element) => element.storeLevel == 0));
   set FrozenFoods(List<Food> foods) =>
       _FrozenFoods.addAll(foods.where((element) => element.storeLevel == 1));
   set RoomTempFoods(List<Food> foods) =>
@@ -37,15 +44,15 @@ class UserRefrigerator {
 
   List<Food> get RefrigerationFoods => _RefrigerationFoods;
   List<Food> get FrozenFoods => _FrozenFoods;
-  List<Food> get RoomtempFoods => _RoomTempFoods;
+  List<Food> get RoomTempFoods => _RoomTempFoods;
 
   // IS - 유통기한별 보기 리스트 (구매일 기준, 남은 유통기한 기준)
-  List<Food> _RegisterDateFoods;
-  List<Food> _RemainDateFoods;
+  List<Food> _RegisterDateFoods = [Food()];
+  List<Food> _RemainDateFoods = [Food()];
 
   // IS - Setter / Getter (유통기한별 보기)
   set RegisterDateFoods(List<Food> foods) =>
-      _RefrigerationFoods.addAll(foods.where((element) => element.isSelected));
+      _RegisterDateFoods.addAll(foods.where((element) => element.isSelected));
   set RemainDateFoods(List<Food> foods) =>
       _RemainDateFoods.addAll(foods.where((element) => !element.isSelected));
 
@@ -54,13 +61,14 @@ class UserRefrigerator {
 
   //TODO: IS - DB에 올릴 때는 Future로 바꿔야 할 듯(add, update, delete).
   // IS - 등록페이지에서 사용할 Function들(add, update, delete).
+
   void AddFoodLists(List<Food> foods) {
     for (int i = 0; i < foods.length; i++) {
-      foods[i].storeLevel == 0
-          ? _RefrigerationFoods.add(foods[i])
-          : foods[i].storeLevel == 1
-              ? _FrozenFoods.add(foods[i])
-              : _RoomTempFoods.add(foods[i]);
+      // foods[i].storeLevel == 0
+      //     ? _RefrigerationFoods.add(foods[i])
+      //     : foods[i].storeLevel == 1
+      //         ? _FrozenFoods.add(foods[i])
+      //         : _RoomTempFoods.add(foods[i]);
       // IS - DB에는 Foods만, 나머지는 받아와서 분류해주는 식으로. 리던던시 방지.
       Foods.add(foods[i]);
     }

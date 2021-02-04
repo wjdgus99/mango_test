@@ -1,13 +1,87 @@
 import 'package:mango_test/model/user.dart' as localUser;
+import 'package:mango_test/model/userRefrigerator.dart';
 
-String UserID; //유저 UID
-String RefrigerID; // 유저의 냉장고 ID
-String Image; //프로필사진
-String Name;
-List<String> FriendList; //IS - 친구 목록
-List<String> SharedList; //IS - 내가 공유하고 있는 품목 목록
-List<String>
-    TradeLog; // IS - 전체 거래 목록 TODO: redundancy of the data(내가 팔았던 목록도 포함시킬 지) vs. More operation. (포함 시키지 않고 연산으로 처리할 지)
-int PhoneNumber;
+import 'food.dart';
 
-// localUser.User user = localUser.User();
+List<Food> sampleFoodList = [
+  Food(
+    name: '레몬',
+    registerDate: DateTime(-11),
+    purchaseDate: DateTime(-12),
+    DueDate: 12,
+    num: 1,
+    storeLevel: 2,
+    category: '과일/채소',
+    isSelected: true,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '파프리카',
+    registerDate: DateTime(0),
+    purchaseDate: DateTime(-1),
+    DueDate: 1,
+    num: 3,
+    storeLevel: 0,
+    category: '과일/채소',
+    isSelected: true,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '오이',
+    registerDate: DateTime(0),
+    purchaseDate: DateTime(-7),
+    DueDate: 7,
+    num: 1,
+    storeLevel: 2,
+    category: '과일/채소',
+    isSelected: true,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '고추',
+    registerDate: DateTime(-2),
+    purchaseDate: DateTime(-14),
+    DueDate: 12,
+    num: 2,
+    storeLevel: 0,
+    category: '과일/채소',
+    isSelected: true,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '만두',
+    shelfLife: DateTime(29),
+    registerDate: DateTime(-2),
+    purchaseDate: DateTime(-4),
+    DueDate: 25,
+    num: 1,
+    storeLevel: 1,
+    category: '냉장/냉동식품',
+    isSelected: false,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '앞다리살',
+    shelfLife: DateTime(12),
+    registerDate: DateTime(-11),
+    purchaseDate: DateTime(-12),
+    DueDate: 0,
+    num: 1,
+    storeLevel: 1,
+    category: '냉장/냉동식품',
+    isSelected: false,
+    selectedNum: 0,
+  ),
+  Food(
+    name: '고등어',
+    shelfLife: DateTime(12),
+    registerDate: DateTime(0),
+    purchaseDate: DateTime(-2),
+    DueDate: 10,
+    num: 3,
+    storeLevel: 1,
+    category: '수산류',
+    isSelected: false,
+    selectedNum: 0,
+  ),
+];
