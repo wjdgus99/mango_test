@@ -164,15 +164,6 @@ class LoginPage extends StatelessWidget {
         LocalUser.PhoneNumber = userCredential.user.phoneNumber;
 
         userRefrigerator.RefrigeratorID = LocalUser.RefrigerID;
-        if (userRefrigerator.Foods != null) {
-          print('Before: ${userRefrigerator.Foods.first}');
-        } else {
-          print('Bofore: null');
-        }
-
-        userRefrigerator.AddFoodLists(sampleFoodList);
-
-        print('After: ${userRefrigerator.Foods}');
 
         /* IS - TODO: Refrigerator.RefrigeratorID = LocalUser.RefrigeratorID;
           Get data from DB referenced by Refrigerator.RefrigeratorID
@@ -186,8 +177,8 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  Future<void> _kakaoLogin(
-      BuildContext context, localUser.User LocalUser) async {
+  Future<void> _kakaoLogin(BuildContext context, localUser.User LocalUser,
+      UserRefrigerator userRefrigerator) async {
     try {
       final installed = await kakao.isKakaoTalkInstalled();
       String authCode = installed
@@ -211,6 +202,8 @@ class LoginPage extends StatelessWidget {
         LocalUser.Image = kakaoUser.properties['profile_image'];
         LocalUser.Name = kakaoUser.properties['nickname'];
 
+        userRefrigerator.RefrigeratorID = LocalUser.RefrigerID;
+
         /* IS - TODO: Refrigerator.RefrigeratorID = LocalUser.RefrigeratorID;
           Get data from DB referenced by Refrigerator.RefrigeratorID
           Set data of Refrigerator Provider from DB
@@ -223,6 +216,28 @@ class LoginPage extends StatelessWidget {
     } catch (e) {
       print(e);
     }
+  }
+
+  void getRefrigeratorFromUser(UserRefrigerator userRefrigerator) {
+    userRefrigerator.Foods.removeAt(0);
+    userRefrigerator.AddFoodLists(sampleFoodList);
+
+    userRefrigerator.RefrigerationFoods.removeAt(0);
+    userRefrigerator.FrozenFoods.removeAt(0);
+    userRefrigerator.RoomTempFoods.removeAt(0);
+    userRefrigerator.RefrigerationFoods = userRefrigerator.Foods;
+    userRefrigerator.FrozenFoods = userRefrigerator.Foods;
+    userRefrigerator.RoomTempFoods = userRefrigerator.Foods;
+    // print('Store 0: ${userRefrigerator.RefrigerationFoods.length}');
+    // print('Store 1: ${userRefrigerator.FrozenFoods.length}');
+    // print('Store 2: ${userRefrigerator.RoomTempFoods.length}');
+
+    userRefrigerator.RegisterDateFoods.removeAt(0);
+    userRefrigerator.RemainDateFoods.removeAt(0);
+    userRefrigerator.RegisterDateFoods = userRefrigerator.Foods;
+    userRefrigerator.RemainDateFoods = userRefrigerator.Foods;
+    // print('Store 0: ${userRefrigerator.RegisterDateFoods.length}');
+    // print('Store 1: ${userRefrigerator.RemainDateFoods.length}');
   }
 
 // Future<void> parseEmailAuth(BuildContext context, String email) async {
