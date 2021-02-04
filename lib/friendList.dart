@@ -4,6 +4,9 @@ import 'package:mango_test/manageFriend.dart';
 import 'package:mango_test/model/exampleUserList.dart';
 
 import 'package:mango_test/model/exampleUser.dart';
+import 'package:mango_test/test_model/exampleTestUser.dart';
+import 'package:mango_test/test_model/exampleTestUserList.dart';
+import 'package:mango_test/test_model/testUser.dart';
 import 'model/user.dart';
 
 import 'package:top_sheet/top_sheet.dart';
@@ -15,8 +18,8 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State<FriendList> {
-  User user = localUser.loadUser();
-  List<User> friendList = localUserList.loadUserList();
+  TestUser user = localTestUser.loadUser();
+  List<TestUser> friendList = localTestUserList.loadUserList();
 
   Widget buildBottomSheet(BuildContext context) {
     return Container(

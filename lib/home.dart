@@ -34,15 +34,14 @@ class _HomePageState extends State<HomePage> {
     'nutrition': GlobalKey<NavigatorState>(),
     'mypage': GlobalKey<NavigatorState>(),
   };
+
   int _selectedIndex = 0;
 
   void _selectTab(String tabItem, int index) {
     if (tabItem == _currentPage) {
-      print('1');
       _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
     } else {
       setState(() {
-        print('2');
         _currentPage = pageKeys[index];
         _selectedIndex = index;
       });
