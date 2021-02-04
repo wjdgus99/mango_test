@@ -10,15 +10,21 @@ class MyProduct extends StatefulWidget {
 class _MyProductState extends State<MyProduct> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('2021.01.18'),
-        ),
-        buildCard('paprika', 'jh', '파프리카 으웩', 30, true),
-        buildCard('바나나', 'jh', '덜익은 바나나 먹을사람~', 120, false),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('나의 거래 글'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('2021.01.18'),
+          ),
+          buildCard('paprika', 'jh', '파프리카 으웩', 30, true),
+          buildCard('바나나', 'jh', '덜익은 바나나 먹을사람~', 120, false),
+        ],
+      ),
     );
   }
 

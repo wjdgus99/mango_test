@@ -2,27 +2,33 @@ import 'package:flutter/material.dart';
 
 import '../colors.dart';
 
-class MyTrade extends StatefulWidget {
+class MyTradeList extends StatefulWidget {
   @override
   _MyTradeState createState() => _MyTradeState();
 }
 
-class _MyTradeState extends State<MyTrade> {
+class _MyTradeState extends State<MyTradeList> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('2021.01.18'),
-        ),
-        buildCard('바나나우유', 'si', '바나나 우유 드릴게용~', 3, false),
-        buildCard('비요뜨', 'yg', '먹을사람 가져가시오!', 12, true),
-        buildCard('paprika', 'jh', '파프리카 으웩', 30, true),
-        buildCard('cucumber', 'is', '오이 남습니다 가져가세요.', 60, false),
-        buildCard('lemon', 'mj', '레몬 뀹><', 65, true),
-        buildCard('바나나', 'jh', '덜익은 바나나 먹을사람~', 120, false),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('나의 거래 내역'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('2021.01.18'),
+          ),
+          buildCard('바나나우유', 'si', '바나나 우유 드릴게용~', 3, false),
+          buildCard('비요뜨', 'yg', '먹을사람 가져가시오!', 12, true),
+          buildCard('paprika', 'jh', '파프리카 으웩', 30, true),
+          buildCard('cucumber', 'is', '오이 남습니다 가져가세요.', 60, false),
+          buildCard('lemon', 'mj', '레몬 뀹><', 65, true),
+          buildCard('바나나', 'jh', '덜익은 바나나 먹을사람~', 120, false),
+        ],
+      ),
     );
   }
 

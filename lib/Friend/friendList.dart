@@ -19,7 +19,6 @@ class FriendList extends StatefulWidget {
 
 class _FriendListState extends State<FriendList> {
   TestUser user = localTestUser.loadUser();
-  List<TestUser> friendList = localTestUserList.loadUserList();
 
   Widget buildBottomSheet(BuildContext context) {
     return Container(
@@ -96,45 +95,28 @@ class _FriendListState extends State<FriendList> {
               })
         ],
       ),
-      body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(user.Image),
-            ),
-            title: Text(user.Name),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(user.Image),
-            ),
-            title: Text(user.FriendList.toString()),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(user.Image),
-            ),
-            title: Text(friendList.length.toString()),
-          ),
-        ),
-      ]),
+      body: ListView.builder(
+          itemCount: user.FriendList.length,
+          itemBuilder: (context, int index) {
+            return _buildFriendList(index);
+          }),
     );
   }
 
-  Widget _buildFriendList() {
-    return ListTile(
-        leading: Image.asset(user.Image),
-        title: Text(friendList.length.toString()));
+  Widget _buildFriendList(int index) {
+    return Container(
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.2))),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage(user.FriendList[index].Image),
+          ),
+          title: Text(user.FriendList[index].Name),
+        ),
+      ),
+    );
   }
 
   Widget _topSheet() {

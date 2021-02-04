@@ -3,10 +3,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mango_test/model/user.dart' as localUser;
+
+// import 'package:mango_test/model/user.dart' as localUser;
+import 'package:mango_test/test_model/exampleTestUser.dart';
+import 'package:mango_test/test_model/testUser.dart';
 import 'package:provider/provider.dart';
 
 import '../app.dart';
+import '../colors.dart';
+import 'myTradeList.dart';
+import 'myProduct.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -18,7 +24,6 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nickNameController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
 
   bool isSwitched = true;
   String dropdownValue = 'Option 1';
@@ -27,6 +32,8 @@ class _ProfileState extends State<Profile> {
   final picker = ImagePicker();
   File _image;
 
+  TestUser _user = localTestUser.loadUser();
+
   @override
   void initState() {
     super.initState();
@@ -34,97 +41,162 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<localUser.User>(builder: (context, user, child) {
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
-          centerTitle: true,
-          title: Text('마이페이지'),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                color: Theme.of(context).accentColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                onPressed: () => print('Save Profile'),
-                child: Text('저장'),
-              ),
-            )
-          ],
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          child: ListView(
-            padding: EdgeInsets.all(DeviceWidth * 0.1),
-            children: <Widget>[
-              imageProfile(user),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(top: 15), // 얘는, flexible 할 필요 X
-                child: Text(
-                  "계정정보",
-                  style: Theme.of(context).textTheme.subtitle1.copyWith(
-                        color: Theme.of(context).accentColor,
-                      ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.all(DeviceWidth * 0.04),
+    // return Consumer<localUser.User>(builder: (context, user, child) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+        centerTitle: true,
+        title: Text('마이페이지'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              onPressed: () => print('Save Profile'),
+              child: Text('저장'),
+            ),
+          )
+        ],
+      ),
+      body: ListView(
+        // padding: EdgeInsets.all(DeviceWidth * 0.05),
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                SizedBox(width: 100, child: imageProfile(_user)),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                            hintText: (user.Email == null) ? '이메일' : user.Email,
-                            hintStyle: Theme.of(context).textTheme.headline5),
-                      ),
-                      TextField(
-                        controller: _nickNameController,
-                        decoration: InputDecoration(
-                            hintText: (user.Name == null) ? '이름' : user.Name,
-                            hintStyle: Theme.of(context).textTheme.headline5),
-                      ),
-                    ],
-                  )),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  "알림설정",
-                  style: Theme.of(context).textTheme.subtitle1.copyWith(
-                        color: Theme.of(context).accentColor,
-                      ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.all(DeviceWidth * 0.04),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: Text('유통기한 만료 알림',
-                                  style:
-                                      Theme.of(context).textTheme.headline5)),
-                          Switch(
-                              value: isSwitched,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                });
-                              }),
-                        ],
-                      ),
-                      dropDownMenu(),
-                    ],
-                  )),
-            ],
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _user.Name,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        Text(
+                          '#' + _user.UserID,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ]),
+                )
+              ],
+            ),
           ),
-        ),
-      );
-    });
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    ButtonTheme.fromButtonThemeData(
+                      data: Theme.of(context).buttonTheme.copyWith(
+                            minWidth: 70,
+                            height: 70,
+                          ),
+                      child: FlatButton(
+                        color: Colors.grey[100],
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MyTradeList()));
+                        },
+                        shape: CircleBorder(),
+                        child: Icon(
+                          Icons.playlist_add_check,
+                          size: 40,
+                          color: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme
+                              .secondary,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '전체 거래 내역',
+                        style: Theme.of(context).textTheme.headline5.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    ButtonTheme.fromButtonThemeData(
+                      data: Theme.of(context).buttonTheme.copyWith(
+                            minWidth: 70,
+                            height: 70,
+                          ),
+                      child: FlatButton(
+                        color: Colors.grey[100],
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      MyProduct()));
+                        },
+                        shape: CircleBorder(),
+                        child: Icon(Icons.person_outline_rounded,
+                            size: 40,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Text(
+                        '나의 거래 글',
+                        style: Theme.of(context).textTheme.headline5.copyWith(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            thickness: 5,
+            color: Colors.grey[200],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "계정정보",
+              ),
+            ),
+          ),
+          Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "알림설정",
+              ),
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+    // });
   }
 
   Widget dropDownMenu() {
@@ -193,7 +265,7 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Widget imageProfile(localUser.User user) {
+  Widget imageProfile(TestUser user) {
     return Stack(
       children: <Widget>[
         CircleAvatar(
@@ -201,12 +273,13 @@ class _ProfileState extends State<Profile> {
           //TODO: Need To change - get from storage.
           backgroundImage: AssetImage(
               /*user.Image*/
-              'images/profile_image.png'),
+              // 'images/users.png'
+              user.Image),
           backgroundColor: Colors.white,
         ),
         Positioned(
-          top: 5,
-          left: 60,
+          top: 50,
+          left: 70,
           child: Container(
             width: 30,
             height: 30,
