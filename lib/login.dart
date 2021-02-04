@@ -98,7 +98,8 @@ class LoginPage extends StatelessWidget {
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () => _kakaoLogin(context, user),
+                    onPressed: () =>
+                        _kakaoLogin(context, user, userRefrigerator),
                     icon: Icon(Icons.account_box),
                     label: Text(
                       '카카오계정으로 시작하기',
