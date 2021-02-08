@@ -12,6 +12,8 @@ import '../model/user.dart';
 import 'package:top_sheet/top_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'add/phone.dart';
+
 class FriendList extends StatefulWidget {
   @override
   _FriendListState createState() => _FriendListState();
@@ -148,7 +150,12 @@ class _FriendListState extends State<FriendList> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.contact_phone),
-                    onPressed: () => print('연락처로 추가'),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Phone()));
+                    },
                   ),
                   Text('연락처로 추가')
                 ],

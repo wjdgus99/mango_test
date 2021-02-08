@@ -39,6 +39,59 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  Widget dropDownMenu() {
+    return Container(
+      height: 60,
+      child: InputDecorator(
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        ),
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton(
+            isExpanded: true,
+            value: dropdownValue,
+            icon: Icon(
+              Icons.arrow_drop_down,
+              color: Theme.of(context).accentColor,
+              size: 30,
+            ),
+            // elevation: 16,
+            // underline: DropdownButtonHideUnderline(child: Container()),
+            items: <DropdownMenuItem>[
+              DropdownMenuItem(
+                value: 'Option 1',
+                child: Text('만료 2일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 2',
+                child: Text('만료 3일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 3',
+                child: Text('만료 5일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+              DropdownMenuItem(
+                value: 'Option 4',
+                child: Text('만료 7일전',
+                    style: Theme.of(context).textTheme.headline5),
+              ),
+            ],
+            onChanged: (value) {
+              setState(() {
+                dropdownValue = value;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Consumer<localUser.User>(builder: (context, user, child) {
@@ -122,7 +175,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '전체 거래 내역',
+                        '나의 거래 내역',
                         style: Theme.of(context).textTheme.headline5.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
@@ -197,59 +250,6 @@ class _ProfileState extends State<Profile> {
       ),
     );
     // });
-  }
-
-  Widget dropDownMenu() {
-    return Container(
-      height: 60,
-      child: InputDecorator(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton(
-            isExpanded: true,
-            value: dropdownValue,
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Theme.of(context).accentColor,
-              size: 30,
-            ),
-            // elevation: 16,
-            // underline: DropdownButtonHideUnderline(child: Container()),
-            items: <DropdownMenuItem>[
-              DropdownMenuItem(
-                value: 'Option 1',
-                child: Text('만료 2일전',
-                    style: Theme.of(context).textTheme.headline5),
-              ),
-              DropdownMenuItem(
-                value: 'Option 2',
-                child: Text('만료 3일전',
-                    style: Theme.of(context).textTheme.headline5),
-              ),
-              DropdownMenuItem(
-                value: 'Option 3',
-                child: Text('만료 5일전',
-                    style: Theme.of(context).textTheme.headline5),
-              ),
-              DropdownMenuItem(
-                value: 'Option 4',
-                child: Text('만료 7일전',
-                    style: Theme.of(context).textTheme.headline5),
-              ),
-            ],
-            onChanged: (value) {
-              setState(() {
-                dropdownValue = value;
-              });
-            },
-          ),
-        ),
-      ),
-    );
   }
 
   Future getImage() async {

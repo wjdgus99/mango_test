@@ -17,6 +17,9 @@ class _MyTradeState extends State<MyTradeList> {
       ),
       body: ListView(
         children: [
+          Container(
+
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text('2021.01.18'),
