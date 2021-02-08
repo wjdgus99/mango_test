@@ -55,6 +55,33 @@ class localRefrigerator {
         isSelected: false,
         selectedNum: 0,
       ),
+      Food(
+        name: 'cucumber',
+        DueDate: 12,
+        num: 2,
+        category: '과일/채소',
+        // foodimg: 'images/foods/pepper.png',
+        isSelected: false,
+        selectedNum: 0,
+      ),
+      Food(
+        name: 'paprika',
+        DueDate: 12,
+        num: 2,
+        category: '과일/채소',
+        // foodimg: 'images/foods/pepper.png',
+        isSelected: false,
+        selectedNum: 0,
+      ),
+      Food(
+        name: 'pepper',
+        DueDate: 12,
+        num: 2,
+        category: '과일/채소',
+        // foodimg: 'images/foods/pepper.png',
+        isSelected: false,
+        selectedNum: 0,
+      ),
     ];
 
     return Foods;

@@ -8,6 +8,7 @@ import 'package:mango_test/main.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:search_widget/search_widget.dart';
+import 'package:tabnavigator/tabnavigator.dart';
 
 import '../model/food.dart';
 
@@ -21,14 +22,13 @@ class Share extends StatefulWidget {
 class _ShareState extends State<Share> {
   bool none = false;
 
-  TextEditingController _textController = TextEditingController();
+  // final List<String> list = List.generate(20, (index) => 'Test $index');
 
-  //TODO: 여기  집중집중!!
-  //TODO: 여기  집중집중!!
-  //TODO: 여기  집중집중!!
-  // JH : 여기 아래 코드 보면 알 수 있듯이 이건 test_model말고 그냥 기존 model의 food.dart를 사용했습니다!!
   static List<Food> mainDataList = localRefrigerator.loadFood();
   List<Food> newDataList = List.from(mainDataList);
+
+  final List<String> list =
+      List.generate(mainDataList.length, (index) => mainDataList[index].name);
 
   onItemChanged(String value) {
     setState(() {
@@ -90,6 +90,11 @@ class _ShareState extends State<Share> {
               )
             : ListView(
                 children: [
+                  IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        showSearch(context: context, delegate: Search(list));
+                      }),
                   buildCard('paprika', 'is'),
                   buildCard('pepper', 'mj'),
                   buildCard('lemon', 'jh'),
@@ -174,5 +179,69 @@ class _ShareState extends State<Share> {
         ),
       ),
     );
+  }
+}
+
+class Search extends SearchDelegate {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return <Widget>[
+      IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  String selectedResult;
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container(
+      child: Center(
+        child: Text('HI'),
+      ),
+    );
+  }
+
+  final List<String> listExample;
+
+  Search(this.listExample);
+
+  List<String> recentList = ['lemon', 'mango'];
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> suggestionList = [];
+    query.isEmpty
+        ? suggestionList = recentList
+        : suggestionList.addAll(listExample.where(
+            (element) => element.contains(query),
+          ));
+
+    return ListView.builder(
+        itemCount: suggestionList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(suggestionList[index]),
+            onTap: () {
+              selectedResult = suggestionList[index];
+              // recentList.add(query);
+              showResults(context);
+            },
+          );
+        });
   }
 }
