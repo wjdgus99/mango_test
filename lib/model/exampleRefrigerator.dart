@@ -1,4 +1,4 @@
-import 'food.dart';
+import 'users/food.dart';
 
 class localRefrigerator {
   //한명의 Refrigerator (흐름: 전체 Refrigerator 목록 중, userID와 해당하는 refriID를가진 친구 COMECOME!)

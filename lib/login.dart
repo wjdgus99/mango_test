@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart' as google;
 import 'package:kakao_flutter_sdk/all.dart' as kakao;
 import 'package:mango_test/model/exampleUser.dart';
-import 'package:mango_test/model/user.dart' as localUser;
-import 'package:mango_test/model/userRefrigerator.dart';
+import 'package:mango_test/model/users/user.dart' as localUser;
+import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
 
 import 'app.dart';
@@ -156,6 +156,8 @@ class LoginPage extends StatelessWidget {
 
         userCredential = await auth.signInWithCredential(googleAuthCredential);
 
+        print(userCredential.user);
+
         LocalUser.UserID = userCredential.user.uid;
 
         // IS - TODO: 이 부분은 uid를 받아온 이후 DB에 접근해서 가져오자.
@@ -165,6 +167,8 @@ class LoginPage extends StatelessWidget {
         LocalUser.PhoneNumber = userCredential.user.phoneNumber;
 
         userRefrigerator.RefrigeratorID = LocalUser.RefrigerID;
+
+        getRefrigeratorFromUser(userRefrigerator);
 
         /* IS - TODO: Refrigerator.RefrigeratorID = LocalUser.RefrigeratorID;
           Get data from DB referenced by Refrigerator.RefrigeratorID
@@ -205,6 +209,8 @@ class LoginPage extends StatelessWidget {
 
         userRefrigerator.RefrigeratorID = LocalUser.RefrigerID;
 
+        getRefrigeratorFromUser(userRefrigerator);
+
         /* IS - TODO: Refrigerator.RefrigeratorID = LocalUser.RefrigeratorID;
           Get data from DB referenced by Refrigerator.RefrigeratorID
           Set data of Refrigerator Provider from DB
@@ -237,8 +243,8 @@ class LoginPage extends StatelessWidget {
     userRefrigerator.RemainDateFoods.removeAt(0);
     userRefrigerator.RegisterDateFoods = userRefrigerator.Foods;
     userRefrigerator.RemainDateFoods = userRefrigerator.Foods;
-    // print('Store 0: ${userRefrigerator.RegisterDateFoods.length}');
-    // print('Store 1: ${userRefrigerator.RemainDateFoods.length}');
+    // print('Store 3: ${userRefrigerator.RegisterDateFoods.length}');
+    // print('Store 4: ${userRefrigerator.RemainDateFoods.length}');
   }
 
 // Future<void> parseEmailAuth(BuildContext context, String email) async {

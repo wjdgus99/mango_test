@@ -1,4 +1,4 @@
-import 'user.dart';
+import './users/user.dart';
 
 class localUserList {
   //전체 USER

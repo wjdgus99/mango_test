@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app.dart';
 import 'colors.dart';
-import 'model/food.dart';
+import 'model/users/food.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 
 class ItemSelect extends StatefulWidget {

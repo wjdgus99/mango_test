@@ -1,5 +1,5 @@
 // IS - 카테고리를 파일로 따로 빼 놓으면 나중에 DB에 개별 사진이 쌓일 때를 고려햐여 이 폴더만 삭제하고 새로 업데이트하기 편함.
-import 'food.dart';
+import 'users/food.dart';
 
 String CallImage(Food food) {
   List<String> categories = [

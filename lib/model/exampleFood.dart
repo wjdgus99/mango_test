@@ -1,3 +1,3 @@
-import 'package:mango_test/model/userRefrigerator.dart';
+import 'package:mango_test/model/users/userRefrigerator.dart';
 
-import 'food.dart';
+import 'users/food.dart';

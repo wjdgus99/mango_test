@@ -7,7 +7,8 @@ class User with ChangeNotifier {
   String _Name;
   String _PhoneNumber;
 
-  final String RefrigerID = '123'; // 유저의 냉장고 ID
+  final String RefrigerID =
+      '123'; // 유저의 냉장고 ID  IS - 일단 상수로 넣어놓음. > UUID를 조합해서 만들 예정.
   List<String> FriendList; //IS - 친구 목록 TODO: need to change
   List<String> SharedList; //IS - 내가 공유하고 있는 품목 목록 TODO: need to change
   List<String>
