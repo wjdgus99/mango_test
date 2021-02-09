@@ -1,6 +1,7 @@
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mango_test/model/food.dart';
+import 'package:mango_test/model/users/food.dart';
+// import 'package:mango_test/model/food.dart';
 
 class FlappySearch extends StatefulWidget {
   @override
