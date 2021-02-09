@@ -160,7 +160,7 @@ class _ChatListState extends State<ChatList> {
                       'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:18', 1),
                   _buildChatList(
                     'yg', // user name
-                    '친구야 내가 레몬으로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라 ㅎㅎ ', //body content
+                    '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
                     '오전 11:12', //time
                     3, // unread message
                   ),
@@ -170,7 +170,7 @@ class _ChatListState extends State<ChatList> {
                 children: ListTile.divideTiles(context: context, tiles: [
                   _buildChatList(
                     'yg', // user name
-                    '친구야 내가 레몬으로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라 ㅎㅎ ', //body content
+                    '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
                     '오전 11:22', //time
                     3, // unread message
                   ),

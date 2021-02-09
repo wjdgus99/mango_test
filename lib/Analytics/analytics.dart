@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
 
-import 'model/nutrition/chart.dart';
-import 'model/nutrition/series.dart';
+import '../model/nutrition/chart.dart';
+import '../model/nutrition/series.dart';
 
-class Nutrition extends StatefulWidget {
+class Analytics extends StatefulWidget {
   @override
-  _NutritionState createState() => _NutritionState();
+  _AnalyticsState createState() => _AnalyticsState();
 }
 
-class _NutritionState extends State<Nutrition> {
+class _AnalyticsState extends State<Analytics> {
   final List<Series> date_data = [
     Series(
       nutrient: '탄수화물',

@@ -3,11 +3,11 @@ import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_d
 
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/camera.dart';
-import 'package:mango_test/friendList.dart';
-import 'package:mango_test/nutrition.dart';
-import 'package:mango_test/profile.dart';
+import 'package:mango_test/Friend/friendList.dart';
+import 'package:mango_test/Analytics/analytics.dart';
+import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/refrigerator.dart';
-import 'package:mango_test/share.dart';
+import 'package:mango_test/Share/share.dart';
 import 'package:flutter/material.dart';
 
 import 'app.dart';
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
           _buildOffstageNavigator('refrigerator'),
           _buildOffstageNavigator('share'),
           _buildOffstageNavigator('add'),
-          _buildOffstageNavigator('nutrition'),
+          _buildOffstageNavigator('analytics'),
           _buildOffstageNavigator('mypage'),
         ]),
         // floatingActionButton: _buildFloatingActionButton(),
@@ -101,8 +101,6 @@ class _HomePageState extends State<HomePage> {
       SpeedDialAction(
         child: Icon(Icons.mode_edit),
         label: Text('거래 품목 등록', style: customStyle),
-        //backgroundColor: Theme.of(context).accentColor,
-        //foregroundColor: Colors.white,
       ),
       SpeedDialAction(
           child: Icon(Icons.date_range),
@@ -136,15 +134,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-// print('length : ${Foods.length}');
-//
-// print('food 1 : ${Foods[0].name}');
 }
-// class TabNavigatorRoutes {
-//   static const String root = '/';
-// static const String detail = '/detail';
-// }
-
 class TabNavigator extends StatelessWidget {
   TabNavigator({this.navigatorKey, this.tabItem});
 
@@ -160,8 +150,8 @@ class TabNavigator extends StatelessWidget {
       child = Share();
     else if (tabItem == 'add')
       child = ItemRegistration();
-    else if (tabItem == 'nutrition')
-      child = Nutrition();
+    else if (tabItem == 'analytics')
+      child = Analytics();
     else if (tabItem == 'mypage') child = Profile();
 
     return Navigator(
