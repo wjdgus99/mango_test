@@ -6,7 +6,9 @@ import 'package:mango_test/app.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/refrigerator.dart';
-import 'model/food.dart';
+
+import 'model/users/food.dart';
+// import 'model/food.dart';
 
 class ItemCreate extends StatefulWidget {
   @override
@@ -81,7 +83,8 @@ class _ItemCreateState extends State<ItemCreate> {
               color: Theme.of(context).accentColor,
               child: Text('등록'),
               onPressed: () {
-                showAlertDialog('품목 수정을 완료하시겠습니까?','품목의 정보가 수정됩니다.','취소','완료');
+                showAlertDialog(
+                    '품목 수정을 완료하시겠습니까?', '품목의 정보가 수정됩니다.', '취소', '완료');
               },
             ),
           ), //mj: this is for bottom 등록 button
@@ -255,15 +258,15 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-  void showAlertDialog(String title, String subtitle, String button1, String button2) async {
+  void showAlertDialog(
+      String title, String subtitle, String button1, String button2) async {
     String result = await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.circular(20.0)), //this right here
+              borderRadius: BorderRadius.circular(20.0)), //this right here
           child: Container(
             height: DeviceHeight * 0.3,
             child: Padding(
@@ -274,7 +277,9 @@ class _ItemCreateState extends State<ItemCreate> {
                 children: [
                   Text(title),
                   Text(subtitle),
-                  SizedBox(height: DeviceHeight * 0.07,),
+                  SizedBox(
+                    height: DeviceHeight * 0.07,
+                  ),
                   SizedBox(
                     width: DeviceWidth * 0.8,
                     child: Row(
@@ -294,7 +299,9 @@ class _ItemCreateState extends State<ItemCreate> {
                             ),
                           ),
                         ),
-                        SizedBox(width: DeviceHeight * 0.02,),
+                        SizedBox(
+                          width: DeviceHeight * 0.02,
+                        ),
                         Expanded(
                           child: Container(
                             height: DeviceHeight * 0.07,
@@ -325,15 +332,13 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-
   Future<dynamic> showCupertinoDatePicker() {
-
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(10.0),
-              topRight: const Radius.circular(10.0),
-            )),
+          topLeft: const Radius.circular(10.0),
+          topRight: const Radius.circular(10.0),
+        )),
         context: context,
         builder: (BuildContext builder) {
           return Container(
@@ -345,18 +350,18 @@ class _ItemCreateState extends State<ItemCreate> {
                   child: Text('구매일'),
                 ),
                 Expanded(
-                    child: CupertinoDatePicker(
-                      initialDateTime: DateTime.now(),
-                      onDateTimeChanged: (DateTime newdate) {
-                        print(newdate);
-                      },
-                      // use24hFormat: true,
-                      // maximumDate: new DateTime(2030, 12, 30),
-                      // minimumYear: 2010,
-                      // maximumYear: 2018,
-                      // minuteInterval: 1,
-                      mode: CupertinoDatePickerMode.date,
-                    ),
+                  child: CupertinoDatePicker(
+                    initialDateTime: DateTime.now(),
+                    onDateTimeChanged: (DateTime newdate) {
+                      print(newdate);
+                    },
+                    // use24hFormat: true,
+                    // maximumDate: new DateTime(2030, 12, 30),
+                    // minimumYear: 2010,
+                    // maximumYear: 2018,
+                    // minuteInterval: 1,
+                    mode: CupertinoDatePickerMode.date,
+                  ),
                 ),
               ],
             ),
