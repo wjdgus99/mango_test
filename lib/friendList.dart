@@ -7,7 +7,7 @@ import 'package:mango_test/model/exampleUser.dart';
 import 'package:mango_test/test_model/exampleTestUser.dart';
 import 'package:mango_test/test_model/exampleTestUserList.dart';
 import 'package:mango_test/test_model/testUser.dart';
-import 'model/users/user.dart';
+import 'model/user.dart';
 
 import 'package:top_sheet/top_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

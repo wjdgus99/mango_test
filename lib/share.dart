@@ -9,7 +9,7 @@ import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:search_widget/search_widget.dart';
 
-import 'model/users/food.dart';
+import 'model/food.dart';
 
 class Share extends StatefulWidget {
   @override

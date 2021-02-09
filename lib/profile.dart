@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mango_test/model/users/user.dart' as localUser;
+import 'package:mango_test/model/user.dart' as localUser;
 import 'package:provider/provider.dart';
 
 import 'app.dart';
