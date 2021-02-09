@@ -1,7 +1,8 @@
-import 'package:mango_test/model/user.dart' as localUser;
-import 'package:mango_test/model/userRefrigerator.dart';
+import 'package:mango_test/model/friends/trade.dart';
+import 'package:mango_test/model/users/user.dart' as localUser;
+import 'package:mango_test/model/users/userRefrigerator.dart';
 
-import 'food.dart';
+import 'users/food.dart';
 
 List<Food> sampleFoodList = [
   Food(

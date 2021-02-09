@@ -10,7 +10,7 @@ import 'package:numberpicker/numberpicker.dart';
 import 'app.dart';
 import 'colors.dart';
 import 'model/RefryItem.dart';
-import 'model/food.dart';
+import 'model/users/food.dart';
 
 List<RefryItem> items = <RefryItem>[
   RefryItem(

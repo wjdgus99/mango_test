@@ -3,12 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fireStore;
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/all.dart';
-import 'package:mango_test/model/user.dart';
-import 'package:mango_test/model/userRefrigerator.dart';
+import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
 import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'model/user.dart' as localUser;
+import 'model/users/user.dart' as localUser;
 
 import 'app.dart';
 

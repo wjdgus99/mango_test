@@ -1,4 +1,4 @@
-import 'user.dart';
+import './users//user.dart';
 
 class localUser {
   //한명의 USER

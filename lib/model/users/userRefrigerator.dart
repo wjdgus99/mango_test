@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mango_test/refrigerator.dart';
 
-import './food.dart';
+import 'food.dart';
 
 class UserRefrigerator extends ChangeNotifier {
   String _RefrigeratorID;
@@ -14,12 +14,18 @@ class UserRefrigerator extends ChangeNotifier {
   String get RefrigeratorID => _RefrigeratorID;
 
   List<Food> Foods = [Food()]; // IS - Food Lists.
-  List<int> StorageAlarm; // IS - [ 0 - 냉장 / 1 - 냉동 / 2 - 실온] 별 알람 일자.
+  int RefrigerationAlarm; // IS - 냉장 알림 주기
+  int FrozenAlarm; // IS - 냉동 알림 주기
+  int RoomTempAlarm; // IS - 실온 알림 주기
 
   // IS - 한눈에 보기를 위한 리스트.
   List<Food> _RefrigerationFoods = [Food()];
   List<Food> _FrozenFoods = [Food()];
   List<Food> _RoomTempFoods = [Food()];
+
+  // IS - 유통기한별 보기 리스트 (구매일 기준, 남은 유통기한 기준)
+  List<Food> _RegisterDateFoods = [Food()];
+  List<Food> _RemainDateFoods = [Food()];
 
   // TODO: IS - 혹시 아래 setter 코드가 안 먹으면, comment처리해 놓은 setter로 사용.
   // set RefrigerationFoods(List<Food> foods) {
@@ -45,10 +51,6 @@ class UserRefrigerator extends ChangeNotifier {
   List<Food> get RefrigerationFoods => _RefrigerationFoods;
   List<Food> get FrozenFoods => _FrozenFoods;
   List<Food> get RoomTempFoods => _RoomTempFoods;
-
-  // IS - 유통기한별 보기 리스트 (구매일 기준, 남은 유통기한 기준)
-  List<Food> _RegisterDateFoods = [Food()];
-  List<Food> _RemainDateFoods = [Food()];
 
   // IS - Setter / Getter (유통기한별 보기)
   set RegisterDateFoods(List<Food> foods) =>
@@ -133,6 +135,7 @@ class UserRefrigerator extends ChangeNotifier {
     return result.sort((pre, next) => pre.DueDate.compareTo(next.DueDate));
   }
 
+  // IS - TODO: LoadFoodsFromSnapshot, UpdateFoodsFromSnapshot, DeleteFoodsFromSnapshot. (Firebase)
   // IS - 원하는 리스트 불러오기 ( e.g. LostFoodList(RegisterDateFood()); )
   List<Food> LoadFoodList(List<Food> foods) => foods;
 }
