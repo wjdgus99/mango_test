@@ -49,7 +49,7 @@ dependencies:
   numberpicker: ^1.3.0
   flutter_picker: ^1.1.5
   uuid: ^2.2.2
-
+  flappy_search_bar: ^1.7.2
 
 dev_dependencies:
   flutter_test:
