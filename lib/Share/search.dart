@@ -10,6 +10,7 @@ class FlappySearch extends StatefulWidget {
 
 class _FlappySearchState extends State<FlappySearch> {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
