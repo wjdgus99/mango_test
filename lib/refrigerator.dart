@@ -41,6 +41,7 @@ class _RefrigeratorState extends State<Refrigerator> {
   bool isEdited = false; //mj: 선택버튼 누름 확인
   int foldNum = 0; //mj: 접혀있는 개
   int num = 0;
+  int _filterValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +136,13 @@ class _RefrigeratorState extends State<Refrigerator> {
                         children: <Widget>[
                           InkWell(
                             child: Text('수정'),
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ItemCreate()));
+                            },
                           ),
                           SizedBox(
                             width: DeviceWidth * 0.05,
@@ -148,16 +155,11 @@ class _RefrigeratorState extends State<Refrigerator> {
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('완료'),
+                            child: Text('취소'),
                             onTap: () {
                               setState(() {
                                 isEdited = false;
                               });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          ItemCreate()));
                             },
                           ),
                         ],
@@ -230,6 +232,7 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   Widget showTap2(List<Food> foods) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
           width: DeviceWidth,
@@ -240,7 +243,30 @@ class _RefrigeratorState extends State<Refrigerator> {
             padding: EdgeInsets.all(DeviceWidth * 0.04),
             child: Row(
               children: [
-                Expanded(child: Text('전체 ${foods.length}개')),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      value: _filterValue,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text("전체"),
+                          value: 0,
+                        ),
+                        DropdownMenuItem(
+                          child: Text("유통기한"),
+                          value: 1,
+                        ),
+                        DropdownMenuItem(
+                          child: Text("구매일"),
+                          value: 2,
+                        ),
+                      ],
+                      onChanged: (value){
+                        setState(() {
+                          _filterValue = value;
+                        });
+                      }),
+                ),
+                Expanded(child: SizedBox()),
                 isEdited == false
                     ? InkWell(
                         child: Text('선택 ✓'),
@@ -254,7 +280,14 @@ class _RefrigeratorState extends State<Refrigerator> {
                         children: <Widget>[
                           InkWell(
                             child: Text('수정'),
-                            onTap: () {},
+                            onTap: () {
+                              isEdited = false;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          ItemCreate()));
+                            },
                           ),
                           SizedBox(
                             width: DeviceWidth * 0.05,
@@ -267,7 +300,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('완료'),
+                            child: Text('취소'),
                             onTap: () {
                               setState(() {
                                 isEdited = false;
@@ -278,6 +311,10 @@ class _RefrigeratorState extends State<Refrigerator> {
                       ),
               ],
             )),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: DeviceWidth * 0.04),
+        //   child: Text('유통기한 만료 7일 이내'),
+        // ),
         Expanded(child: contents(foods)),
       ],
     );

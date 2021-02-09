@@ -1,6 +1,12 @@
+import 'package:charts_flutter/flutter.dart' as chart;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mango_test/app.dart';
+
+import 'package:mango_test/model/exampleRefrigerator.dart';
+import 'package:mango_test/refrigerator.dart';
+import 'model/food.dart';
 
 class ItemCreate extends StatefulWidget {
   @override
@@ -12,6 +18,8 @@ class _ItemCreateState extends State<ItemCreate> {
   int tabValue = 0;
   int radioValue = 0;
   final TextEditingController _nameTextController = new TextEditingController();
+
+  List<Food> Foods = localRefrigerator.loadFood();
 
   final Map<int, Widget> tabBarWidget = const <int, Widget>{
     0: Padding(
@@ -39,26 +47,85 @@ class _ItemCreateState extends State<ItemCreate> {
     return Scaffold(
       appBar: AppBar(
         title: Text(appTitle),
+        centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.all(DeviceWidth * 0.05),// mj: TODO. DeviceWidth로 바꾸기
+        padding: EdgeInsets.all(DeviceWidth * 0.05),
         children: <Widget>[
+          showTop(),
+          SizedBox(
+            height: 10,
+          ),
           showInfo(),
-          Expanded(child: Container()),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: DeviceHeight * 0.07,
+            alignment: Alignment.centerLeft,
+            child: InkWell(
+              child: Text(
+                '품목삭제',
+                style: TextStyle(color: Theme.of(context).errorColor),
+              ),
+              onTap: () {},
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: DeviceHeight * 0.08,
+            child: FlatButton(
+              //padding: EdgeInsets.symmetric(vertical: 20),
+              color: Theme.of(context).accentColor,
+              child: Text('등록'),
+              onPressed: () {
+                showAlertDialog('품목 수정을 완료하시겠습니까?','품목의 정보가 수정됩니다.','취소','완료');
+              },
+            ),
+          ), //mj: this is for bottom 등록 button
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(DeviceWidth * 0.05),
-        child: Container(
-          height: 70,
-          child: FlatButton(
-            color: Theme.of(context).accentColor,
-            child: Text('등록'),
-            onPressed: (){},
-          ),
-        ),
-      ),
     );
+  }
+
+  Widget showTop() {
+    return Container(
+        height: DeviceHeight * 0.06,
+        child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: Foods.length,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == 0) {
+                return Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      width: 50,
+                      child: FlatButton(
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text(
+                          '+',
+                          style:
+                              TextStyle(color: Theme.of(context).accentColor),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ));
+              } else {
+                return Padding(
+                    padding: EdgeInsets.all(5),
+                    child: FlatButton(
+                      color: Theme.of(context).accentColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Text('${Foods[index].name}'),
+                      onPressed: () {},
+                    ));
+              }
+            }));
   }
 
   Widget showInfo() {
@@ -66,18 +133,34 @@ class _ItemCreateState extends State<ItemCreate> {
       child: Column(
         children: <Widget>[
           Container(alignment: Alignment.topLeft, child: Text('제품정보')),
+          SizedBox(
+            height: DeviceHeight * 0.02,
+          ),
           showTextField(_nameTextController, '품명'),
+          SizedBox(
+            height: DeviceHeight * 0.02,
+          ),
           Row(
             children: <Widget>[
               showSelectField('수량'),
-              showSelectField('카테고리'),
+              SizedBox(
+                width: DeviceHeight * 0.02,
+              ),
+              Expanded(child: showSelectField('카테고리')),
             ],
           ),
-          Container(alignment: Alignment.topLeft, child: Text('보관방법')),
+          Container(
+              padding: EdgeInsets.only(top: DeviceHeight * 0.03),
+              alignment: Alignment.topLeft,
+              child: Text('보관방법')),
+          SizedBox(
+            width: DeviceHeight * 0.02,
+          ),
           Container(
             width: DeviceWidth, // mj: TODO. DeviceWidth
             child: CupertinoSegmentedControl(
-              //padding: EdgeInsets.all(5), // mj: TODO. DeviceWidth
+              padding: EdgeInsets.all(DeviceHeight * 0.02),
+              // mj: TODO. DeviceWidth
               children: tabBarWidget,
               onValueChanged: (int val) {
                 setState(() {
@@ -87,38 +170,40 @@ class _ItemCreateState extends State<ItemCreate> {
               groupValue: tabValue,
             ),
           ),
-          Row(
-            children: <Widget>[
-              Expanded(child: Text('표시기준')),
-              Radio(
-                value: 0,
-                groupValue: radioValue,
-                onChanged: (int val) {
-                  setState(() {
-                    radioValue = val;
-                  });
-                },
-              ),
-              Text('유통기한'),
-              Radio(
-                value: 1,
-                groupValue: radioValue,
-                onChanged: (int val) {
-                  setState(() {
-                    radioValue = val;
-                  });
-                },
-              ),
-              Text('구매일'),
-            ],
+          Container(
+            child: Row(
+              children: <Widget>[
+                Expanded(child: Text('표시기준')),
+                Radio(
+                  value: 0,
+                  groupValue: radioValue,
+                  onChanged: (int val) {
+                    setState(() {
+                      radioValue = val;
+                    });
+                  },
+                ),
+                Text('유통기한'),
+                Radio(
+                  value: 1,
+                  groupValue: radioValue,
+                  onChanged: (int val) {
+                    setState(() {
+                      radioValue = val;
+                    });
+                  },
+                ),
+                Text('구매일'),
+              ],
+            ),
           ),
-          showSelectField('구매일'),
+          radioValue == 0 ? showSelectField('유통기한') : showSelectField('구매일'),
         ],
       ),
     );
   }
 
-  Widget showTextField(TextEditingController myController, String info){
+  Widget showTextField(TextEditingController myController, String info) {
     return TextFormField(
       controller: myController,
       decoration: InputDecoration(
@@ -131,19 +216,19 @@ class _ItemCreateState extends State<ItemCreate> {
         prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
         suffixIcon: IconButton(
           icon: Icon(Icons.clear),
-          onPressed: () {},
+          onPressed: () {
+            _nameTextController.clear();
+          },
         ),
       ),
     );
   }
 
-  Widget showSelectField(String info){
+  Widget showSelectField(String info) {
     return Container(
       height: 60,
       decoration: BoxDecoration(
-        border: Border.all(
-            color: Colors.grey
-        ),
+        border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ),
       child: Center(
@@ -153,10 +238,12 @@ class _ItemCreateState extends State<ItemCreate> {
               padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
               child: Text(info), // myIcon is a 48px-wide widget.
             ),
-            Text('3'),
+            Text('10'),
             IconButton(
               icon: Icon(Icons.arrow_drop_down),
-              onPressed: (){},
+              onPressed: () {
+                showCupertinoDatePicker();
+              },
             ),
             // Padding(
             //   padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
@@ -166,5 +253,114 @@ class _ItemCreateState extends State<ItemCreate> {
         ),
       ),
     );
+  }
+
+  void showAlertDialog(String title, String subtitle, String button1, String button2) async {
+    String result = await showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.circular(20.0)), //this right here
+          child: Container(
+            height: DeviceHeight * 0.3,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(title),
+                  Text(subtitle),
+                  SizedBox(height: DeviceHeight * 0.07,),
+                  SizedBox(
+                    width: DeviceWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: DeviceHeight * 0.07,
+                            child: FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                button1,
+                              ),
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: DeviceHeight * 0.02,),
+                        Expanded(
+                          child: Container(
+                            height: DeviceHeight * 0.07,
+                            child: FlatButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Refrigerator()));
+                              },
+                              child: Text(
+                                button2,
+                              ),
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
+  Future<dynamic> showCupertinoDatePicker() {
+
+    return showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(10.0),
+              topRight: const Radius.circular(10.0),
+            )),
+        context: context,
+        builder: (BuildContext builder) {
+          return Container(
+            height: DeviceHeight * 0.3,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text('구매일'),
+                ),
+                Expanded(
+                    child: CupertinoDatePicker(
+                      initialDateTime: DateTime.now(),
+                      onDateTimeChanged: (DateTime newdate) {
+                        print(newdate);
+                      },
+                      // use24hFormat: true,
+                      // maximumDate: new DateTime(2030, 12, 30),
+                      // minimumYear: 2010,
+                      // maximumYear: 2018,
+                      // minuteInterval: 1,
+                      mode: CupertinoDatePickerMode.date,
+                    ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
