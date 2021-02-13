@@ -4,15 +4,12 @@ import 'package:mango_test/Chat/chatList.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/Share/history.dart';
-import 'package:mango_test/main.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:mango_test/model/users/food.dart';
-import 'package:search_widget/search_widget.dart';
-import 'package:tabnavigator/tabnavigator.dart';
-
-// import '../model/food.dart';
+import 'package:mango_test/test_model/exampleShareFood.dart';
+import '../app.dart';
 import './search.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class Share extends StatefulWidget {
   @override
@@ -23,6 +20,7 @@ class Share extends StatefulWidget {
 
 class _ShareState extends State<Share> {
   bool none = false;
+  double searchHeight = 80;
 
   // final List<String> list = List.generate(20, (index) => 'Test $index');
 
@@ -30,13 +28,13 @@ class _ShareState extends State<Share> {
   List<Food> newDataList = List.from(mainDataList);
 
   final List<String> list =
-      List.generate(mainDataList.length, (index) => mainDataList[index].name);
+  List.generate(mainDataList.length, (index) => mainDataList[index].name);
 
   onItemChanged(String value) {
     setState(() {
       newDataList = mainDataList
           .where((element) =>
-              element.name.toLowerCase().contains(value.toLowerCase()))
+          element.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -44,64 +42,90 @@ class _ShareState extends State<Share> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.person),
-            // onPressed: () => Navigator.pushNamed(context, FRIENDLIST),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => FriendList()));
-            },
-          ),
-          title: Text('거래광장'),
-          actions: [
-            IconButton(
-                icon: Icon(Icons.chat_bubble_outline_outlined),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => ChatList()));
-                }),
-            IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => History()));
-                })
-          ],
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.person),
+          // onPressed: () => Navigator.pushNamed(context, FRIENDLIST),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => FriendList()));
+          },
         ),
-        body: none
-            ? Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('images/logo.png'),
-                      ),
-                      Text(
-                        '친구를 추가해서 \n거래를 시작해보세요',
-                        textAlign: TextAlign.center,
-                      ),
-                    ]),
-              )
-            : ListView(
-                children: [
-                  IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(context: context, delegate: Search(list));
-                      }),
+        title: Text('거래광장'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.chat_bubble_outline_outlined),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ChatList()));
+              }),
+          IconButton(
+              icon: Icon(Icons.notifications_none),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => History()));
+              })
+        ],
+      ),
+      body: none
+          ? Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage('images/logo.png'),
+              ),
+              Text(
+                '친구를 추가해서 \n거래를 시작해보세요',
+                textAlign: TextAlign.center,
+              ),
+            ]),
+      )
+      // : ListView(
+      //     children: [
+      // IconButton(
+      //     icon: Icon(Icons.search),
+      //     onPressed: () {
+      //       showSearch(context: context, delegate: Search(list));
+      //     }),
+          : SizedBox.expand(
+        child: SafeArea(
+          minimum: EdgeInsets.all(0.1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SearchBar<Food>(
+              placeHolder: ListView(
+                children: <Widget>[
                   buildCard('paprika', 'is'),
                   buildCard('pepper', 'mj'),
                   buildCard('lemon', 'jh'),
                 ],
-              ));
+              ),
+              onSearch: search,
+              minimumChars: 1,
+              onItemFound: (Food food, int index) {
+                return food.name == 'd'
+                    ? SizedBox() :
+                buildCard(food.name, 'mj');
+                // : ListTile(
+                //     title: Text(food.name),
+                //     subtitle: Text(food.num.toString()),
+                //     trailing: Text(food.category),
+                //     // trailing: Text($search),
+                //   );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildCard(String food, String user) {
@@ -128,7 +152,7 @@ class _ShareState extends State<Share> {
                       child: CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                            AssetImage('images/users/photo_$user.jpeg'),
+                        AssetImage('images/users/photo_$user.jpeg'),
                         backgroundColor: Colors.white60,
                       ),
                     ),
@@ -144,15 +168,24 @@ class _ShareState extends State<Share> {
                   ),
                   Text(
                     food + '  3개',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline6,
                   ),
                   Text(
                     '유통기한 2021.12.30',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle2,
                   ),
                   Text(
                     '최대한 빨리 나눔합시당~~ ',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .subtitle2,
                   ),
                   Row(
                     children: [
@@ -171,7 +204,9 @@ class _ShareState extends State<Share> {
                             side: BorderSide(color: Grey200)),
                       ),
                       RaisedButton(
-                        color: Theme.of(context).accentColor,
+                        color: Theme
+                            .of(context)
+                            .accentColor,
                         child: Icon(Icons.send_rounded),
                         onPressed: () => print('message'),
                         shape: RoundedRectangleBorder(
@@ -188,6 +223,26 @@ class _ShareState extends State<Share> {
       ),
     );
   }
+}
+
+Future<List<Food>> search(String search) async {
+  await Future.delayed(Duration(seconds: 2));
+  return List.generate(StoreFoodList.length, (int index) {
+    print('hello' + search + '!');
+    return StoreFoodList[index]
+        .name
+        .toLowerCase()
+        .contains(search.toLowerCase())
+        ? Food(
+      name: StoreFoodList[index].name,
+      category: StoreFoodList[index].category,
+      // category: search.toString(),
+      num: StoreFoodList[index].num,
+      shelfLife: StoreFoodList[index].shelfLife,
+      DueDate: StoreFoodList[index].DueDate,
+    )
+        : Food(name: 'd');
+  });
 }
 
 class Search extends SearchDelegate {
@@ -236,8 +291,8 @@ class Search extends SearchDelegate {
     query.isEmpty
         ? suggestionList = recentList
         : suggestionList.addAll(listExample.where(
-            (element) => element.contains(query),
-          ));
+          (element) => element.contains(query),
+    ));
 
     return ListView.builder(
         itemCount: suggestionList.length,

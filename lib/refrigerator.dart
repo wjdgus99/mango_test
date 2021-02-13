@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemSelect.dart';
-import 'package:mango_test/model/exampleFood.dart';
+import 'package:mango_test/test_model/exampleShareFood.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:numberpicker/numberpicker.dart';
 
