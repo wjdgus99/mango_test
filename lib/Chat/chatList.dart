@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/Chat/editChatList.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ChatList extends StatefulWidget {
@@ -32,7 +33,12 @@ class _ChatListState extends State<ChatList> {
                 )),
           ]),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => EditChatList()));
+            },
             child: ListTile(
               title: Text(
                 '편집',
