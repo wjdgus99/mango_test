@@ -24,14 +24,14 @@ class _HomePageState extends State<HomePage> {
     'refrigerator',
     'share',
     'add',
-    'nutrition',
+    'analytics',
     'mypage'
   ];
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
     'refrigerator': GlobalKey<NavigatorState>(),
     'share': GlobalKey<NavigatorState>(),
     'add': GlobalKey<NavigatorState>(),
-    'nutrition': GlobalKey<NavigatorState>(),
+    'analytics': GlobalKey<NavigatorState>(),
     'mypage': GlobalKey<NavigatorState>(),
   };
 

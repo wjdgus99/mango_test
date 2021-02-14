@@ -7,6 +7,7 @@ import 'package:mango_test/Share/history.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/model/users/food.dart';
 import 'package:mango_test/test_model/exampleShareFood.dart';
+import 'package:mango_test/test_model/storeFood.dart';
 import '../app.dart';
 import './search.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
@@ -20,24 +21,6 @@ class Share extends StatefulWidget {
 
 class _ShareState extends State<Share> {
   bool none = false;
-  double searchHeight = 80;
-
-  // final List<String> list = List.generate(20, (index) => 'Test $index');
-
-  static List<Food> mainDataList = localRefrigerator.loadFood();
-  List<Food> newDataList = List.from(mainDataList);
-
-  final List<String> list =
-  List.generate(mainDataList.length, (index) => mainDataList[index].name);
-
-  onItemChanged(String value) {
-    setState(() {
-      newDataList = mainDataList
-          .where((element) =>
-          element.name.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,20 +83,28 @@ class _ShareState extends State<Share> {
           minimum: EdgeInsets.all(0.1),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBar<Food>(
+            child: SearchBar<StoreFood>(
               placeHolder: ListView(
                 children: <Widget>[
-                  buildCard('paprika', 'is'),
-                  buildCard('pepper', 'mj'),
-                  buildCard('lemon', 'jh'),
+                  buildCard('lemon', 'mj', 12, '과일/채소',
+                      DateTime(2021, DateTime.january, 9)),
+                  buildCard('pepper', 'is', 32, '과일/채소',
+                      DateTime(2021, DateTime.august, 11)),
+                  buildCard('paprika', 'jh', 60, '과일/채소',
+                      DateTime(2021, DateTime.january, 1)),
+                  buildCard('cucumber', 'si', 70, '과일/채소',
+                      DateTime(2021, DateTime.february, 4)),
+                  buildCard('apple', 'yg', 130, '과일/채소',
+                      DateTime(2021, DateTime.january, 20)),
                 ],
               ),
               onSearch: search,
               minimumChars: 1,
-              onItemFound: (Food food, int index) {
-                return food.name == 'd'
-                    ? SizedBox() :
-                buildCard(food.name, 'mj');
+              onItemFound: (StoreFood food, int index) {
+                return food.name == ''
+                    ? SizedBox()
+                    : buildCard(food.name, food.owner, food.registTime,
+                    food.category, food.shelfLife);
                 // : ListTile(
                 //     title: Text(food.name),
                 //     subtitle: Text(food.num.toString()),
@@ -128,7 +119,8 @@ class _ShareState extends State<Share> {
     );
   }
 
-  Widget buildCard(String food, String user) {
+  Widget buildCard(String food, String owner, int min, String text,
+      DateTime due) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Grey200, width: 2),
@@ -152,7 +144,7 @@ class _ShareState extends State<Share> {
                       child: CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                        AssetImage('images/users/photo_$user.jpeg'),
+                        AssetImage('images/users/photo_$owner.jpeg'),
                         backgroundColor: Colors.white60,
                       ),
                     ),
@@ -164,24 +156,26 @@ class _ShareState extends State<Share> {
                 children: [
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: Text('1시간 전'),
+                    child:
+                    (min < 60) ? Text('$min분 전') : Text('${min ~/ 60}시간 전'),
                   ),
                   Text(
-                    food + '  3개',
+                    food + '  $num개',
                     style: Theme
                         .of(context)
                         .textTheme
                         .headline6,
                   ),
                   Text(
-                    '유통기한 2021.12.30',
+                    '${due.year}.${due.month}.${due.day}',
                     style: Theme
                         .of(context)
                         .textTheme
-                        .subtitle2,
+                        .subtitle2
+                        .copyWith(color: Red500),
                   ),
                   Text(
-                    '최대한 빨리 나눔합시당~~ ',
+                    text,
                     style: Theme
                         .of(context)
                         .textTheme
@@ -193,11 +187,7 @@ class _ShareState extends State<Share> {
                         color: Orange100,
                         child: Icon(Icons.call),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      FlappySearch()));
+                          print('call');
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -225,7 +215,7 @@ class _ShareState extends State<Share> {
   }
 }
 
-Future<List<Food>> search(String search) async {
+Future<List<StoreFood>> search(String search) async {
   await Future.delayed(Duration(seconds: 2));
   return List.generate(StoreFoodList.length, (int index) {
     print('hello' + search + '!');
@@ -233,78 +223,19 @@ Future<List<Food>> search(String search) async {
         .name
         .toLowerCase()
         .contains(search.toLowerCase())
-        ? Food(
-      name: StoreFoodList[index].name,
-      category: StoreFoodList[index].category,
-      // category: search.toString(),
-      num: StoreFoodList[index].num,
-      shelfLife: StoreFoodList[index].shelfLife,
-      DueDate: StoreFoodList[index].DueDate,
-    )
-        : Food(name: 'd');
+        ? StoreFood(
+        name: StoreFoodList[index].name,
+        category: StoreFoodList[index].category,
+        num: StoreFoodList[index].num,
+        shelfLife: StoreFoodList[index].shelfLife,
+        registTime: StoreFoodList[index].registTime,
+        owner: StoreFoodList[index].owner)
+        : StoreFood(
+        name: '',
+        category: '',
+        num: 0,
+        shelfLife: DateTime(0),
+        owner: '',
+        registTime: 0);
   });
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  String selectedResult;
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('HI'),
-      ),
-    );
-  }
-
-  final List<String> listExample;
-
-  Search(this.listExample);
-
-  List<String> recentList = ['lemon', 'mango'];
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList.addAll(listExample.where(
-          (element) => element.contains(query),
-    ));
-
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(suggestionList[index]),
-            onTap: () {
-              selectedResult = suggestionList[index];
-              // recentList.add(query);
-              showResults(context);
-            },
-          );
-        });
-  }
 }

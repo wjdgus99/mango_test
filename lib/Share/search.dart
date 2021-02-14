@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/test_model/exampleShareFood.dart';
 import 'package:mango_test/model/sampleData.dart';
 import 'package:mango_test/model/users/food.dart';
+import 'package:mango_test/test_model/storeFood.dart';
 // import 'package:mango_test/model/food.dart';
 
 class FlappySearch extends StatefulWidget {
@@ -17,9 +18,9 @@ class _FlappySearchState extends State<FlappySearch> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SearchBar<Food>(
+          child: SearchBar<StoreFood>(
             onSearch: search,
-            onItemFound: (Food food, int index) {
+            onItemFound: (StoreFood food, int index) {
               return food.name == ''
                   ? SizedBox()
                   : ListTile(
@@ -36,7 +37,7 @@ class _FlappySearchState extends State<FlappySearch> {
   }
 }
 
-Future<List<Food>> search(String search) async {
+Future<List<StoreFood>> search(String search) async {
   await Future.delayed(Duration(seconds: 2));
   return List.generate(StoreFoodList.length, (int index) {
     print('hello' + search + '!');
@@ -44,14 +45,19 @@ Future<List<Food>> search(String search) async {
             .name
             .toLowerCase()
             .contains(search.toLowerCase())
-        ? Food(
+        ? StoreFood(
             name: StoreFoodList[index].name,
             category: StoreFoodList[index].category,
-            // category: search.toString(),
             num: StoreFoodList[index].num,
             shelfLife: StoreFoodList[index].shelfLife,
-            DueDate: StoreFoodList[index].DueDate,
-          )
-        : Food(name: '');
+            registTime: StoreFoodList[index].registTime,
+            owner: StoreFoodList[index].owner)
+        : StoreFood(
+            name: '',
+            category: '',
+            num: 0,
+            shelfLife: DateTime(0),
+            owner: '',
+            registTime: 0);
   });
 }
