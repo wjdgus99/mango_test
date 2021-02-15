@@ -59,68 +59,68 @@ class _ShareState extends State<Share> {
       ),
       body: none
           ? Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(
-                image: AssetImage('images/logo.png'),
-              ),
-              Text(
-                '친구를 추가해서 \n거래를 시작해보세요',
-                textAlign: TextAlign.center,
-              ),
-            ]),
-      )
-      // : ListView(
-      //     children: [
-      // IconButton(
-      //     icon: Icon(Icons.search),
-      //     onPressed: () {
-      //       showSearch(context: context, delegate: Search(list));
-      //     }),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('images/logo.png'),
+                    ),
+                    Text(
+                      '친구를 추가해서 \n거래를 시작해보세요',
+                      textAlign: TextAlign.center,
+                    ),
+                  ]),
+            )
+          // : ListView(
+          //     children: [
+          // IconButton(
+          //     icon: Icon(Icons.search),
+          //     onPressed: () {
+          //       showSearch(context: context, delegate: Search(list));
+          //     }),
           : SizedBox.expand(
-        child: SafeArea(
-          minimum: EdgeInsets.all(0.1),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBar<StoreFood>(
-              placeHolder: ListView(
-                children: <Widget>[
-                  buildCard('lemon', 'mj', 12, '과일/채소',
-                      DateTime(2021, DateTime.january, 9)),
-                  buildCard('pepper', 'is', 32, '과일/채소',
-                      DateTime(2021, DateTime.august, 11)),
-                  buildCard('paprika', 'jh', 60, '과일/채소',
-                      DateTime(2021, DateTime.january, 1)),
-                  buildCard('cucumber', 'si', 70, '과일/채소',
-                      DateTime(2021, DateTime.february, 4)),
-                  buildCard('apple', 'yg', 130, '과일/채소',
-                      DateTime(2021, DateTime.january, 20)),
-                ],
+              child: SafeArea(
+                minimum: EdgeInsets.all(0.1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SearchBar<StoreFood>(
+                    placeHolder: ListView(
+                      children: <Widget>[
+                        buildCard('lemon', 'mj', 12, '과일/채소', 3,
+                            DateTime(2021, DateTime.january, 9)),
+                        buildCard('pepper', 'is', 32, '과일/채소', 1,
+                            DateTime(2021, DateTime.august, 11)),
+                        buildCard('paprika', 'jh', 60, '과일/채소', 3,
+                            DateTime(2021, DateTime.january, 1)),
+                        buildCard('cucumber', 'si', 70, '과일/채소', 5,
+                            DateTime(2021, DateTime.february, 4)),
+                        buildCard('apple', 'yg', 130, '과일/채소', 4,
+                            DateTime(2021, DateTime.january, 20)),
+                      ],
+                    ),
+                    onSearch: search,
+                    minimumChars: 1,
+                    onItemFound: (StoreFood food, int index) {
+                      return food.name == ''
+                          ? SizedBox()
+                          : buildCard(food.name, food.owner, food.registTime,
+                              food.category, food.num, food.shelfLife);
+                      // : ListTile(
+                      //     title: Text(food.name),
+                      //     subtitle: Text(food.num.toString()),
+                      //     trailing: Text(food.category),
+                      //     // trailing: Text($search),
+                      //   );
+                    },
+                  ),
+                ),
               ),
-              onSearch: search,
-              minimumChars: 1,
-              onItemFound: (StoreFood food, int index) {
-                return food.name == ''
-                    ? SizedBox()
-                    : buildCard(food.name, food.owner, food.registTime,
-                    food.category, food.shelfLife);
-                // : ListTile(
-                //     title: Text(food.name),
-                //     subtitle: Text(food.num.toString()),
-                //     trailing: Text(food.category),
-                //     // trailing: Text($search),
-                //   );
-              },
             ),
-          ),
-        ),
-      ),
     );
   }
 
-  Widget buildCard(String food, String owner, int min, String text,
-      DateTime due) {
+  Widget buildCard(
+      String food, String owner, int min, String text, int num, DateTime due) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Grey200, width: 2),
@@ -144,7 +144,7 @@ class _ShareState extends State<Share> {
                       child: CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                        AssetImage('images/users/photo_$owner.jpeg'),
+                            AssetImage('images/users/photo_$owner.jpeg'),
                         backgroundColor: Colors.white60,
                       ),
                     ),
@@ -157,29 +157,22 @@ class _ShareState extends State<Share> {
                   Align(
                     alignment: Alignment.bottomRight,
                     child:
-                    (min < 60) ? Text('$min분 전') : Text('${min ~/ 60}시간 전'),
+                        (min < 60) ? Text('$min분 전') : Text('${min ~/ 60}시간 전'),
                   ),
                   Text(
                     food + '  $num개',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .headline6,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Text(
                     '${due.year}.${due.month}.${due.day}',
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .subtitle2
                         .copyWith(color: Red500),
                   ),
                   Text(
                     text,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .subtitle2,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   Row(
                     children: [
@@ -194,9 +187,7 @@ class _ShareState extends State<Share> {
                             side: BorderSide(color: Grey200)),
                       ),
                       RaisedButton(
-                        color: Theme
-                            .of(context)
-                            .accentColor,
+                        color: Theme.of(context).accentColor,
                         child: Icon(Icons.send_rounded),
                         onPressed: () => print('message'),
                         shape: RoundedRectangleBorder(
@@ -220,22 +211,22 @@ Future<List<StoreFood>> search(String search) async {
   return List.generate(StoreFoodList.length, (int index) {
     print('hello' + search + '!');
     return StoreFoodList[index]
-        .name
-        .toLowerCase()
-        .contains(search.toLowerCase())
+            .name
+            .toLowerCase()
+            .contains(search.toLowerCase())
         ? StoreFood(
-        name: StoreFoodList[index].name,
-        category: StoreFoodList[index].category,
-        num: StoreFoodList[index].num,
-        shelfLife: StoreFoodList[index].shelfLife,
-        registTime: StoreFoodList[index].registTime,
-        owner: StoreFoodList[index].owner)
+            name: StoreFoodList[index].name,
+            category: StoreFoodList[index].category,
+            num: StoreFoodList[index].num,
+            shelfLife: StoreFoodList[index].shelfLife,
+            registTime: StoreFoodList[index].registTime,
+            owner: StoreFoodList[index].owner)
         : StoreFood(
-        name: '',
-        category: '',
-        num: 0,
-        shelfLife: DateTime(0),
-        owner: '',
-        registTime: 0);
+            name: '',
+            category: '',
+            num: 0,
+            shelfLife: DateTime(0),
+            owner: '',
+            registTime: 0);
   });
 }
