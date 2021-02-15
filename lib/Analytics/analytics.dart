@@ -69,11 +69,17 @@ class Analytics extends StatelessWidget {
                       width: 300,
                       height: 250,
                     ),
-                    Align(
-                        alignment: Alignment.centerRight,
-                        child: Text('나의 냉장고')),
-                    Align(
-                        alignment: Alignment.centerRight, child: Text('권장 기준')),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('나의 냉장고')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                          alignment: Alignment.centerRight, child: Text('권장 기준')),
+                    ),
                   ],
                 ),
               ),
@@ -108,7 +114,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.3,
                             center: Text('양호'),
                             progressColor: Colors.green,
@@ -118,7 +124,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.125,
                             center: Text('부족'),
                             progressColor: Colors.red,
@@ -128,7 +134,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.7,
                             center: Text('과다'),
                             progressColor: Colors.yellow,
@@ -143,7 +149,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.7,
                             center: Text('과다'),
                             progressColor: Colors.yellow,
@@ -153,7 +159,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.3,
                             center: Text('양호'),
                             progressColor: Colors.green,
@@ -163,7 +169,7 @@ class Analytics extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: CircularPercentIndicator(
                             radius: 100.0,
-                            lineWidth: 10.0,
+                            lineWidth: 12.0,
                             percent: 0.125,
                             center: Text('부족'),
                             progressColor: Colors.red,
@@ -205,7 +211,51 @@ class Analytics extends StatelessWidget {
                       image: AssetImage('images/영양요정.png'),
                     ),
                     Text('나트륨, 탄수화물을 줄이는\n건강한 식습관을 가져보세요!'),
-
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Align(
+                          alignment: Alignment.centerLeft, child: Text('나트륨')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearPercentIndicator(
+                        width: 350.0,
+                        lineHeight: 10.0,
+                        percent: 0.5,
+                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        progressColor: Colors.red,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Align(
+                          alignment: Alignment.centerLeft, child: Text('당류')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearPercentIndicator(
+                        width: 350.0,
+                        lineHeight: 10.0,
+                        percent: 0.5,
+                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        progressColor: Colors.yellow,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Align(
+                          alignment: Alignment.centerLeft, child: Text('탄수화물')),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearPercentIndicator(
+                        width: 350.0,
+                        lineHeight: 10.0,
+                        percent: 0.5,
+                        backgroundColor: Colors.grey.withOpacity(0.5),
+                        progressColor: Colors.green,
+                      ),
+                    ),
                   ],
                 ),
               ),
