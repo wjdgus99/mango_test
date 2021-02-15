@@ -9,3 +9,4 @@ const Red500 = Color(0xFFEE7243);
 const Red200 = Color(0xFFF8CBBB);
 const Grey200 = Color(0xFFEDEDED);
 const Black = Color(0xFF000000);
+Color TGreen500 = Color(0xFFB0D849).withOpacity(0.8);

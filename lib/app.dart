@@ -7,7 +7,7 @@ import 'package:mango_test/itemRegistration.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
 import 'package:mango_test/Profile/profile.dart';
-import 'package:mango_test/Analytics/analytics.dart';
+import 'package:mango_test/Analytics/nutrition.dart';
 import 'package:mango_test/Share/share.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodDirect.dart';
@@ -45,7 +45,7 @@ class MangoApp extends StatelessWidget {
         ADDINPUT: (context) => AdditionalInput(),
         DIRECTINPUT: (context) => DirectInput(),
         PROFILE: (context) => Profile(),
-        NUTRITION: (context) => Analytics(),
+        NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
         FRIENDLIST: (context) => FriendList(),

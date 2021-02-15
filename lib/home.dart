@@ -1,10 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_design.dart';
+import 'package:mango_test/Analytics/analytics.dart';
 
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/Friend/friendList.dart';
-import 'package:mango_test/Analytics/analytics.dart';
+import 'package:mango_test/Analytics/nutrition.dart';
 import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/Share/share.dart';
@@ -133,8 +134,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
+
 class TabNavigator extends StatelessWidget {
   TabNavigator({this.navigatorKey, this.tabItem});
 
