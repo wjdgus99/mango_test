@@ -10,6 +10,7 @@ import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/Share/share.dart';
 import 'package:flutter/material.dart';
 
+import 'HHome.dart';
 import 'app.dart';
 import 'itemRegistration.dart';
 
@@ -149,7 +150,8 @@ class TabNavigator extends StatelessWidget {
     else if (tabItem == 'share')
       child = Share();
     else if (tabItem == 'add')
-      child = ItemRegistration();
+      // child = HHOME();
+    child = ItemRegistration();
     else if (tabItem == 'analytics')
       child = Analytics();
     else if (tabItem == 'mypage') child = Profile();

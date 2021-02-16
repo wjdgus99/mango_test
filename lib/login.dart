@@ -7,6 +7,7 @@ import 'package:mango_test/model/users/user.dart' as localUser;
 import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
 
+import 'HHome.dart';
 import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -120,6 +121,7 @@ class LoginPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () => Navigator.pushNamed(context, HOME),
+                    // onPressed: () => Navigator.pushNamed(context, '/HHOME'),
                     icon: Icon(Icons.account_box),
                     label: Text(
                       '${userRefrigerator.RefrigeratorID}',

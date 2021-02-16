@@ -207,9 +207,9 @@ class Analytics extends StatelessWidget {
                         image: AssetImage('images/logo.png'),
                       ),
                     ),
-                    Image(
-                      image: AssetImage('images/영양요정.png'),
-                    ),
+                    // Image(
+                    //   image: AssetImage('images/영양요정.png'),
+                    // ),
                     Text('나트륨, 탄수화물을 줄이는\n건강한 식습관을 가져보세요!'),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
