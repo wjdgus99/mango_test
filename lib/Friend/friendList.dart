@@ -1,9 +1,13 @@
+import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mango_test/Friend/add/email.dart';
 import 'package:mango_test/Friend/manageFriend.dart';
 import 'package:mango_test/model/exampleUserList.dart';
 
 import 'package:mango_test/model/exampleUser.dart';
+import 'package:mango_test/test_model/exampleFriendList.dart';
 import 'package:mango_test/test_model/exampleTestUser.dart';
 import 'package:mango_test/test_model/exampleTestUserList.dart';
 import 'package:mango_test/test_model/testUser.dart';
@@ -12,7 +16,9 @@ import 'package:mango_test/test_model/testUser.dart';
 import 'package:top_sheet/top_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'add/ID.dart';
 import 'add/phone.dart';
+import 'editFriend.dart';
 
 class FriendList extends StatefulWidget {
   @override
@@ -45,10 +51,16 @@ class _FriendListState extends State<FriendList> {
                 )),
           ]),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => EditFriend()));
+            },
             child: ListTile(
               title: Text(
                 '편집',
+                style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -64,6 +76,7 @@ class _FriendListState extends State<FriendList> {
             child: ListTile(
               title: Text(
                 '친구 관리',
+                style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -97,11 +110,24 @@ class _FriendListState extends State<FriendList> {
               })
         ],
       ),
-      body: ListView.builder(
-          itemCount: user.FriendList.length,
-          itemBuilder: (context, int index) {
-            return _buildFriendList(index);
-          }),
+      body: SizedBox.expand(
+        child: SafeArea(
+          minimum: EdgeInsets.all(0.1),
+          child: SearchBar<TestUser>(
+            searchBarPadding: EdgeInsets.all(10),
+            placeHolder: ListView.builder(
+                itemCount: user.FriendList.length,
+                itemBuilder: (context, int index) {
+                  return _buildFriendList(index);
+                }),
+            onSearch: search,
+            minimumChars: 1,
+            onItemFound: (TestUser food, int index) {
+              return food.Name == '' ? SizedBox() : _buildFriendList(index);
+            },
+          ),
+        ),
+      ),
     );
   }
 
@@ -115,7 +141,10 @@ class _FriendListState extends State<FriendList> {
             radius: 30,
             backgroundImage: AssetImage(user.FriendList[index].Image),
           ),
-          title: Text(user.FriendList[index].Name),
+          title: Text(
+            user.FriendList[index].Name,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
         ),
       ),
     );
@@ -164,7 +193,12 @@ class _FriendListState extends State<FriendList> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.add_circle_outline),
-                    onPressed: () => print('ID로 추가'),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => ID()));
+                    },
                   ),
                   Text('ID로 추가')
                 ],
@@ -173,9 +207,14 @@ class _FriendListState extends State<FriendList> {
                 children: [
                   IconButton(
                     icon: Icon(Icons.person_add_alt),
-                    onPressed: () => print('추천친구'),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => Email()));
+                    },
                   ),
-                  Text('추천친구')
+                  Text('이메일로 추가')
                 ],
               ),
             ],
@@ -185,4 +224,16 @@ class _FriendListState extends State<FriendList> {
       direction: TopSheetDirection.TOP,
     );
   }
+}
+
+Future<List<TestUser>> search(String search) async {
+  await Future.delayed(Duration(seconds: 2));
+  return List.generate(Friends.length, (int index) {
+    return Friends[index].Name.toLowerCase().contains(search.toLowerCase())
+        ? TestUser(
+            Name: Friends[index].Name,
+            Image: Friends[index].Image,
+          )
+        : TestUser(Name: '');
+  });
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mango_test/HHome.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
@@ -7,7 +9,7 @@ import 'package:mango_test/itemRegistration.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/login.dart';
 import 'package:mango_test/Profile/profile.dart';
-import 'package:mango_test/Analytics/analytics.dart';
+import 'package:mango_test/Analytics/nutrition.dart';
 import 'package:mango_test/Share/share.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodDirect.dart';
@@ -45,13 +47,14 @@ class MangoApp extends StatelessWidget {
         ADDINPUT: (context) => AdditionalInput(),
         DIRECTINPUT: (context) => DirectInput(),
         PROFILE: (context) => Profile(),
-        NUTRITION: (context) => Analytics(),
+        NUTRITION: (context) => Nutrition(),
         SHARE: (context) => Share(),
         CAMERA: (context) => Camera(),
         FRIENDLIST: (context) => FriendList(),
         ITEMREGIST: (context) => ItemRegistration(),
         ITEMSELECT: (context) => ItemSelect(),
         ITEMCREATE: (context) => ItemCreate(),
+        '/HHOME': (context) => HHOME(),
       },
     );
   }
@@ -65,7 +68,7 @@ ThemeData _buildMangoTheme() {
     accentColor: Orange500,
     primaryColor: Colors.white,
     hoverColor: Orange500,
-    errorColor: Red200,
+    errorColor: Red500,
     toggleableActiveColor: Orange500,
     cursorColor: Orange500,
     buttonTheme: base.buttonTheme.copyWith(
@@ -94,8 +97,30 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
       .copyWith(
         /* headline6: Text of AppBar */
         headline6: base.headline6.copyWith(
-          fontSize: 16.0,
-          fontWeight: FontWeight.bold,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w700,
+        ),
+        /* headline5: hintText of ProfilePage(subtitle 2_KR)*/
+        headline5: base.headline5.copyWith(
+          fontSize: 24.0,
+          fontWeight: FontWeight.w500, //medium
+        ),
+        /* headline4: dialog title*/
+        headline4: base.headline4.copyWith(
+          fontSize: 34.0,
+          fontWeight: FontWeight.w400,
+        ),
+        headline3: base.headline4.copyWith(
+          fontSize: 40.0,
+          fontWeight: FontWeight.w400,
+        ),
+        headline2: base.headline2.copyWith(
+          fontSize: 60.0,
+          fontWeight: FontWeight.w300,
+        ),
+        headline1: base.headline1.copyWith(
+          fontSize: 96.0,
+          fontWeight: FontWeight.w300,
         ),
         /* subtitle1: title of ListTile */
         subtitle1: base.subtitle1.copyWith(
@@ -105,32 +130,29 @@ TextTheme _buildMangoTextTheme(TextTheme base) {
         /* subtitle2: substitle of ListTile*/
         subtitle2: base.subtitle2.copyWith(
           fontSize: 14.0,
-          fontWeight: FontWeight.normal,
-        ),
-
-        /* headline5: hintText of ProfilePage(subtitle 2_KR)*/
-        headline5: base.headline5.copyWith(
-          fontSize: 16.0,
-          fontWeight: FontWeight.normal,
-        ),
-        /* headline4: dialog title*/
-        headline4: base.headline4.copyWith(
-          fontSize: 24.0,
           fontWeight: FontWeight.w500,
         ),
-        /* button: all of button + tabs */
-        button: base.button.copyWith(
+        bodyText1: base.bodyText1.copyWith(
           fontWeight: FontWeight.w400,
-          fontSize: 14.0,
+          fontSize: 16.0,
         ),
         /* bodyText2: dialog text */
         bodyText2: base.button.copyWith(
-          fontWeight: FontWeight.w400,
           fontSize: 14.0,
+          fontWeight: FontWeight.w400,
         ),
-        bodyText1: base.bodyText1.copyWith(
+        /* button: all of button + tabs */
+        button: base.button.copyWith(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w400,
+        ),
+        caption: base.caption.copyWith(
+          fontSize: 12.0,
           fontWeight: FontWeight.w500,
-          fontSize: 16.0,
+        ),
+        overline: base.caption.copyWith(
+          fontSize: 10.0,
+          fontWeight: FontWeight.w500,
         ),
       )
       .apply(

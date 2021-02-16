@@ -97,21 +97,22 @@ class _ProfileState extends State<Profile> {
     // return Consumer<localUser.User>(builder: (context, user, child) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
+        leading: Text(''),
+        // leading: IconButton(icon: Icon(Icons.menu), onPressed: null),
         centerTitle: true,
         title: Text('마이페이지'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
-              color: Theme.of(context).accentColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              onPressed: () => print('Save Profile'),
-              child: Text('저장'),
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(8.0),
+        //     child: RaisedButton(
+        //       color: Theme.of(context).accentColor,
+        //       shape: RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.circular(30)),
+        //       onPressed: () => print('Save Profile'),
+        //       child: Text('저장'),
+        //     ),
+        //   )
+        // ],
       ),
       body: ListView(
         // padding: EdgeInsets.all(DeviceWidth * 0.05),
@@ -175,7 +176,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '나의 거래 내역',
+                        '거래 내역',
                         style: Theme.of(context).textTheme.headline5.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
@@ -210,7 +211,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: Text(
-                        '나의 거래 글',
+                        '나의 게시글',
                         style: Theme.of(context).textTheme.headline5.copyWith(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),

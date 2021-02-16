@@ -1,15 +1,16 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter_speed_dial_material_design/flutter_speed_dial_material_design.dart';
+import 'package:mango_test/Analytics/analytics.dart';
 
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/Friend/friendList.dart';
-import 'package:mango_test/Analytics/analytics.dart';
 import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/Share/share.dart';
 import 'package:flutter/material.dart';
 
+import 'HHome.dart';
 import 'app.dart';
 import 'itemRegistration.dart';
 
@@ -24,14 +25,14 @@ class _HomePageState extends State<HomePage> {
     'refrigerator',
     'share',
     'add',
-    'nutrition',
+    'analytics',
     'mypage'
   ];
   Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
     'refrigerator': GlobalKey<NavigatorState>(),
     'share': GlobalKey<NavigatorState>(),
     'add': GlobalKey<NavigatorState>(),
-    'nutrition': GlobalKey<NavigatorState>(),
+    'analytics': GlobalKey<NavigatorState>(),
     'mypage': GlobalKey<NavigatorState>(),
   };
 
@@ -133,8 +134,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
+
 class TabNavigator extends StatelessWidget {
   TabNavigator({this.navigatorKey, this.tabItem});
 
@@ -149,7 +150,8 @@ class TabNavigator extends StatelessWidget {
     else if (tabItem == 'share')
       child = Share();
     else if (tabItem == 'add')
-      child = ItemRegistration();
+      // child = HHOME();
+    child = ItemRegistration();
     else if (tabItem == 'analytics')
       child = Analytics();
     else if (tabItem == 'mypage') child = Profile();

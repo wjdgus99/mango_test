@@ -4,15 +4,13 @@ import 'package:mango_test/Chat/chatList.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/Share/history.dart';
-import 'package:mango_test/main.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
-import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:mango_test/model/users/food.dart';
-import 'package:search_widget/search_widget.dart';
-import 'package:tabnavigator/tabnavigator.dart';
-
-// import '../model/food.dart';
+import 'package:mango_test/test_model/exampleShareFood.dart';
+import 'package:mango_test/test_model/storeFood.dart';
+import '../app.dart';
 import './search.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class Share extends StatefulWidget {
   @override
@@ -24,87 +22,105 @@ class Share extends StatefulWidget {
 class _ShareState extends State<Share> {
   bool none = false;
 
-  // final List<String> list = List.generate(20, (index) => 'Test $index');
-
-  static List<Food> mainDataList = localRefrigerator.loadFood();
-  List<Food> newDataList = List.from(mainDataList);
-
-  final List<String> list =
-      List.generate(mainDataList.length, (index) => mainDataList[index].name);
-
-  onItemChanged(String value) {
-    setState(() {
-      newDataList = mainDataList
-          .where((element) =>
-              element.name.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.person),
-            // onPressed: () => Navigator.pushNamed(context, FRIENDLIST),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => FriendList()));
-            },
-          ),
-          title: Text('거래광장'),
-          actions: [
-            IconButton(
-                icon: Icon(Icons.chat_bubble_outline_outlined),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => ChatList()));
-                }),
-            IconButton(
-                icon: Icon(Icons.notifications_none),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => History()));
-                })
-          ],
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.person),
+          // onPressed: () => Navigator.pushNamed(context, FRIENDLIST),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => FriendList()));
+          },
         ),
-        body: none
-            ? Center(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('images/logo.png'),
-                      ),
-                      Text(
-                        '친구를 추가해서 \n거래를 시작해보세요',
-                        textAlign: TextAlign.center,
-                      ),
-                    ]),
-              )
-            : ListView(
-                children: [
-                  IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        showSearch(context: context, delegate: Search(list));
-                      }),
-                  buildCard('paprika', 'is'),
-                  buildCard('pepper', 'mj'),
-                  buildCard('lemon', 'jh'),
-                ],
-              ));
+        title: Text('거래광장'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.chat_bubble_outline_outlined),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => ChatList()));
+              }),
+          IconButton(
+              icon: Icon(Icons.notifications_none),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => History()));
+              })
+        ],
+      ),
+      body: none
+          ? Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage('images/logo.png'),
+                    ),
+                    Text(
+                      '친구를 추가해서 \n거래를 시작해보세요',
+                      textAlign: TextAlign.center,
+                    ),
+                  ]),
+            )
+          // : ListView(
+          //     children: [
+          // IconButton(
+          //     icon: Icon(Icons.search),
+          //     onPressed: () {
+          //       showSearch(context: context, delegate: Search(list));
+          //     }),
+          : SizedBox.expand(
+              child: SafeArea(
+                minimum: EdgeInsets.all(0.1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SearchBar<StoreFood>(
+                    placeHolder: ListView(
+                      children: <Widget>[
+                        buildCard('lemon', 'mj', 12, '과일/채소', 3,
+                            DateTime(2021, DateTime.january, 9)),
+                        buildCard('pepper', 'is', 32, '과일/채소', 1,
+                            DateTime(2021, DateTime.august, 11)),
+                        buildCard('paprika', 'jh', 60, '과일/채소', 3,
+                            DateTime(2021, DateTime.january, 1)),
+                        buildCard('cucumber', 'si', 70, '과일/채소', 5,
+                            DateTime(2021, DateTime.february, 4)),
+                        buildCard('apple', 'yg', 130, '과일/채소', 4,
+                            DateTime(2021, DateTime.january, 20)),
+                      ],
+                    ),
+                    onSearch: search,
+                    minimumChars: 1,
+                    onItemFound: (StoreFood food, int index) {
+                      return food.name == ''
+                          ? SizedBox()
+                          : buildCard(food.name, food.owner, food.registTime,
+                              food.category, food.num, food.shelfLife);
+                      // : ListTile(
+                      //     title: Text(food.name),
+                      //     subtitle: Text(food.num.toString()),
+                      //     trailing: Text(food.category),
+                      //     // trailing: Text($search),
+                      //   );
+                    },
+                  ),
+                ),
+              ),
+            ),
+    );
   }
 
-  Widget buildCard(String food, String user) {
+  Widget buildCard(
+      String food, String owner, int min, String text, int num, DateTime due) {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Grey200, width: 2),
@@ -128,7 +144,7 @@ class _ShareState extends State<Share> {
                       child: CircleAvatar(
                         radius: 20,
                         backgroundImage:
-                            AssetImage('images/users/photo_$user.jpeg'),
+                            AssetImage('images/users/photo_$owner.jpeg'),
                         backgroundColor: Colors.white60,
                       ),
                     ),
@@ -140,19 +156,39 @@ class _ShareState extends State<Share> {
                 children: [
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: Text('1시간 전'),
+                    child: (min < 60)
+                        ? Text(
+                            '$min분 전',
+                            style:
+                                Theme.of(context).textTheme.overline.copyWith(
+                                      color: Color(0xFFBFBFBF),
+                                    ),
+                          )
+                        : Text(
+                            '${min ~/ 60}시간 전',
+                            style: Theme.of(context)
+                                .textTheme
+                                .overline
+                                .copyWith(color: Color(0xFFBFBFBF)),
+                          ),
                   ),
                   Text(
-                    food + '  3개',
-                    style: Theme.of(context).textTheme.headline6,
+                    food + '  $num개',
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                   Text(
-                    '유통기한 2021.12.30',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    '유통기한 ${due.year}.${due.month}.${due.day}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: Theme.of(context).errorColor),
                   ),
                   Text(
-                    '최대한 빨리 나눔합시당~~ ',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(color: Color(0xFFBFBFBF)),
                   ),
                   Row(
                     children: [
@@ -160,11 +196,7 @@ class _ShareState extends State<Share> {
                         color: Orange100,
                         child: Icon(Icons.call),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      FlappySearch()));
+                          print('call');
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -190,66 +222,27 @@ class _ShareState extends State<Share> {
   }
 }
 
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.close),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  String selectedResult;
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('HI'),
-      ),
-    );
-  }
-
-  final List<String> listExample;
-
-  Search(this.listExample);
-
-  List<String> recentList = ['lemon', 'mango'];
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList.addAll(listExample.where(
-            (element) => element.contains(query),
-          ));
-
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(suggestionList[index]),
-            onTap: () {
-              selectedResult = suggestionList[index];
-              // recentList.add(query);
-              showResults(context);
-            },
-          );
-        });
-  }
+Future<List<StoreFood>> search(String search) async {
+  await Future.delayed(Duration(seconds: 2));
+  return List.generate(StoreFoodList.length, (int index) {
+    print('hello' + search + '!');
+    return StoreFoodList[index]
+            .name
+            .toLowerCase()
+            .contains(search.toLowerCase())
+        ? StoreFood(
+            name: StoreFoodList[index].name,
+            category: StoreFoodList[index].category,
+            num: StoreFoodList[index].num,
+            shelfLife: StoreFoodList[index].shelfLife,
+            registTime: StoreFoodList[index].registTime,
+            owner: StoreFoodList[index].owner)
+        : StoreFood(
+            name: '',
+            category: '',
+            num: 0,
+            shelfLife: DateTime(0),
+            owner: '',
+            registTime: 0);
+  });
 }

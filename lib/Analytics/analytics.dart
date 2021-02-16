@@ -1,191 +1,462 @@
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mango_test/colors.dart';
+import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
-import '../model/nutrition/chart.dart';
-import '../model/nutrition/series.dart';
+import '../colors.dart';
 
-class Analytics extends StatefulWidget {
-  @override
-  _AnalyticsState createState() => _AnalyticsState();
-}
-
-class _AnalyticsState extends State<Analytics> {
-  final List<Series> date_data = [
-    Series(
-      nutrient: '탄수화물',
-      percentage: 48,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '단백질',
-      percentage: 73,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '지방',
-      percentage: 32,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '당류',
-      percentage: 45,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-  ];
-
-  final List<Series> week_data = [
-    Series(
-      nutrient: '탄수화물',
-      percentage: 38,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '단백질',
-      percentage: 63,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '지방',
-      percentage: 82,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '당류',
-      percentage: 15,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-  ];
-
-  final List<Series> month_data = [
-    Series(
-      nutrient: '탄수화물',
-      percentage: 48,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '단백질',
-      percentage: 53,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '지방',
-      percentage: 52,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '당류',
-      percentage: 31,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-  ];
-
-  final List<Series> year_data = [
-    Series(
-      nutrient: '탄수화물',
-      percentage: 91,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '단백질',
-      percentage: 63,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '지방',
-      percentage: 82,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-    Series(
-      nutrient: '당류',
-      percentage: 25,
-      barColor: charts.ColorUtil.fromDartColor(Orange500.withOpacity(0.5)),
-    ),
-  ];
-
+class Analytics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+        backgroundColor: Orange500,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.line_weight),
+          ),
+          title: Text('냉장고 분석'),
           centerTitle: true,
-          leading: Text(' '),
-          title: Text('영양성분'),
           actions: [
             IconButton(
-                icon: Icon(Icons.share), onPressed: () => print('nutrition'))
+                icon: Icon(Icons.crop_square), onPressed: () => print('ref'))
           ],
         ),
-        body: Container(
-          margin: EdgeInsets.all(10),
-          child: DefaultTabController(
-            length: 4,
-            initialIndex: 0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  child: Container(
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Colors.grey[200],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TabBar(
-                        // TODO: color!
-                        indicatorColor: Colors.black,
-                        labelColor: Colors.black,
-                        unselectedLabelColor: Colors.grey,
-                        indicator: BoxDecoration(
-                          // TODO: color!
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: Offset(1, 1),
+        body: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              '나의 영양 정보',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: RadarChart(
+                          ticksTextStyle:
+                              TextStyle(fontSize: 5, color: Colors.grey),
+                          featuresTextStyle: Theme.of(context)
+                              .textTheme
+                              .caption
+                              .copyWith(
+                                  color: Color(0xFF777777), letterSpacing: 1),
+                          graphColors: [TGreen500, Orange500],
+                          ticks: [20, 40, 60, 80, 100],
+                          features: [
+                            '탄수화물',
+                            '  칼로리 ',
+                            '  콜레스테롤',
+                            '나트륨',
+                            '지방   ',
+                            '단백질    '
+                          ],
+                          data: [
+                            [62, 40, 78, 15, 6, 80],
+                            [50, 40, 50, 50, 50, 50],
+                          ],
+                          // reverseAxis: true,
+                        ),
+                        width: 300,
+                        height: 250,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: SizedBox(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: CircleAvatar(
+                                                backgroundColor: Orange500,
+                                                radius: 5,
+                                              ),
+                                            ),
+                                            Text(
+                                              '나의 냉장고',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .overline,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: CircleAvatar(
+                                                radius: 5,
+                                                backgroundColor: TGreen500,
+                                              ),
+                                            ),
+                                            Text(
+                                              '권장 기준',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .overline,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  height: 45,
+                                  width: 100,
+                                ),
+                              ),
                             ),
                           ],
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
                         ),
-                        tabs: [
-                          Tab(
-                            text: '일 ',
-                          ),
-                          Tab(
-                            text: '주 ',
-                          ),
-                          Tab(
-                            text: '월 ',
-                          ),
-                          Tab(
-                            text: '년 ',
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 300,
-                  child: TabBarView(
-                    children: <Widget>[
-                      Container(child: Chart(data: date_data)),
-                      Container(child: Chart(data: week_data)),
-                      Container(child: Chart(data: month_data)),
-                      Container(child: Chart(data: year_data)),
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(12.0, 2.0, 12.0, 12.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '1일 영양성분 기준치에 대한 비율 (%)',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .copyWith(
+                                      fontSize: 8.0,
+                                      // fontWeight: FontWeight.w400,
+                                      color: Color(0xFF929292),
+                                    ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '성인 1명 2000 kcal 기준',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .copyWith(
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFF929292),
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              '식품군별 영양 균형',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        // crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.3,
+                              center: Text('양호',
+                                  style: TextStyle(
+                                      fontFamily: 'IBMPlexSans',
+                                      fontSize: 20.49,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF96B039))),
+                              progressColor: Color(0xFF96B039),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.125,
+                              center: Text(
+                                '부족',
+                                style: TextStyle(
+                                    fontFamily: 'IBMPlexSans',
+                                    fontSize: 20.49,
+                                    fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).errorColor),
+                              ),
+                              progressColor: Theme.of(context).errorColor,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.7,
+                              center: Text(
+                                '과다',
+                                style: TextStyle(
+                                  fontFamily: 'IBMPlexSans',
+                                  fontSize: 20.49,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFFFFCE48),
+                                ),
+                              ),
+                              progressColor: Color(0xFFFFCE48),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.7,
+                              center: Text(
+                                '과다',
+                                style: TextStyle(
+                                  fontFamily: 'IBMPlexSans',
+                                  fontSize: 20.49,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFFFFCE48),
+                                ),
+                              ),
+                              progressColor: Color(0xFFFFCE48),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.3,
+                              center: Text('양호',
+                                  style: TextStyle(
+                                      fontFamily: 'IBMPlexSans',
+                                      fontSize: 20.49,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF96B039))),
+                              progressColor: Color(0xFF96B039),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 12.0,
+                              percent: 0.125,
+                              center: Text(
+                                '부족',
+                                style: TextStyle(
+                                    fontFamily: 'IBMPlexSans',
+                                    fontSize: 20.49,
+                                    fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).errorColor),
+                              ),
+                              progressColor: Theme.of(context).errorColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              '주의 영양소 섭취 현황',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 80,
+                        child: Image(
+                          image: AssetImage('images/logo.png'),
+                        ),
+                      ),
+                      // Image(
+                      //   image: AssetImage('images/영양요정.png'),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('나트륨, 탄수화물을 줄이는\n건강한 식습관을 가져보세요!'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '나트륨',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearPercentIndicator(
+                          width: 350.0,
+                          lineHeight: 10.0,
+                          percent: 0.5,
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          progressColor: Theme.of(context).errorColor,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '당류',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearPercentIndicator(
+                          width: 350.0,
+                          lineHeight: 10.0,
+                          percent: 0.5,
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          progressColor: Color(0xFFFFCE48),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '탄수화물',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color: Color(0xFF606060),
+                                  ),
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearPercentIndicator(
+                          width: 350.0,
+                          lineHeight: 10.0,
+                          percent: 0.5,
+                          backgroundColor: Colors.grey.withOpacity(0.5),
+                          progressColor: Color(0xFF96B039),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

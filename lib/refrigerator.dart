@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemSelect.dart';
-import 'package:mango_test/model/catogories.dart';
-import 'package:mango_test/model/exampleFood.dart';
-import 'package:mango_test/model/users/user.dart' as localUser;
-import 'package:mango_test/model/users/userRefrigerator.dart';
+import 'package:mango_test/test_model/exampleShareFood.dart';
+// import 'package:mango_test/model/catogories.dart';
+// import 'package:mango_test/model/exampleFood.dart';
+// import 'package:mango_test/model/users/user.dart' as localUser;
+// import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -94,13 +95,23 @@ class _RefrigeratorState extends State<Refrigerator> {
             padding: EdgeInsets.all(DeviceWidth * 0.04),
             child: Row(
               children: [
-                Expanded(child: Text('전체 ${foods.length}개')),
+                Expanded(
+                    child: Text(
+                  '전체 ${foods.length}개',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(color: Color(0xFF666666)),
+                )),
                 isEdited == false
                     ? Row(
                         children: <Widget>[
                           isAllFold == true
                               ? InkWell(
-                                  child: Text('모두 펼치기'),
+                                  child: Text(
+                                    '모두 펼치기',
+                                    style: Theme.of(context).textTheme.caption,
+                                  ),
                                   onTap: () {
                                     setState(() {
                                       isAllFold = false;
@@ -112,7 +123,9 @@ class _RefrigeratorState extends State<Refrigerator> {
                                   },
                                 )
                               : InkWell(
-                                  child: Text('모두 접기'),
+                                  child: Text('모두 접기',
+                                      style:
+                                          Theme.of(context).textTheme.caption),
                                   onTap: () {
                                     setState(() {
                                       isAllFold = true;
@@ -127,7 +140,8 @@ class _RefrigeratorState extends State<Refrigerator> {
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('선택 ✓'),
+                            child: Text('선택 ✓',
+                                style: Theme.of(context).textTheme.caption),
                             onTap: () {
                               setState(() {
                                 isEdited = true;
@@ -143,7 +157,13 @@ class _RefrigeratorState extends State<Refrigerator> {
                     : Row(
                         children: <Widget>[
                           InkWell(
-                            child: Text('수정'),
+                            child: Text('수정',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption
+                                    .copyWith(
+                                      color: Color(0xFF929292),
+                                    )),
                             onTap: () {
                               Navigator.push(
                                   context,
@@ -156,14 +176,21 @@ class _RefrigeratorState extends State<Refrigerator> {
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('삭제'),
+                            child: Text(
+                              '삭제',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption
+                                  .copyWith(color: Color(0xFF929292)),
+                            ),
                             onTap: () {},
                           ),
                           SizedBox(
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('취소'),
+                            child: Text('취소',
+                                style: Theme.of(context).textTheme.caption),
                             onTap: () {
                               setState(() {
                                 isEdited = false;
@@ -213,7 +240,7 @@ class _RefrigeratorState extends State<Refrigerator> {
         Container(
           width: DeviceWidth,
           height: DeviceHeight * 0.15,
-          color: Theme.of(context).errorColor,
+          color: Theme.of(context).errorColor.withOpacity(0.5),
         ),
         Container(
             padding: EdgeInsets.all(DeviceWidth * 0.04),
@@ -224,15 +251,20 @@ class _RefrigeratorState extends State<Refrigerator> {
                       value: _filterValue,
                       items: [
                         DropdownMenuItem(
-                          child: Text("전체"),
+                          child: Text(
+                            "전체",
+                            style: Theme.of(context).textTheme.button,
+                          ),
                           value: 0,
                         ),
                         DropdownMenuItem(
-                          child: Text("유통기한"),
+                          child: Text("유통기한",
+                              style: Theme.of(context).textTheme.button),
                           value: 1,
                         ),
                         DropdownMenuItem(
-                          child: Text("구매일"),
+                          child: Text("구매일",
+                              style: Theme.of(context).textTheme.button),
                           value: 2,
                         ),
                       ],
@@ -245,7 +277,10 @@ class _RefrigeratorState extends State<Refrigerator> {
                 Expanded(child: SizedBox()),
                 isEdited == false
                     ? InkWell(
-                        child: Text('선택 ✓'),
+                        child: Text(
+                          '선택 ✓',
+                          style: Theme.of(context).textTheme.caption,
+                        ),
                         onTap: () {
                           setState(() {
                             isEdited = true;
@@ -255,7 +290,8 @@ class _RefrigeratorState extends State<Refrigerator> {
                     : Row(
                         children: <Widget>[
                           InkWell(
-                            child: Text('수정'),
+                            child: Text('수정',
+                                style: Theme.of(context).textTheme.caption),
                             onTap: () {
                               isEdited = false;
                               Navigator.push(
@@ -269,14 +305,16 @@ class _RefrigeratorState extends State<Refrigerator> {
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('삭제'),
+                            child: Text('삭제',
+                                style: Theme.of(context).textTheme.caption),
                             onTap: () {},
                           ),
                           SizedBox(
                             width: DeviceWidth * 0.05,
                           ),
                           InkWell(
-                            child: Text('취소'),
+                            child: Text('취소',
+                                style: Theme.of(context).textTheme.button),
                             onTap: () {
                               setState(() {
                                 isEdited = false;
@@ -312,7 +350,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
                     color:
-                        foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
+                        foods[index].DueDate > 3 ? Grey200 : Red200.withOpacity(0.4),
                     border: Border.all(
                       color: Color(0xFFF9F8F6),
                     ),
@@ -360,18 +398,13 @@ class _RefrigeratorState extends State<Refrigerator> {
                                 foods[index].isSelected
                                     ? '${foods[index].registerDate.year}년 ${foods[index].registerDate.month}월 ${foods[index].registerDate.day}일 등록 '
                                     : '${foods[index].shelfLife.year}년 ${foods[index].shelfLife.month}월 ${foods[index].shelfLife.day}일 까지 ',
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2
-                                        .fontSize,
-                                    fontWeight: Theme.of(context)
-                                        .textTheme
-                                        .subtitle2
-                                        .fontWeight,
-                                    color: foods[index].isSelected
-                                        ? Blue500
-                                        : Red500) /*Theme.of(context).textTheme.subtitle2*/,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .button
+                                    .copyWith(
+                                        color: foods[index].isSelected
+                                             ? Blue500 
+                                             : Theme.of(context).errorColor),
                               ),
                             ],
                           ),
@@ -380,7 +413,10 @@ class _RefrigeratorState extends State<Refrigerator> {
                           flex: 3,
                         ),
                         InkWell(
-                            child: Text('${foods[index].num} ▾'),
+                            child: Text(
+                              '${foods[index].num} ▾',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
                             onTap: () {
                               showCupertinoPicker(index);
                             }),
@@ -579,7 +615,7 @@ class _RefrigeratorState extends State<Refrigerator> {
       width: DeviceWidth * 46 / 375,
       height: DeviceHeight * 30 / 812,
       decoration: BoxDecoration(
-        color: Theme.of(context).errorColor,
+        color: Red200,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
@@ -588,7 +624,7 @@ class _RefrigeratorState extends State<Refrigerator> {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Color(0xFFEE7243)),
+              .copyWith(color: Theme.of(context).errorColor),
         ),
       ),
     );
@@ -614,7 +650,10 @@ class _RefrigeratorState extends State<Refrigerator> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text('수량'),
+                  child: Text(
+                    '수량',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
                 ),
                 Expanded(
                   child: CupertinoPicker(
@@ -627,6 +666,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                     children: List<Widget>.generate(20, (int index) {
                       return Text(
                         (++index).toString(),
+                        style: Theme.of(context).textTheme.headline5,
                       );
                     }),
                     scrollController: FixedExtentScrollController(

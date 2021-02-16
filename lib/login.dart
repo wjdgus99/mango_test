@@ -7,6 +7,7 @@ import 'package:mango_test/model/users/user.dart' as localUser;
 import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
 
+import 'HHome.dart';
 import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,10 +35,11 @@ class LoginPage extends StatelessWidget {
                   flex: 10,
                 ),
                 Container(
-                  child: Text(
-                    '당신의 냉장고를 관리해주는 집요정,',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
+                  child: Text('당신의 냉장고를 관리해주는 집요정,',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(color: Colors.white)),
                 ),
                 Spacer(
                   flex: 1,
@@ -49,10 +51,11 @@ class LoginPage extends StatelessWidget {
                   flex: 1,
                 ),
                 Container(
-                  child: Text(
-                    'Manager + 古',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
+                  child: Text('Manager + 古',
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.white)),
                 ),
                 Spacer(
                   flex: 1,
@@ -120,6 +123,7 @@ class LoginPage extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () => Navigator.pushNamed(context, HOME),
+                    // onPressed: () => Navigator.pushNamed(context, '/HHOME'),
                     icon: Icon(Icons.account_box),
                     label: Text(
                       '${userRefrigerator.RefrigeratorID}',
