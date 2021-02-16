@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/app.dart';
 import 'package:mango_test/itemSelect.dart';
 
+import 'itemCreate.dart';
+
 class ItemRegistration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ItemRegistration extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => ItemSelect()));
+                          builder: (BuildContext context) => ItemCreate()));
                 },
               ),
             ),
