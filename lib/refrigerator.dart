@@ -4,10 +4,10 @@ import 'package:flutter_picker/Picker.dart';
 import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemSelect.dart';
 import 'package:mango_test/test_model/exampleShareFood.dart';
-// import 'package:mango_test/model/catogories.dart';
+import 'package:mango_test/model/catogories.dart';
 // import 'package:mango_test/model/exampleFood.dart';
-// import 'package:mango_test/model/users/user.dart' as localUser;
-// import 'package:mango_test/model/users/userRefrigerator.dart';
+import 'package:mango_test/model/users/user.dart' as localUser;
+import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -349,8 +349,9 @@ class _RefrigeratorState extends State<Refrigerator> {
                 Container(
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
-                    color:
-                        foods[index].DueDate > 3 ? Grey200 : Red200.withOpacity(0.4),
+                    color: foods[index].DueDate > 3
+                        ? Grey200
+                        : Red200.withOpacity(0.4),
                     border: Border.all(
                       color: Color(0xFFF9F8F6),
                     ),
@@ -403,8 +404,8 @@ class _RefrigeratorState extends State<Refrigerator> {
                                     .button
                                     .copyWith(
                                         color: foods[index].isSelected
-                                             ? Blue500 
-                                             : Theme.of(context).errorColor),
+                                            ? Blue500
+                                            : Theme.of(context).errorColor),
                               ),
                             ],
                           ),
@@ -474,7 +475,7 @@ class _RefrigeratorState extends State<Refrigerator> {
     }
   }
 
-  Widget contents2(List<Food> foods){
+  Widget contents2(List<Food> foods) {
     bool isTitle = true;
 
     if (foods == null || foods.isEmpty) {
@@ -483,129 +484,137 @@ class _RefrigeratorState extends State<Refrigerator> {
       return Container(
         height: DeviceHeight * 0.5, //mj: ListView 내의 ListView = Height가 정해진다.
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: DeviceWidth * 0.05),
-          itemCount: foods.length + 1,
-          itemBuilder: (BuildContext context, int index) {
-            return isTitle ?
-                Text('유통기한 만료 7일 이내')
-                :Stack(
-              children: [
-                Container(
-                  height: DeviceHeight * 87 / 812,
-                  decoration: BoxDecoration(
-                    color:
-                    foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
-                    border: Border.all(
-                      color: Color(0xFFF9F8F6),
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                  ),
-                  child: Center(
-                    child: Row(
-                      children: <Widget>[
-                        Stack(
-                          children: <Widget>[
-                            Image.asset(
-                              'images/foods/lemon.png',
-                              width: DeviceWidth * 82 / 375,
-                              height: DeviceHeight * 67 / 812,
-                              fit: BoxFit.contain,
-                            ),
-                            foods[index].DueDate <= 0
-                                ? Positioned(
-                                top: 0, left: 5, child: dDate('OVER'))
-                                : foods[index].DueDate <= 3
-                                ? Positioned(
-                                top: 0,
-                                left: 5,
-                                child: dDate(
-                                    'D - ${foods[index].DueDate}'))
-                                : SizedBox(),
-                          ],
-                        ),
-                        Spacer(
-                          flex: 1,
-                        ),
+            padding: EdgeInsets.symmetric(horizontal: DeviceWidth * 0.05),
+            itemCount: foods.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              return isTitle
+                  ? Text('유통기한 만료 7일 이내')
+                  : Stack(
+                      children: [
                         Container(
-                          padding:
-                          EdgeInsets.only(top: DeviceHeight * 20 / 812),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                '${foods[index].name}',
-                                style: Theme.of(context).textTheme.subtitle1,
-                              ),
-                              Text(
-                                '21년 01월 07일 까지',
-                                style: Theme.of(context).textTheme.subtitle2,
-                              ),
-                            ],
+                          height: DeviceHeight * 87 / 812,
+                          decoration: BoxDecoration(
+                            color: foods[index].DueDate > 3
+                                ? Grey200
+                                : Color(0xFFF9EBE5),
+                            border: Border.all(
+                              color: Color(0xFFF9F8F6),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.0),
+                            ),
+                          ),
+                          child: Center(
+                            child: Row(
+                              children: <Widget>[
+                                Stack(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      'images/foods/lemon.png',
+                                      width: DeviceWidth * 82 / 375,
+                                      height: DeviceHeight * 67 / 812,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    foods[index].DueDate <= 0
+                                        ? Positioned(
+                                            top: 0,
+                                            left: 5,
+                                            child: dDate('OVER'))
+                                        : foods[index].DueDate <= 3
+                                            ? Positioned(
+                                                top: 0,
+                                                left: 5,
+                                                child: dDate(
+                                                    'D - ${foods[index].DueDate}'))
+                                            : SizedBox(),
+                                  ],
+                                ),
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      top: DeviceHeight * 20 / 812),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '${foods[index].name}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1,
+                                      ),
+                                      Text(
+                                        '21년 01월 07일 까지',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Spacer(
+                                  flex: 3,
+                                ),
+                                InkWell(
+                                    child: Text('${foods[index].num} ▾'),
+                                    onTap: () {
+                                      showCupertinoPicker(index);
+                                    }),
+                                Spacer(
+                                  flex: 1,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Spacer(
-                          flex: 3,
-                        ),
-                        InkWell(
-                            child: Text('${foods[index].num} ▾'),
-                            onTap: () {
-                              showCupertinoPicker(index);
-                            }),
-                        Spacer(
-                          flex: 1,
-                        ),
+                        isEdited == true
+                            ? Positioned(
+                                top: -5,
+                                right: 8,
+                                child: SizedBox(
+                                  width: 18,
+                                  child: Stack(
+                                    children: [
+                                      RaisedButton(
+                                        shape: CircleBorder(),
+                                        color: foods[index].isSelected == false
+                                            ? Colors.grey
+                                            : Theme.of(context).accentColor,
+                                        onPressed: () {
+                                          setState(() {
+                                            if (foods[index].isSelected ==
+                                                false) {
+                                              num++;
+                                              foods[index].isSelected = true;
+                                              foods[index].selectedNum = num;
+                                              print(index);
+                                            } else {
+                                              num--;
+                                              foods[index].isSelected = false;
+                                              foods[index].selectedNum = num;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      foods[index].isSelected == false
+                                          ? SizedBox()
+                                          : Text('${foods[index].selectedNum}'),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
                       ],
-                    ),
-                  ),
-                ),
-                isEdited == true
-                    ? Positioned(
-                  top: -5,
-                  right: 8,
-                  child: SizedBox(
-                    width: 18,
-                    child: Stack(
-                      children: [
-                        RaisedButton(
-                          shape: CircleBorder(),
-                          color: foods[index].isSelected == false
-                              ? Colors.grey
-                              : Theme.of(context).accentColor,
-                          onPressed: () {
-                            setState(() {
-                              if (foods[index].isSelected == false) {
-                                num++;
-                                foods[index].isSelected = true;
-                                foods[index].selectedNum = num;
-                                print(index);
-                              } else {
-                                num--;
-                                foods[index].isSelected = false;
-                                foods[index].selectedNum = num;
-                              }
-                            });
-                          },
-                        ),
-                        foods[index].isSelected == false
-                            ? SizedBox()
-                            : Text('${foods[index].selectedNum}'),
-                      ],
-                    ),
-                  ),
-                )
-                    : SizedBox(),
-              ],
-            );
-          },
-          separatorBuilder: (BuildContext context, int index){
-            if (isTitle == true) isTitle = false;
-            return const SizedBox(
-              height: 10,
-            );
-          }
-        ),
+                    );
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              if (isTitle == true) isTitle = false;
+              return const SizedBox(
+                height: 10,
+              );
+            }),
       );
     }
   }
