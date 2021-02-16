@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:mango_test/itemCreate.dart';
 import 'package:mango_test/itemSelect.dart';
+import 'package:mango_test/model/catogories.dart';
 import 'package:mango_test/model/exampleFood.dart';
+import 'package:mango_test/model/users/user.dart' as localUser;
+import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
 
 import 'app.dart';
 import 'colors.dart';
@@ -45,37 +49,41 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Text(''),
-          centerTitle: true,
-          title: Text('나의 냉장고'),
-          bottom: TabBar(
-            indicatorColor: Theme.of(context).accentColor,
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 14.0,
+    return Consumer2<localUser.User, UserRefrigerator>(
+      builder: (context, user, userRefrigerator, child) {
+        return DefaultTabController(
+          initialIndex: 0,
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: Text(''),
+              centerTitle: true,
+              title: Text('나의 냉장고'),
+              bottom: TabBar(
+                indicatorColor: Theme.of(context).accentColor,
+                labelStyle: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.0,
+                ),
+                tabs: <Tab>[
+                  Tab(
+                    text: '한눈에보기',
+                  ),
+                  Tab(
+                    text: '유통기한',
+                  ),
+                ],
+              ),
             ),
-            tabs: <Tab>[
-              Tab(
-                text: '한눈에보기',
-              ),
-              Tab(
-                text: '유통기한',
-              ),
-            ],
+            body: TabBarView(
+              children: [
+                showTap1(userRefrigerator.Foods),
+                showTap2(userRefrigerator.Foods),
+              ],
+            ),
           ),
-        ),
-        body: TabBarView(
-          children: [
-            showTap1(Foods),
-            showTap2(Foods),
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -191,38 +199,6 @@ class _RefrigeratorState extends State<Refrigerator> {
                   });
                 }),
               );
-              // return ExpansionPanelList(
-              //   animationDuration: Duration(seconds: 1),
-              //   children: [
-              //     ExpansionPanel(
-              //       body: contents(foods),
-              //       headerBuilder: (BuildContext context, bool isExpanded) {
-              //         return Container(
-              //           padding: EdgeInsets.all(10),
-              //           child: Text(
-              //             items[index].headerValue,
-              //             style: TextStyle(
-              //               fontSize: 18,
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //       isExpanded: items[index].isExpanded,
-              //     )
-              //   ],
-              //   expansionCallback: (int item, bool status) {
-              //     setState(() {
-              //       items[index].isExpanded = !items[index].isExpanded;
-              //       if (items[index].isExpanded == false)
-              //         foldNum++;
-              //       else
-              //         foldNum--;
-              //       if (foldNum == items.length)
-              //         isAllFold = true;
-              //       else if (foldNum == 0) isAllFold = false;
-              //     });
-              //   },
-              // );
             },
           ),
         ),
@@ -260,7 +236,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                           value: 2,
                         ),
                       ],
-                      onChanged: (value){
+                      onChanged: (value) {
                         setState(() {
                           _filterValue = value;
                         });
@@ -350,7 +326,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                         Stack(
                           children: <Widget>[
                             Image.asset(
-                              'images/foods/lemon.png',
+                              'images/category/${CallImage(foods[index])}',
                               width: DeviceWidth * 82 / 375,
                               height: DeviceHeight * 67 / 812,
                               fit: BoxFit.contain,
@@ -381,8 +357,21 @@ class _RefrigeratorState extends State<Refrigerator> {
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
                               Text(
-                                '21년 01월 07일 까지',
-                                style: Theme.of(context).textTheme.subtitle2,
+                                foods[index].isSelected
+                                    ? '${foods[index].registerDate.year}년 ${foods[index].registerDate.month}월 ${foods[index].registerDate.day}일 등록 '
+                                    : '${foods[index].shelfLife.year}년 ${foods[index].shelfLife.month}월 ${foods[index].shelfLife.day}일 까지 ',
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        .fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2
+                                        .fontWeight,
+                                    color: foods[index].isSelected
+                                        ? Blue500
+                                        : Red500) /*Theme.of(context).textTheme.subtitle2*/,
                               ),
                             ],
                           ),

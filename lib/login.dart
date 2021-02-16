@@ -235,16 +235,13 @@ class LoginPage extends StatelessWidget {
     userRefrigerator.RefrigerationFoods = userRefrigerator.Foods;
     userRefrigerator.FrozenFoods = userRefrigerator.Foods;
     userRefrigerator.RoomTempFoods = userRefrigerator.Foods;
-    // print('Store 0: ${userRefrigerator.RefrigerationFoods.length}');
-    // print('Store 1: ${userRefrigerator.FrozenFoods.length}');
-    // print('Store 2: ${userRefrigerator.RoomTempFoods.length}');
 
     userRefrigerator.RegisterDateFoods.removeAt(0);
     userRefrigerator.RemainDateFoods.removeAt(0);
     userRefrigerator.RegisterDateFoods = userRefrigerator.Foods;
     userRefrigerator.RemainDateFoods = userRefrigerator.Foods;
-    // print('Store 3: ${userRefrigerator.RegisterDateFoods.length}');
-    // print('Store 4: ${userRefrigerator.RemainDateFoods.length}');
+
+    userRefrigerator.updateDuedate();
   }
 
 // Future<void> parseEmailAuth(BuildContext context, String email) async {
