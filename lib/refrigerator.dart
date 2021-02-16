@@ -231,7 +231,7 @@ class _RefrigeratorState extends State<Refrigerator> {
         Container(
           width: DeviceWidth,
           height: DeviceHeight * 0.15,
-          color: Theme.of(context).errorColor,
+          color: Theme.of(context).errorColor.withOpacity(0.5),
         ),
         Container(
             padding: EdgeInsets.all(DeviceWidth * 0.04),
@@ -341,7 +341,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
                     color:
-                        foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
+                        foods[index].DueDate > 3 ? Grey200 : Red200.withOpacity(0.4),
                     border: Border.all(
                       color: Color(0xFFF9F8F6),
                     ),
@@ -466,7 +466,7 @@ class _RefrigeratorState extends State<Refrigerator> {
       width: DeviceWidth * 46 / 375,
       height: DeviceHeight * 30 / 812,
       decoration: BoxDecoration(
-        color: Theme.of(context).errorColor,
+        color: Red200,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
@@ -475,7 +475,7 @@ class _RefrigeratorState extends State<Refrigerator> {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Color(0xFFEE7243)),
+              .copyWith(color: Theme.of(context).errorColor),
         ),
       ),
     );
