@@ -156,23 +156,39 @@ class _ShareState extends State<Share> {
                 children: [
                   Align(
                     alignment: Alignment.bottomRight,
-                    child:
-                        (min < 60) ? Text('$min분 전') : Text('${min ~/ 60}시간 전'),
+                    child: (min < 60)
+                        ? Text(
+                            '$min분 전',
+                            style:
+                                Theme.of(context).textTheme.overline.copyWith(
+                                      color: Color(0xFFBFBFBF),
+                                    ),
+                          )
+                        : Text(
+                            '${min ~/ 60}시간 전',
+                            style: Theme.of(context)
+                                .textTheme
+                                .overline
+                                .copyWith(color: Color(0xFFBFBFBF)),
+                          ),
                   ),
                   Text(
                     food + '  $num개',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                   Text(
-                    '${due.year}.${due.month}.${due.day}',
+                    '유통기한 ${due.year}.${due.month}.${due.day}',
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle2
-                        .copyWith(color: Red500),
+                        .caption
+                        .copyWith(color: Theme.of(context).errorColor),
                   ),
                   Text(
                     text,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(color: Color(0xFFBFBFBF)),
                   ),
                   Row(
                     children: [

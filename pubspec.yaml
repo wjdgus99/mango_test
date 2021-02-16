@@ -80,6 +80,9 @@ flutter:
     - images/users/
     - images/category/
   fonts:
+    - family: IBMPlexSans
+      fonts:
+        - asset: fonts/IBMPlexSans-Bold.ttf
     - family: Oregano
       fonts:
         - asset: fonts/Oregano-Italic.ttf

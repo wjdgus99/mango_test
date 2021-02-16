@@ -68,7 +68,7 @@ ThemeData _buildMangoTheme() {
     accentColor: Orange500,
     primaryColor: Colors.white,
     hoverColor: Orange500,
-    errorColor: Red200,
+    errorColor: Red500,
     toggleableActiveColor: Orange500,
     cursorColor: Orange500,
     buttonTheme: base.buttonTheme.copyWith(

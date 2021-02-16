@@ -60,6 +60,7 @@ class _FriendListState extends State<FriendList> {
             child: ListTile(
               title: Text(
                 '편집',
+                style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -75,6 +76,7 @@ class _FriendListState extends State<FriendList> {
             child: ListTile(
               title: Text(
                 '친구 관리',
+                style: Theme.of(context).textTheme.bodyText1,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -139,7 +141,10 @@ class _FriendListState extends State<FriendList> {
             radius: 30,
             backgroundImage: AssetImage(user.FriendList[index].Image),
           ),
-          title: Text(user.FriendList[index].Name),
+          title: Text(
+            user.FriendList[index].Name,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
         ),
       ),
     );

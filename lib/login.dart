@@ -35,10 +35,11 @@ class LoginPage extends StatelessWidget {
                   flex: 10,
                 ),
                 Container(
-                  child: Text(
-                    '당신의 냉장고를 관리해주는 집요정,',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
+                  child: Text('당신의 냉장고를 관리해주는 집요정,',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(color: Colors.white)),
                 ),
                 Spacer(
                   flex: 1,
@@ -50,10 +51,11 @@ class LoginPage extends StatelessWidget {
                   flex: 1,
                 ),
                 Container(
-                  child: Text(
-                    'Manager + 古',
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
+                  child: Text('Manager + 古',
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.white)),
                 ),
                 Spacer(
                   flex: 1,
