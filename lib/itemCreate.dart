@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mango_test/app.dart';
+import 'package:intl/intl.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/refrigerator.dart';
 
+import 'colors.dart';
 import 'model/users/food.dart';
-// import 'model/food.dart';
 
 class ItemCreate extends StatefulWidget {
   @override
@@ -47,15 +48,16 @@ class _ItemCreateState extends State<ItemCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Grey200,
       appBar: AppBar(
         title: Text(appTitle),
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.all(DeviceWidth * 0.05),
+        //padding: EdgeInsets.all(DeviceWidth * 0.05),
         children: <Widget>[
-          showTop(),
-          SizedBox(
+          showTop()
+          ,SizedBox(
             height: 10,
           ),
           showInfo(),
@@ -63,29 +65,36 @@ class _ItemCreateState extends State<ItemCreate> {
             height: 10,
           ),
           Container(
+            color: Colors.white,
             height: DeviceHeight * 0.07,
             alignment: Alignment.centerLeft,
-            child: InkWell(
-              child: Text(
-                '품목삭제',
-                style: TextStyle(color: Theme.of(context).errorColor),
+            child: Container(
+              padding: EdgeInsets.only(left: DeviceWidth * 0.05),
+              child: InkWell(
+                child: Text(
+                  '품목삭제',
+                  style: TextStyle(color: Theme.of(context).errorColor),
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
             ),
           ),
           SizedBox(
             height: 10,
           ),
           Container(
-            height: DeviceHeight * 0.08,
-            child: FlatButton(
-              //padding: EdgeInsets.symmetric(vertical: 20),
-              color: Theme.of(context).accentColor,
-              child: Text('등록'),
-              onPressed: () {
-                showAlertDialog(
-                    '품목 수정을 완료하시겠습니까?', '품목의 정보가 수정됩니다.', '취소', '완료');
-              },
+            padding: EdgeInsets.all(DeviceWidth * 0.05),
+            child: Container(
+              height: DeviceHeight * 0.08,
+              child: FlatButton(
+                //padding: EdgeInsets.symmetric(vertical: 20),
+                color: Theme.of(context).accentColor,
+                child: Text('등록'),
+                onPressed: () {
+                  showAlertDialog(
+                      '품목 수정을 완료하시겠습니까?', '품목의 정보가 수정됩니다.', '취소', '완료');
+                },
+              ),
             ),
           ), //mj: this is for bottom 등록 button
         ],
@@ -95,18 +104,20 @@ class _ItemCreateState extends State<ItemCreate> {
 
   Widget showTop() {
     return Container(
-        height: DeviceHeight * 0.06,
+        color: Colors.white,
+        height: DeviceHeight * 0.08,
         child: ListView.builder(
+          padding: EdgeInsets.symmetric(vertical: DeviceHeight*0.01),
             scrollDirection: Axis.horizontal,
             itemCount: Foods.length,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Padding(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(8),
                     child: Container(
                       width: 50,
                       child: FlatButton(
-                        color: Colors.green,
+                        color: Orange100,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
@@ -120,12 +131,15 @@ class _ItemCreateState extends State<ItemCreate> {
               } else {
                 return Padding(
                     padding: EdgeInsets.all(5),
-                    child: FlatButton(
-                      color: Theme.of(context).accentColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Text('${Foods[index].name}'),
-                      onPressed: () {},
+                    child: Container(
+                      width: Foods[index].name.length * 25.0,
+                      child: FlatButton(
+                        color: Grey200,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text('${Foods[index].name}'),
+                        onPressed: () {},
+                      ),
                     ));
               }
             }));
@@ -133,6 +147,8 @@ class _ItemCreateState extends State<ItemCreate> {
 
   Widget showInfo() {
     return Container(
+      color: Colors.white,
+      padding: EdgeInsets.all(DeviceWidth * 0.05),
       child: Column(
         children: <Widget>[
           Container(alignment: Alignment.topLeft, child: Text('제품정보')),
@@ -162,8 +178,9 @@ class _ItemCreateState extends State<ItemCreate> {
           Container(
             width: DeviceWidth, // mj: TODO. DeviceWidth
             child: CupertinoSegmentedControl(
-              padding: EdgeInsets.all(DeviceHeight * 0.02),
-              // mj: TODO. DeviceWidth
+              //selectedColor: Colors.white,
+              //unselectedColor: Grey200,
+              padding: EdgeInsets.symmetric(vertical: DeviceHeight * 0.02),
               children: tabBarWidget,
               onValueChanged: (int val) {
                 setState(() {
@@ -229,7 +246,7 @@ class _ItemCreateState extends State<ItemCreate> {
 
   Widget showSelectField(String info) {
     return Container(
-      height: 60,
+      height: 60, // TODO. DeviceHeight
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -242,16 +259,13 @@ class _ItemCreateState extends State<ItemCreate> {
               child: Text(info), // myIcon is a 48px-wide widget.
             ),
             Text('10'),
+            info == '수량'? SizedBox() :Expanded(child: SizedBox()),
             IconButton(
               icon: Icon(Icons.arrow_drop_down),
               onPressed: () {
                 showCupertinoDatePicker();
               },
             ),
-            // Padding(
-            //   padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
-            //   child: Icon(Icons.arrow_drop_down), // myIcon is a 48px-wide widget.
-            // ),
           ],
         ),
       ),
@@ -351,15 +365,12 @@ class _ItemCreateState extends State<ItemCreate> {
                 ),
                 Expanded(
                   child: CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
+                    //initialDateTime: DateTime.now(),
+                    initialDateTime: DateFormat('yyyy-MM-dd').parse('2020-11-11'),
                     onDateTimeChanged: (DateTime newdate) {
                       print(newdate);
                     },
-                    // use24hFormat: true,
-                    // maximumDate: new DateTime(2030, 12, 30),
-                    // minimumYear: 2010,
-                    // maximumYear: 2018,
-                    // minuteInterval: 1,
+                    maximumDate: DateTime.now(),
                     mode: CupertinoDatePickerMode.date,
                   ),
                 ),

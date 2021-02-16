@@ -138,4 +138,16 @@ class UserRefrigerator extends ChangeNotifier {
   // IS - TODO: LoadFoodsFromSnapshot, UpdateFoodsFromSnapshot, DeleteFoodsFromSnapshot. (Firebase)
   // IS - 원하는 리스트 불러오기 ( e.g. LostFoodList(RegisterDateFood()); )
   List<Food> LoadFoodList(List<Food> foods) => foods;
+
+  void updateDuedate() {
+    for (int i = 0; i < Foods.length; i++) {
+      if (Foods[i].isSelected) {
+        Foods[i].DueDate =
+            DateTime.now().difference(Foods[i].registerDate).inDays;
+      } else {
+        Foods[i].DueDate = Foods[i].shelfLife.difference(DateTime.now()).inDays;
+      }
+      print('${Foods[i].name}, ${Foods[i].DueDate}');
+    }
+  }
 }
