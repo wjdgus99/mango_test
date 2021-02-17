@@ -7,8 +7,8 @@ import 'users/food.dart';
 List<Food> sampleFoodList = [
   Food(
     name: '레몬',
-    registerDate: DateTime(2021, 1, 25),
-    purchaseDate: DateTime(2021, 1, 23),
+    registerDate: DateTime(2021, 2, 15),
+    purchaseDate: DateTime(2021, 2, 14),
     DueDate: 12,
     num: 1,
     storeLevel: 2,
@@ -18,8 +18,8 @@ List<Food> sampleFoodList = [
   ),
   Food(
     name: '파프리카',
-    registerDate: DateTime(2021, 1, 25),
-    purchaseDate: DateTime(2021, 1, 23),
+    registerDate: DateTime(2021, 2, 15),
+    purchaseDate: DateTime(2021, 2, 14),
     DueDate: 1,
     num: 3,
     storeLevel: 0,
@@ -63,7 +63,7 @@ List<Food> sampleFoodList = [
   ),
   Food(
     name: '앞다리살',
-    shelfLife: DateTime(2021, 3, 12),
+    shelfLife: DateTime(2021, 2, 12),
     registerDate: DateTime(2021, 1, 27),
     purchaseDate: DateTime(2021, 1, 27),
     DueDate: 0,
@@ -75,7 +75,7 @@ List<Food> sampleFoodList = [
   ),
   Food(
     name: '고등어',
-    shelfLife: DateTime(2021, 2, 26),
+    shelfLife: DateTime(2021, 2, 22),
     registerDate: DateTime(2021, 1, 27),
     purchaseDate: DateTime(2021, 1, 27),
     DueDate: 10,

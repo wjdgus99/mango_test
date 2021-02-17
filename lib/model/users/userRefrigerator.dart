@@ -142,8 +142,19 @@ class UserRefrigerator extends ChangeNotifier {
   void updateDuedate() {
     for (int i = 0; i < Foods.length; i++) {
       if (Foods[i].isSelected) {
-        Foods[i].DueDate =
-            DateTime.now().difference(Foods[i].registerDate).inDays;
+        if (Foods[i].storeLevel == 0) {
+          Foods[i].DueDate =
+              Foods[i].registerDate.difference(DateTime.now()).inDays +
+                  RefrigerationAlarm;
+        } else if (Foods[i].storeLevel == 1) {
+          Foods[i].DueDate =
+              Foods[i].registerDate.difference(DateTime.now()).inDays +
+                  FrozenAlarm;
+        } else {
+          Foods[i].DueDate =
+              Foods[i].registerDate.difference(DateTime.now()).inDays +
+                  RoomTempAlarm;
+        }
       } else {
         Foods[i].DueDate = Foods[i].shelfLife.difference(DateTime.now()).inDays;
       }

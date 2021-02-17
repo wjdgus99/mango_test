@@ -31,6 +31,7 @@ final FRIENDLIST = '/friendList';
 final ITEMREGIST = '/itemRegistration';
 final ITEMSELECT = '/itemSelect';
 final ITEMCREATE = '/itemCreate';
+
 var DeviceHeight;
 var DeviceWidth;
 
