@@ -56,8 +56,8 @@ class _ItemCreateState extends State<ItemCreate> {
       body: ListView(
         //padding: EdgeInsets.all(DeviceWidth * 0.05),
         children: <Widget>[
-          showTop()
-          ,SizedBox(
+          showTop(),
+          SizedBox(
             height: 10,
           ),
           showInfo(),
@@ -107,7 +107,7 @@ class _ItemCreateState extends State<ItemCreate> {
         color: Colors.white,
         height: DeviceHeight * 0.08,
         child: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: DeviceHeight*0.01),
+            padding: EdgeInsets.symmetric(vertical: DeviceHeight * 0.01),
             scrollDirection: Axis.horizontal,
             itemCount: Foods.length,
             itemBuilder: (BuildContext context, int index) {
@@ -259,7 +259,7 @@ class _ItemCreateState extends State<ItemCreate> {
               child: Text(info), // myIcon is a 48px-wide widget.
             ),
             Text('10'),
-            info == '수량'? SizedBox() :Expanded(child: SizedBox()),
+            info == '수량' ? SizedBox() : Expanded(child: SizedBox()),
             IconButton(
               icon: Icon(Icons.arrow_drop_down),
               onPressed: () {
@@ -321,11 +321,8 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.07,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Refrigerator()));
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    '/', ModalRoute.withName('/'));
                               },
                               child: Text(
                                 button2,
@@ -366,7 +363,8 @@ class _ItemCreateState extends State<ItemCreate> {
                 Expanded(
                   child: CupertinoDatePicker(
                     //initialDateTime: DateTime.now(),
-                    initialDateTime: DateFormat('yyyy-MM-dd').parse('2020-11-11'),
+                    initialDateTime:
+                        DateFormat('yyyy-MM-dd').parse('2020-11-11'),
                     onDateTimeChanged: (DateTime newdate) {
                       print(newdate);
                     },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mango_test/Chat/editChatList.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'chatRoom.dart';
+
 class ChatList extends StatefulWidget {
   @override
   _ChatListState createState() => _ChatListState();
@@ -193,33 +195,57 @@ class _ChatListState extends State<ChatList> {
   }
 
   Widget _buildChatList(String user, String text, String time, int message) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: ListTile(
-        // isThreeLine: true,
-        contentPadding: EdgeInsets.all(2),
-        leading: CircleAvatar(
-          radius: 30,
-          backgroundImage: AssetImage('images/users/photo_$user.jpeg'),
-        ),
-        title: Text(user),
-        subtitle: Text(
-          text,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: Column(
-          children: [
-            Text(time),
-            if (message != 0)
-              CircleAvatar(
-                radius: 12,
-                backgroundColor: Colors.red,
-                child: Text(
-                  message.toString(),
-                ),
-              )
-          ],
+    return InkWell(
+      onTap: () {
+        print(Navigator.defaultRouteName);
+
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ChatRoom()));
+
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (BuildContext context) =>
+        //             ChatRoom()));
+
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
+
+        // Navigator.pushReplacementNamed(context, '/chatRoom');
+
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
+
+        // Navigator.removeRouteBelow(context,
+        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListTile(
+          // isThreeLine: true,
+          contentPadding: EdgeInsets.all(2),
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: AssetImage('images/users/photo_$user.jpeg'),
+          ),
+          title: Text(user),
+          subtitle: Text(
+            text,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: Column(
+            children: [
+              Text(time),
+              if (message != 0)
+                CircleAvatar(
+                  radius: 12,
+                  backgroundColor: Colors.red,
+                  child: Text(
+                    message.toString(),
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );
