@@ -147,7 +147,8 @@ class UserRefrigerator extends ChangeNotifier {
       } else {
         Foods[i].DueDate = Foods[i].shelfLife.difference(DateTime.now()).inDays;
       }
-      print('${Foods[i].name}, ${Foods[i].DueDate}');
+      print(Foods[i].name);
+      print(Foods[i].DueDate);
     }
   }
 }

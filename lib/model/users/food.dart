@@ -12,7 +12,7 @@ class Food {
     this.num,
     this.nutrition,
     this.isSelected,
-    this.selectedNum,
+    // this.selectedNum,
     this.storeLevel,
     this.DueDate,
   });
@@ -28,5 +28,5 @@ class Food {
   int DueDate; // IS - 유통기한 남은 날짜 or 등록기준 지난 시간. TODO: 유통기한: ShelfLife - PurchaseDate / 등록일자: Now - PurchaseDate
   Nutrient nutrition; //영양정보
   bool isSelected; // IS - 구매일자 vs. 유통기한
-  int selectedNum;
+  // int selectedNum;
 }

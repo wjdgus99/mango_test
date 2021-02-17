@@ -14,7 +14,7 @@ List<Food> sampleFoodList = [
     storeLevel: 2,
     category: '과일',
     isSelected: true,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '파프리카',
@@ -25,7 +25,7 @@ List<Food> sampleFoodList = [
     storeLevel: 0,
     category: '채소',
     isSelected: true,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '오이',
@@ -36,7 +36,7 @@ List<Food> sampleFoodList = [
     storeLevel: 2,
     category: '채소',
     isSelected: true,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '고추',
@@ -47,7 +47,7 @@ List<Food> sampleFoodList = [
     storeLevel: 0,
     category: '채소',
     isSelected: true,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '만두',
@@ -59,7 +59,7 @@ List<Food> sampleFoodList = [
     storeLevel: 1,
     category: '냉장/냉동식품',
     isSelected: false,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '앞다리살',
@@ -71,7 +71,7 @@ List<Food> sampleFoodList = [
     storeLevel: 1,
     category: '냉장/냉동식품',
     isSelected: false,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
   Food(
     name: '고등어',
@@ -83,6 +83,6 @@ List<Food> sampleFoodList = [
     storeLevel: 1,
     category: '수산물',
     isSelected: false,
-    selectedNum: 0,
+    // selectedNum: 0,
   ),
 ];

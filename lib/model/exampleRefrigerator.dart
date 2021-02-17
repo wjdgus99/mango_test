@@ -17,7 +17,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/lemon.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: '파프리카',
@@ -26,7 +26,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/paprika.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: '오이',
@@ -35,7 +35,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/cucumber.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: '고추',
@@ -44,7 +44,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/pepper.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: 'lemon',
@@ -53,7 +53,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/pepper.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: 'cucumber',
@@ -62,7 +62,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/pepper.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: 'paprika',
@@ -71,7 +71,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/pepper.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
       Food(
         name: 'pepper',
@@ -80,7 +80,7 @@ class localRefrigerator {
         category: '과일/채소',
         // foodimg: 'images/foods/pepper.png',
         isSelected: false,
-        selectedNum: 0,
+        // selectedNum: 0,
       ),
     ];
 

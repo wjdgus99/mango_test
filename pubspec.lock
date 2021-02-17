@@ -188,6 +188,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_datetime_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_datetime_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.0"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -478,6 +485,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  radio_grouped_buttons:
+    dependency: "direct main"
+    description:
+      name: radio_grouped_buttons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0+2"
   search_widget:
     dependency: "direct main"
     description:
