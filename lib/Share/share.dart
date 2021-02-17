@@ -284,11 +284,7 @@ class _ShareState extends State<Share> {
                             child: FlatButton(
 
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            ChatRoom()));
+                                Navigator.pushReplacementNamed(context, '/chatRoom');
                               },
                               child: Text(
                                 '생성',

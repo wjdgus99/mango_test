@@ -199,24 +199,8 @@ class _ChatListState extends State<ChatList> {
       onTap: () {
         print(Navigator.defaultRouteName);
 
-        Navigator.push(context, MaterialPageRoute(builder: (_) => ChatRoom()));
-
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (BuildContext context) =>
-        //             ChatRoom()));
-
-        // Navigator.pushReplacement(context,
-        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
-
-        // Navigator.pushReplacementNamed(context, '/chatRoom');
-
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
-
-        // Navigator.removeRouteBelow(context,
-        //     MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) => ChatRoom()));
       },
       child: Padding(
         padding: const EdgeInsets.all(12.0),

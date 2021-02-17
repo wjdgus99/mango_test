@@ -6,6 +6,10 @@ class ID extends StatelessWidget {
     TextEditingController _text = TextEditingController();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },),
         title: Text('아이디로 추가'),
         centerTitle: true,
       ),

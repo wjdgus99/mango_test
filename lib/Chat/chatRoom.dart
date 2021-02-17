@@ -30,24 +30,34 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Container(
         child: Column(
           children: [
-            Flexible(child: ListView()),
+            Flexible(
+                child: ListView(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundImage:
+                            AssetImage('images/users/photo_jh.jpeg'),
+                        backgroundColor: Colors.white60,
+                      ),
+                    ),
+                    Expanded(
+                        child: SizedBox(
+                      height: 20,
+                    ))
+                  ],
+                )
+              ],
+            )),
             Divider(height: 1.0),
+            Container(
+              decoration: BoxDecoration(color: Theme.of(context).cardColor),
+              child: _buildTextComposer(),
+            ),
           ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        height: 100.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0, -2),
-              blurRadius: 6.0,
-            )
-          ],
-          color: Colors.white,
         ),
       ),
     );
@@ -62,7 +72,6 @@ class _ChatRoomState extends State<ChatRoom> {
       text: text,
       animationController: AnimationController(
         duration: const Duration(milliseconds: 3000),
-        // vsync: this,
       ),
     );
     setState(() {
@@ -95,9 +104,8 @@ class _ChatRoomState extends State<ChatRoom> {
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 4.0),
                 child: IconButton(
-                  icon: _isComposing
-                      ? const Icon(Icons.directions_run)
-                      : const Icon(Icons.directions_walk),
+                  icon: Icon(Icons.send),
+                  color: _isComposing ? Colors.red : Colors.grey,
                   onPressed: _isComposing
                       ? () => _handleSubmitted(_textController.text)
                       : null,

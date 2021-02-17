@@ -19,6 +19,13 @@ class _PhoneState extends State<Phone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
         title: Text('연락처로 추가'),
         centerTitle: true,
       ),
