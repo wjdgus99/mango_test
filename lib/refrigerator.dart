@@ -182,11 +182,11 @@ class _RefrigeratorState extends State<Refrigerator> {
                                           color: Color(0xFF929292),
                                         )),
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          ItemCreate()));
+                              if (modifyFoodList.length <= 0) {
+                              } else {
+                                Navigator.pushNamed(context, ITEMCREATE,
+                                    arguments: modifyFoodList);
+                              }
                             },
                           ),
                           SizedBox(
@@ -202,7 +202,34 @@ class _RefrigeratorState extends State<Refrigerator> {
                                       .caption
                                       .copyWith(color: Color(0xFF929292)),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+                                if (modifyFoodList.length > 0) {
+                                  for (int i = 0;
+                                      i < modifyFoodList.length;
+                                      i++) {
+                                    userRefrigerator.Foods.remove(
+                                        modifyFoodList[i]);
+                                  }
+
+                                  userRefrigerator.RefrigerationFoods.clear();
+                                  userRefrigerator.RefrigerationFoods =
+                                      userRefrigerator.Foods;
+                                  userRefrigerator.FrozenFoods.clear();
+                                  userRefrigerator.FrozenFoods =
+                                      userRefrigerator.Foods;
+                                  userRefrigerator.RoomTempFoods.clear();
+                                  userRefrigerator.RoomTempFoods =
+                                      userRefrigerator.Foods;
+
+                                  print(
+                                      '총  - ${userRefrigerator.Foods.length} / ${userRefrigerator.RefrigerationFoods.length} / ${userRefrigerator.FrozenFoods.length} / ${userRefrigerator.RoomTempFoods.length}');
+
+                                  modifyFoodList.clear();
+                                  isEdited = !isEdited;
+                                } else {}
+                              });
+                            },
                           ),
                           SizedBox(
                             width: DeviceWidth * 0.05,
@@ -374,11 +401,17 @@ class _RefrigeratorState extends State<Refrigerator> {
                 Container(
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
-                    color: foods[index].DueDate > 3
-                        ? Grey200
-                        : Red200.withOpacity(0.4),
+                    color: modifyFoodList.contains(foods[index])
+                        ? Orange100
+                        : foods[index].DueDate > 0
+                            ? Grey200
+                            : foods[index].isSelected
+                                ? Blue100.withOpacity(0.6)
+                                : Red200.withOpacity(0.4),
                     border: Border.all(
-                      color: Color(0xFFF9F8F6),
+                      color: modifyFoodList.contains(foods[index])
+                          ? Orange500
+                          : Color(0xFFF9F8F6),
                     ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(5.0),
@@ -395,18 +428,27 @@ class _RefrigeratorState extends State<Refrigerator> {
                               height: DeviceHeight * 67 / 812,
                               fit: BoxFit.contain,
                             ),
-                            foods[index].isSelected
-                                ? SizedBox()
-                                : foods[index].DueDate <= 0
+                            foods[index].DueDate <= 0
+                                ? foods[index].isSelected
                                     ? Positioned(
-                                        top: 0, left: 5, child: dDate('OVER'))
-                                    : foods[index].DueDate <= 3
-                                        ? Positioned(
+                                        top: 0,
+                                        left: 5,
+                                        child: dDate(
+                                            foods[index].isSelected, 'STALE'))
+                                    : Positioned(
+                                        top: 0,
+                                        left: 5,
+                                        child: dDate(
+                                            foods[index].isSelected, 'OVER'))
+                                : foods[index].DueDate <= 7
+                                    ? foods[index].isSelected
+                                        ? SizedBox()
+                                        : Positioned(
                                             top: 0,
                                             left: 5,
-                                            child: dDate(
+                                            child: dDate(false,
                                                 'D - ${foods[index].DueDate}'))
-                                        : SizedBox(),
+                                    : SizedBox(),
                           ],
                         ),
                         Spacer(
@@ -542,12 +584,12 @@ class _RefrigeratorState extends State<Refrigerator> {
                                         ? Positioned(
                                             top: 0,
                                             left: 5,
-                                            child: dDate('OVER'))
+                                            child: dDate(true, 'OVER'))
                                         : foods[index].DueDate <= 3
                                             ? Positioned(
                                                 top: 0,
                                                 left: 5,
-                                                child: dDate(
+                                                child: dDate(true,
                                                     'D - ${foods[index].DueDate}'))
                                             : SizedBox(),
                                   ],
@@ -642,21 +684,23 @@ class _RefrigeratorState extends State<Refrigerator> {
     }
   }
 
-  Widget dDate(String txt) {
+  Widget dDate(bool isSelected, String txt) {
     return Container(
-      width: DeviceWidth * 46 / 375,
+      width: isSelected ? DeviceWidth * 55 / 375 : DeviceWidth * 46 / 375,
       height: DeviceHeight * 30 / 812,
       decoration: BoxDecoration(
-        color: Red200,
+        color: isSelected ? Blue100 : Red200,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
         child: Text(
           txt,
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Theme.of(context).errorColor),
+          style: isSelected
+              ? Theme.of(context).textTheme.headline6.copyWith(color: Blue500)
+              : Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Theme.of(context).errorColor),
         ),
       ),
     );

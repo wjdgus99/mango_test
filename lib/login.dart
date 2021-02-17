@@ -230,6 +230,12 @@ class LoginPage extends StatelessWidget {
   }
 
   void getRefrigeratorFromUser(UserRefrigerator userRefrigerator) {
+    // IS - 보관방법 별 알림 주기.
+    userRefrigerator.RefrigerationAlarm = 7;
+    userRefrigerator.FrozenAlarm = 30;
+    userRefrigerator.RoomTempAlarm = 3;
+
+    // IS - 음식 리스트 불러오기.
     userRefrigerator.Foods.removeAt(0);
     userRefrigerator.AddFoodLists(sampleFoodList);
 
@@ -245,6 +251,7 @@ class LoginPage extends StatelessWidget {
     userRefrigerator.RegisterDateFoods = userRefrigerator.Foods;
     userRefrigerator.RemainDateFoods = userRefrigerator.Foods;
 
+    //IS - D-day 업데이트
     userRefrigerator.updateDuedate();
   }
 
