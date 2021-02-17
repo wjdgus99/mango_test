@@ -147,21 +147,25 @@ class _ItemCreateState extends State<ItemCreate> {
                           style:
                               TextStyle(color: Theme.of(context).accentColor),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            //TODO. Foods.Length 하나 더 추가해야될 듯. 하면서 내용은 없는 DB로...내용없는 DB하나 더 추가되도록!!!
+                          });
+                        },
                       ),
                     ));
               } else {
                 return Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
-                      width: Foods[index].name.length * 25.0,
+                      width: Foods[index-1].name.length * 25.0,
                       child: FlatButton(
                         color: currentSelected == index
                             ? Theme.of(context).accentColor
                             : Grey200,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
-                        child: Text('${Foods[index].name}'),
+                        child: Text('${Foods[index-1].name}'),
                         onPressed: () {
                           setState(() {
                             currentSelected = index;
@@ -188,7 +192,7 @@ class _ItemCreateState extends State<ItemCreate> {
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               border: OutlineInputBorder(),
-              hintText: Foods[currentSelected].name,
+              hintText: Foods[currentSelected-1].name,
               prefixIcon: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
                 child: Text('품명'), // myIcon is a 48px-wide widget.
@@ -207,13 +211,13 @@ class _ItemCreateState extends State<ItemCreate> {
           ),
           Row(
             children: <Widget>[
-              showSelectField('수량', Foods[currentSelected].num.toString()),
+              showSelectField('수량', Foods[currentSelected-1].num.toString()),
               SizedBox(
                 width: DeviceHeight * 0.02,
               ),
               Expanded(
                   child:
-                      showSelectField('카테고리', Foods[currentSelected].category)),
+                      showSelectField('카테고리', Foods[currentSelected-1].category)),
             ],
           ),
           Container(
@@ -407,7 +411,7 @@ class _ItemCreateState extends State<ItemCreate> {
                     itemExtent: 32,
                     onSelectedItemChanged: (int newValue) {
                       setState(() {
-                        Foods[currentSelected].num = newValue + 1;
+                        Foods[currentSelected-1].num = newValue + 1;
                       });
                     },
                     children: List<Widget>.generate(20, (int index) {
@@ -417,7 +421,7 @@ class _ItemCreateState extends State<ItemCreate> {
                       );
                     }),
                     scrollController: FixedExtentScrollController(
-                        initialItem: Foods[index].num),
+                        initialItem: Foods[index-1].num-1),
                   ),
                 ),
               ],
@@ -490,7 +494,7 @@ class _ItemCreateState extends State<ItemCreate> {
                       initialSelection: 2, //TODO.
                       radioButtonValue: (value,index){
                         setState(() {
-                          Foods[currentSelected].category = value;
+                          Foods[currentSelected-1].category = value;
                         });
                       },
                       buttonLables: [
