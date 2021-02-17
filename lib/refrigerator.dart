@@ -32,6 +32,8 @@ List<RefryItem> items = <RefryItem>[
   ),
 ];
 
+List<Food> modifyFoodList = new List<Food>();
+
 class Refrigerator extends StatefulWidget {
   @override
   _RefrigeratorState createState() => _RefrigeratorState();
@@ -78,8 +80,8 @@ class _RefrigeratorState extends State<Refrigerator> {
             ),
             body: TabBarView(
               children: [
-                showTap1(userRefrigerator.Foods),
-                showTap2(userRefrigerator.Foods),
+                showTap1(userRefrigerator),
+                showTap2(userRefrigerator),
               ],
             ),
           ),
@@ -88,14 +90,15 @@ class _RefrigeratorState extends State<Refrigerator> {
     );
   }
 
-  Widget showTap1(List<Food> foods) {
+  Widget showTap1(UserRefrigerator userRefrigerator) {
+    List<Food> foods = userRefrigerator.Foods;
     return Column(
       children: <Widget>[
         Container(
             padding: EdgeInsets.all(DeviceWidth * 0.04),
             child: Row(
               children: [
-                Expanded(
+                Container(
                     child: Text(
                   '전체 ${foods.length}개',
                   style: Theme.of(context)
@@ -103,6 +106,18 @@ class _RefrigeratorState extends State<Refrigerator> {
                       .bodyText2
                       .copyWith(color: Color(0xFF666666)),
                 )),
+                isEdited == true
+                    ? Container(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
+                          '선택 ${modifyFoodList.length}개',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              .copyWith(color: Color(0xFF666666)),
+                        ))
+                    : Text(''),
+                Spacer(),
                 isEdited == false
                     ? Row(
                         children: <Widget>[
@@ -158,12 +173,14 @@ class _RefrigeratorState extends State<Refrigerator> {
                         children: <Widget>[
                           InkWell(
                             child: Text('수정',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption
-                                    .copyWith(
-                                      color: Color(0xFF929292),
-                                    )),
+                                style: modifyFoodList.length > 0
+                                    ? Theme.of(context).textTheme.caption
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .copyWith(
+                                          color: Color(0xFF929292),
+                                        )),
                             onTap: () {
                               Navigator.push(
                                   context,
@@ -178,10 +195,12 @@ class _RefrigeratorState extends State<Refrigerator> {
                           InkWell(
                             child: Text(
                               '삭제',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(color: Color(0xFF929292)),
+                              style: modifyFoodList.length > 0
+                                  ? Theme.of(context).textTheme.caption
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .copyWith(color: Color(0xFF929292)),
                             ),
                             onTap: () {},
                           ),
@@ -194,6 +213,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                             onTap: () {
                               setState(() {
                                 isEdited = false;
+                                modifyFoodList.clear();
                               });
                             },
                           ),
@@ -211,7 +231,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                 title: Text('${items[index].headerValue}'),
                 initiallyExpanded: items[index].isExpanded,
                 children: <Widget>[
-                  contents(foods),
+                  contents(userRefrigerator, index),
                 ],
                 onExpansionChanged: ((newState) {
                   setState(() {
@@ -233,7 +253,7 @@ class _RefrigeratorState extends State<Refrigerator> {
     );
   }
 
-  Widget showTap2(List<Food> foods) {
+  Widget showTap2(UserRefrigerator userRefrigerator) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -329,12 +349,17 @@ class _RefrigeratorState extends State<Refrigerator> {
         //   padding: EdgeInsets.symmetric(horizontal: DeviceWidth * 0.04),
         //   child: Text('유통기한 만료 7일 이내'),
         // ),
-        Expanded(child: contents2(foods)),
+        Expanded(child: contents2(userRefrigerator, 4)),
       ],
     );
   }
 
-  Widget contents(List<Food> foods) {
+  Widget contents(UserRefrigerator userRefrigerator, int idx) {
+    List<Food> foods = idx == 0
+        ? userRefrigerator.RefrigerationFoods
+        : idx == 1
+            ? userRefrigerator.FrozenFoods
+            : userRefrigerator.RoomTempFoods;
     if (foods == null || foods.isEmpty) {
       return emptyList();
     } else {
@@ -370,16 +395,18 @@ class _RefrigeratorState extends State<Refrigerator> {
                               height: DeviceHeight * 67 / 812,
                               fit: BoxFit.contain,
                             ),
-                            foods[index].DueDate <= 0
-                                ? Positioned(
-                                    top: 0, left: 5, child: dDate('OVER'))
-                                : foods[index].DueDate <= 3
+                            foods[index].isSelected
+                                ? SizedBox()
+                                : foods[index].DueDate <= 0
                                     ? Positioned(
-                                        top: 0,
-                                        left: 5,
-                                        child: dDate(
-                                            'D - ${foods[index].DueDate}'))
-                                    : SizedBox(),
+                                        top: 0, left: 5, child: dDate('OVER'))
+                                    : foods[index].DueDate <= 3
+                                        ? Positioned(
+                                            top: 0,
+                                            left: 5,
+                                            child: dDate(
+                                                'D - ${foods[index].DueDate}'))
+                                        : SizedBox(),
                           ],
                         ),
                         Spacer(
@@ -419,7 +446,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             onTap: () {
-                              showCupertinoPicker(index);
+                              showCupertinoPicker(userRefrigerator, idx, index);
                             }),
                         Spacer(
                           flex: 1,
@@ -438,27 +465,22 @@ class _RefrigeratorState extends State<Refrigerator> {
                             children: [
                               RaisedButton(
                                 shape: CircleBorder(),
-                                color: foods[index].isSelected == false
+                                color: !modifyFoodList.contains(foods[index])
                                     ? Colors.grey
                                     : Theme.of(context).accentColor,
                                 onPressed: () {
                                   setState(() {
-                                    if (foods[index].isSelected == false) {
-                                      num++;
-                                      foods[index].isSelected = true;
-                                      foods[index].selectedNum = num;
-                                      print(index);
+                                    if (!modifyFoodList
+                                        .contains(foods[index])) {
+                                      modifyFoodList.add(foods[index]);
+                                      print('${modifyFoodList.length}');
                                     } else {
-                                      num--;
-                                      foods[index].isSelected = false;
-                                      foods[index].selectedNum = num;
+                                      modifyFoodList.remove(foods[index]);
+                                      print('${modifyFoodList.length}');
                                     }
                                   });
                                 },
                               ),
-                              foods[index].isSelected == false
-                                  ? SizedBox()
-                                  : Text('${foods[index].selectedNum}'),
                             ],
                           ),
                         ),
@@ -475,7 +497,8 @@ class _RefrigeratorState extends State<Refrigerator> {
     }
   }
 
-  Widget contents2(List<Food> foods) {
+  Widget contents2(UserRefrigerator userRefrigerator, int idx) {
+    List<Food> foods = userRefrigerator.Foods;
     bool isTitle = true;
 
     if (foods == null || foods.isEmpty) {
@@ -560,7 +583,8 @@ class _RefrigeratorState extends State<Refrigerator> {
                                 InkWell(
                                     child: Text('${foods[index].num} ▾'),
                                     onTap: () {
-                                      showCupertinoPicker(index);
+                                      showCupertinoPicker(
+                                          userRefrigerator, idx, index);
                                     }),
                                 Spacer(
                                   flex: 1,
@@ -588,19 +612,18 @@ class _RefrigeratorState extends State<Refrigerator> {
                                                 false) {
                                               num++;
                                               foods[index].isSelected = true;
-                                              foods[index].selectedNum = num;
-                                              print(index);
+                                              // foods[index].selectedNum = num;
                                             } else {
                                               num--;
                                               foods[index].isSelected = false;
-                                              foods[index].selectedNum = num;
+                                              // foods[index].selectedNum = num;
                                             }
                                           });
                                         },
                                       ),
                                       foods[index].isSelected == false
                                           ? SizedBox()
-                                          : Text('${foods[index].selectedNum}'),
+                                          : Text(/*'${foods[index].num}'*/ ''),
                                     ],
                                   ),
                                 ),
@@ -644,7 +667,8 @@ class _RefrigeratorState extends State<Refrigerator> {
     return Center(child: Text('냉장고 칸이 비어있습니다.'));
   }
 
-  Future<dynamic> showCupertinoPicker(int index) {
+  Future<dynamic> showCupertinoPicker(
+      UserRefrigerator userRefrigerator, int listIndex, int index) {
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -669,7 +693,16 @@ class _RefrigeratorState extends State<Refrigerator> {
                     itemExtent: 32,
                     onSelectedItemChanged: (int newValue) {
                       setState(() {
-                        Foods[index].num = newValue + 1;
+                        if (listIndex == 0) {
+                          userRefrigerator.RefrigerationFoods[index].num =
+                              newValue + 1;
+                        } else if (listIndex == 1) {
+                          userRefrigerator.FrozenFoods[index].num =
+                              newValue + 1;
+                        } else {
+                          userRefrigerator.RoomTempFoods[index].num =
+                              newValue + 1;
+                        }
                       });
                     },
                     children: List<Widget>.generate(20, (int index) {
