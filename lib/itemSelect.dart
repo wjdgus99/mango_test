@@ -139,7 +139,7 @@ class _ItemSelectState extends State<ItemSelect> {
                               setState(() {
                                 num++;
                                 foods[index].isSelected = true;
-                                foods[index].selectedNum = num;
+                                // foods[index].selectedNum = num;
                                 print(index);
                               });
                             },
@@ -148,15 +148,14 @@ class _ItemSelectState extends State<ItemSelect> {
                       : SizedBox(
                           width: 23,
                           child: RaisedButton(
-                            child: Center(
-                                child: Text('${foods[index].selectedNum}')),
+                            child: Center(child: Text('${foods[index].num}')),
                             shape: CircleBorder(),
                             color: Theme.of(context).accentColor,
                             onPressed: () {
                               setState(() {
                                 num--;
                                 foods[index].isSelected = false;
-                                foods[index].selectedNum = num;
+                                // foods[index].selectedNum = num;
                               });
                             },
                           ),
