@@ -28,7 +28,7 @@ class FriendList extends StatefulWidget {
 class _FriendListState extends State<FriendList> {
   TestUser user = localTestUser.loadUser();
 
-  Widget buildBottomSheet(BuildContext context) {
+  Widget buildManageBottomSheet(BuildContext context) {
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,6 +89,85 @@ class _FriendListState extends State<FriendList> {
     );
   }
 
+  Widget buildEditBottomSheet(BuildContext context) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(children: [
+            Expanded(
+                child: Divider(
+              indent: 180,
+              endIndent: 135,
+              thickness: 4,
+            )),
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )),
+          ]),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Phone()));
+            },
+            child: ListTile(
+              title: Text(
+                '연락처로 추가',
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (BuildContext context) => ID()));
+            },
+            child: ListTile(
+              title: Text(
+                '아이디로 추가',
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Email()));
+            },
+            child: ListTile(
+              title: Text(
+                '이메일로 추가',
+                style: Theme.of(context).textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Divider(thickness: 1),
+          SizedBox(
+            height: 60,
+          )
+          // ListTile(
+          //   title: Text('전체 설정'),
+          // ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +176,15 @@ class _FriendListState extends State<FriendList> {
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(Icons.person_add_alt), onPressed: () => _topSheet()),
+              icon: Icon(Icons.person_add_alt),
+              onPressed: () {
+                showMaterialModalBottomSheet(
+                    useRootNavigator: true,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    context: context,
+                    builder: buildEditBottomSheet);
+              }),
           IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
@@ -106,7 +193,7 @@ class _FriendListState extends State<FriendList> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     context: context,
-                    builder: buildBottomSheet);
+                    builder: buildManageBottomSheet);
               })
         ],
       ),

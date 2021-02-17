@@ -16,6 +16,10 @@ class _EmailState extends State<Email> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },),
         title: Text('이메일로 추가'),
         centerTitle: true,
       ),
