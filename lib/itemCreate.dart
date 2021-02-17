@@ -360,11 +360,8 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.06,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Refrigerator()));
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    '/', ModalRoute.withName('/'));
                               },
                               child: Text(
                                 button2,

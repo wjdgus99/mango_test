@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mango_test/Chat/chatList.dart';
+import 'package:mango_test/Chat/chatRoom.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/Share/history.dart';
@@ -205,7 +206,7 @@ class _ShareState extends State<Share> {
                       RaisedButton(
                         color: Theme.of(context).accentColor,
                         child: Icon(Icons.send_rounded),
-                        onPressed: () => print('message'),
+                        onPressed: () => showAlertDialog('치즈', 3, '2021.1.30'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(color: Grey200)),
@@ -218,6 +219,94 @@ class _ShareState extends State<Share> {
           ],
         ),
       ),
+    );
+  }
+
+  void showAlertDialog(
+    String foodName,
+    int num,
+    String dueDate,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)), //this right here
+          child: Container(
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20,10,20,5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '김세인님과의 채팅을 생성하시겠습니까?',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    '$foodName $num개, 유통기한 $dueDate',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  SizedBox(
+                    width: DeviceWidth * 0.8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 40,
+                            child: FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                '취소',
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: DeviceHeight * 0.02,
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: FlatButton(
+
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            ChatRoom()));
+                              },
+                              child: Text(
+                                '생성',
+                                style: Theme.of(context).textTheme.button,
+                              ),
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

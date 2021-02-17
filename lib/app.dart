@@ -11,8 +11,10 @@ import 'package:mango_test/login.dart';
 import 'package:mango_test/Profile/profile.dart';
 import 'package:mango_test/Analytics/nutrition.dart';
 import 'package:mango_test/Share/share.dart';
+import 'package:mango_test/refrigerator.dart';
 import 'package:mango_test/widget/addFood.dart';
 import 'package:mango_test/widget/addFoodDirect.dart';
+import 'Chat/chatRoom.dart';
 import 'model/nutrition/chart.dart';
 import 'home.dart';
 
@@ -55,6 +57,8 @@ class MangoApp extends StatelessWidget {
         ITEMSELECT: (context) => ItemSelect(),
         ITEMCREATE: (context) => ItemCreate(),
         '/HHOME': (context) => HHOME(),
+        '/chatRoom': (context) => ChatRoom(),
+        '/refriger': (context) => Refrigerator(),
       },
     );
   }
