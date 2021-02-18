@@ -87,7 +87,7 @@ class _ItemCreateState extends State<ItemCreate> {
             height: 10,
           ),
           Container(
-            color: Colors.white,
+            color: White,
             height: DeviceHeight * 0.07,
             alignment: Alignment.centerLeft,
             child: Container(
@@ -179,7 +179,7 @@ class _ItemCreateState extends State<ItemCreate> {
 
   Widget showInfo() {
     return Container(
-      color: Colors.white,
+      color: White,
       padding: EdgeInsets.all(DeviceWidth * 0.05),
       child: Column(
         children: <Widget>[
@@ -352,7 +352,7 @@ class _ItemCreateState extends State<ItemCreate> {
                               child: Text(
                                 button1,
                               ),
-                              color: Colors.grey,
+                              color: Theme.of(context).buttonColor,
                             ),
                           ),
                         ),

@@ -43,7 +43,7 @@ class _ItemSelectState extends State<ItemSelect> {
           return Container(
             //height: DeviceHeight * 87 / 812,
             decoration: BoxDecoration(
-              color: foods[index].DueDate > 3 ? Grey200 : Color(0xFFF9EBE5),
+              color: foods[index].DueDate > 3 ? Theme.of(context).buttonColor : Theme.of(context).errorColor.withOpacity(0.4),
               border: Border.all(
                 color: Color(0xFFF9F8F6),
               ),
@@ -124,7 +124,7 @@ class _ItemSelectState extends State<ItemSelect> {
                         },
                         child: Icon(Icons.add),
                         shape: CircleBorder(
-                          side: BorderSide(color: Colors.black),
+                          side: BorderSide(color: Black),
                         ),
                       ),
                     ],
@@ -186,7 +186,7 @@ class _ItemSelectState extends State<ItemSelect> {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Color(0xFFEE7243)),
+              .copyWith(color: Theme.of(context).errorColor),
         ),
       ),
     );

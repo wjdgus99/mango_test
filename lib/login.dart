@@ -12,6 +12,7 @@ import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'colors.dart';
 import 'model/sampleData.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -26,7 +27,7 @@ class LoginPage extends StatelessWidget {
     return Consumer2<localUser.User, UserRefrigerator>(
         builder: (context, user, userRefrigerator, child) {
       return Scaffold(
-          backgroundColor: Color(0xffF7C653),
+          backgroundColor: Theme.of(context).accentColor,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +40,7 @@ class LoginPage extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1
-                          .copyWith(color: Colors.white)),
+                          .copyWith(color: White)),
                 ),
                 Spacer(
                   flex: 1,
@@ -55,7 +56,7 @@ class LoginPage extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .caption
-                          .copyWith(color: Colors.white)),
+                          .copyWith(color: White)),
                 ),
                 Spacer(
                   flex: 1,
@@ -71,9 +72,9 @@ class LoginPage extends StatelessWidget {
                 ButtonTheme(
                   minWidth: 300,
                   height: 40,
-                  buttonColor: Colors.white,
+                  buttonColor: White,
                   child: RaisedButton.icon(
-                    color: Colors.white,
+                    color: White,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () async {
@@ -94,11 +95,11 @@ class LoginPage extends StatelessWidget {
                 ),
                 //same as above button.
                 ButtonTheme(
-                  buttonColor: Colors.white,
+                  buttonColor: White,
                   minWidth: 300,
                   height: 40,
                   child: RaisedButton.icon(
-                    color: Colors.white,
+                    color: White,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () =>
@@ -115,11 +116,11 @@ class LoginPage extends StatelessWidget {
                 ),
                 //same as above button.
                 ButtonTheme(
-                  buttonColor: Colors.white,
+                  buttonColor: White,
                   minWidth: 300,
                   height: 40,
                   child: RaisedButton.icon(
-                    color: Colors.white,
+                    color: White,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
                     onPressed: () => Navigator.pushNamed(context, HOME),

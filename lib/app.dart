@@ -70,23 +70,23 @@ final ThemeData _MangoTheme = _buildMangoTheme();
 ThemeData _buildMangoTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    accentColor: Orange500,
-    primaryColor: Colors.white,
-    hoverColor: Orange500,
+    accentColor: Orange400,
+    primaryColor: White,
+    //hoverColor: Orange400,
     errorColor: Red500,
-    toggleableActiveColor: Orange500,
-    cursorColor: Orange500,
+    // toggleableActiveColor: Orange400,
+    cursorColor: Orange400,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: Grey200,
+      buttonColor: Disabled,
       colorScheme: base.colorScheme.copyWith(
-        secondary: Orange500,
+        secondary: Orange400,
       ),
     ),
 
     /* show Data Picker */
     colorScheme: ColorScheme.light().copyWith(primary: Orange500),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Orange500,
+      backgroundColor: Orange400,
       foregroundColor: Colors.black,
     ),
     textTheme: _buildMangoTextTheme(base.textTheme),
