@@ -5,9 +5,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mango_test/app.dart';
 import 'package:intl/intl.dart';
+import 'package:mango_test/home.dart';
+import 'package:mango_test/model/catogories.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
+import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:mango_test/refrigerator.dart';
+import 'package:provider/provider.dart';
 import 'package:radio_grouped_buttons/custom_buttons/custom_radio_buttons_group.dart';
 
 import 'colors.dart';
@@ -19,7 +23,8 @@ class ItemCreate extends StatefulWidget {
 }
 
 class _ItemCreateState extends State<ItemCreate> {
-  String appTitle = '냉장고 품목 수정';
+  List<Food> addFoodList = new List<Food>();
+
   int tabValue = 0;
   int radioValue = 0;
   int currentSelected = 1; //mj: 선택된 식자재
@@ -28,124 +33,102 @@ class _ItemCreateState extends State<ItemCreate> {
 
   final TextEditingController _nameTextController = new TextEditingController();
 
-  List<Food> Foods = localRefrigerator.loadFood();
+  // List<Food> Foods = localRefrigerator.loadFood();
 
-  final Map<int, Widget> tabBarWidget = const <int, Widget>{
-    0: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉장',
-          style: TextStyle(fontSize: 15),
-        )),
-    1: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉동',
-          style: TextStyle(fontSize: 15),
-        )),
-    2: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '실온',
-          style: TextStyle(fontSize: 15),
-        )),
-  };
-
-  final List<String> category = [
-    '과일',
-    '채소',
-    '우유/유제품',
-    '수산물',
-    '곡물',
-    '조미료/양념',
-    '냉장식품',
-    '냉동식품',
-    '베이커리',
-    '김치/반찬',
-    '즉석식품',
-    '물/음료',
-  ];
-
+  final List<String> categories = imageMatching.keys.toList();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Grey200,
-      appBar: AppBar(
-        title: Text(appTitle),
-        centerTitle: true,
-      ),
-      body: ListView(
-        //padding: EdgeInsets.all(DeviceWidth * 0.05),
-        children: <Widget>[
-          showTop(),
-          SizedBox(
-            height: 10,
-          ),
-          showInfo(),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            color: White,
-            height: DeviceHeight * 0.07,
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.only(left: DeviceWidth * 0.05),
-              child: InkWell(
-                child: Text(
-                  '품목삭제',
-                  style: TextStyle(color: Theme.of(context).errorColor),
+
+    String appTitle = ModalRoute.of(context).settings.arguments;
+
+    if (appTitle.contains('수정')) {
+      addFoodList = modifyFoodList;
+    }
+
+    // List<Food> modifyFoods = ModalRoute.of(context).settings.arguments;
+
+    return Consumer<UserRefrigerator>(
+        builder: (context, userRefrigerator, child) {
+      return Scaffold(
+        backgroundColor: Grey200,
+        appBar: AppBar(
+          title: Text(appTitle),
+          centerTitle: true,
+        ),
+        body: ListView(
+          //padding: EdgeInsets.all(DeviceWidth * 0.05),
+          children: <Widget>[
+            showTop(addFoodList, userRefrigerator),
+            SizedBox(
+              height: 10,
+            ),
+            showInfo(addFoodList, userRefrigerator),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              color: Colors.white,
+              height: DeviceHeight * 0.07,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: EdgeInsets.only(left: DeviceWidth * 0.05),
+                child: InkWell(
+                  child: Text(
+                    '품목삭제',
+                    style: TextStyle(color: Theme.of(context).errorColor),
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {},
               ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.all(DeviceWidth * 0.05),
-            child: Container(
-              height: DeviceHeight * 0.08,
-              child: FlatButton(
-                //padding: EdgeInsets.symmetric(vertical: 20),
-                color: Theme.of(context).accentColor,
-                child: Text('등록'),
-                onPressed: () {
-                  showAlertDialog(
-                      '품목 수정을 완료하시겠습니까?', '품목의 정보가 수정됩니다.', '취소', '완료');
-                },
-              ),
+            SizedBox(
+              height: 10,
             ),
-          ), //mj: this is for bottom 등록 button
-        ],
-      ),
-    );
+            Container(
+              padding: EdgeInsets.all(DeviceWidth * 0.05),
+              child: Container(
+                height: DeviceHeight * 0.08,
+                child: FlatButton(
+                  //padding: EdgeInsets.symmetric(vertical: 20),
+                  color: Theme.of(context).accentColor,
+                  child: Text('등록'),
+                  onPressed: () {
+                    showAlertDialog(addFoodList);
+                  },
+                ),
+              ),
+            ), //mj: this is for bottom 등록 button
+          ],
+        ),
+      );
+    });
   }
 
-  Widget showTop() {
+  Widget showTop(List<Food> foods, UserRefrigerator userRefrigerator) {
     return Container(
         color: Colors.white,
         height: DeviceHeight * 0.08,
         child: ListView.builder(
             padding: EdgeInsets.symmetric(vertical: DeviceHeight * 0.01),
             scrollDirection: Axis.horizontal,
-            itemCount: Foods.length,
+            itemCount: foods.length + 1,
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Padding(
                     padding: EdgeInsets.all(8),
-                    child: Container(
-                      width: 50,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: FlatButton(
-                        color: Orange100,
+                        color: Orange100.withOpacity(0.6),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
                         child: Text(
                           '+',
-                          style:
-                              TextStyle(color: Theme.of(context).accentColor),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              .copyWith(color: Orange700),
                         ),
                         onPressed: () {
                           setState(() {
@@ -157,15 +140,41 @@ class _ItemCreateState extends State<ItemCreate> {
               } else {
                 return Padding(
                     padding: EdgeInsets.all(5),
-                    child: Container(
-                      width: Foods[index-1].name.length * 25.0,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: FlatButton(
                         color: currentSelected == index
-                            ? Theme.of(context).accentColor
-                            : Grey200,
+                            ? Theme.of(context).primaryColor
+                            : Grey200.withOpacity(0.5),
                         shape: RoundedRectangleBorder(
+                            side: currentSelected == index
+                                ? BorderSide(color: Orange700)
+                                : BorderSide(
+                                    color: Color(0xff666666).withOpacity(0.2)),
                             borderRadius: BorderRadius.circular(50)),
-                        child: Text('${Foods[index-1].name}'),
+                        child: Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            '${foods[index - 1].name}',
+                            style: currentSelected == index
+                                ? Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: Orange700)
+                                : Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    .copyWith(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .headline5
+                                            .color
+                                            .withOpacity(0.6),
+                                        fontWeight: FontWeight.w400),
+                          ),
+                        ),
                         onPressed: () {
                           setState(() {
                             currentSelected = index;
@@ -177,7 +186,7 @@ class _ItemCreateState extends State<ItemCreate> {
             }));
   }
 
-  Widget showInfo() {
+  Widget showInfo(List<Food> foods, UserRefrigerator userRefrigerator) {
     return Container(
       color: White,
       padding: EdgeInsets.all(DeviceWidth * 0.05),
@@ -192,7 +201,7 @@ class _ItemCreateState extends State<ItemCreate> {
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               border: OutlineInputBorder(),
-              hintText: Foods[currentSelected-1].name,
+              hintText: foods[currentSelected - 1].name,
               prefixIcon: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
                 child: Text('품명'), // myIcon is a 48px-wide widget.
@@ -211,13 +220,14 @@ class _ItemCreateState extends State<ItemCreate> {
           ),
           Row(
             children: <Widget>[
-              showSelectField('수량', Foods[currentSelected-1].num.toString()),
+              showSelectField(
+                  addFoodList, '수량', foods[currentSelected - 1].num.toString()),
               SizedBox(
                 width: DeviceHeight * 0.02,
               ),
               Expanded(
-                  child:
-                      showSelectField('카테고리', Foods[currentSelected-1].category)),
+                  child: showSelectField(addFoodList, '카테고리',
+                      foods[currentSelected - 1].category)),
             ],
           ),
           Container(
@@ -228,20 +238,136 @@ class _ItemCreateState extends State<ItemCreate> {
             width: DeviceHeight * 0.02,
           ),
           Container(
-            width: DeviceWidth, // mj: TODO. DeviceWidth
-            child: CupertinoSegmentedControl(
-              //selectedColor: Colors.white,
-              //unselectedColor: Grey200,
-              padding: EdgeInsets.symmetric(vertical: DeviceHeight * 0.02),
-              children: tabBarWidget,
-              onValueChanged: (int val) {
-                setState(() {
-                  tabValue = val;
-                });
-              },
-              groupValue: tabValue,
-            ),
-          ),
+              padding: EdgeInsets.fromLTRB(
+                  0, DeviceHeight * 0.02, 0, DeviceHeight * 0.02),
+              width: DeviceWidth, // mj: TODO. DeviceWidth
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    decoration: foods[currentSelected - 1].storeLevel == 0
+                        ? BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            border: Border.all(color: Orange700),
+                            borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(5),
+                            ))
+                        : BoxDecoration(
+                            color: Grey200.withOpacity(0.5),
+                            border: Border.all(
+                                color: Color(0xff666666).withOpacity(0.2)),
+                            borderRadius: BorderRadius.horizontal(
+                              left: Radius.circular(5),
+                            )),
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          foods[currentSelected - 1].storeLevel = 0;
+                          print(foods[currentSelected - 1].storeLevel);
+                        });
+                      },
+                      child: Text(
+                        '냉장',
+                        style: foods[currentSelected - 1].storeLevel == 0
+                            ? Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Orange700, fontWeight: FontWeight.w400)
+                            : Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .color
+                                    .withOpacity(0.6),
+                                fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    decoration: foods[currentSelected - 1].storeLevel == 1
+                        ? BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            border: Border.all(color: Orange700),
+                          )
+                        : BoxDecoration(
+                            color: Grey200.withOpacity(0.5),
+                            border: Border.all(
+                                color: Color(0xff666666).withOpacity(0.2)),
+                          ),
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          foods[currentSelected - 1].storeLevel = 1;
+                        });
+                      },
+                      child: Text(
+                        '냉동',
+                        style: foods[currentSelected - 1].storeLevel == 1
+                            ? Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Orange700, fontWeight: FontWeight.w400)
+                            : Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .color
+                                    .withOpacity(0.6),
+                                fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    decoration: foods[currentSelected - 1].storeLevel == 2
+                        ? BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            border: Border.all(color: Orange700),
+                            borderRadius: BorderRadius.horizontal(
+                              right: Radius.circular(5),
+                            ))
+                        : BoxDecoration(
+                            color: Grey200.withOpacity(0.5),
+                            border: Border.all(
+                                color: Color(0xff666666).withOpacity(0.2)),
+                            borderRadius: BorderRadius.horizontal(
+                              right: Radius.circular(5),
+                            )),
+                    child: FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          foods[currentSelected - 1].storeLevel = 2;
+                        });
+                      },
+                      child: Text(
+                        '실온',
+                        style: foods[currentSelected - 1].storeLevel == 2
+                            ? Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Orange700, fontWeight: FontWeight.w400)
+                            : Theme.of(context).textTheme.subtitle1.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .color
+                                    .withOpacity(0.6),
+                                fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+              // CupertinoSegmentedControl(
+              //   //selectedColor: Colors.white,
+              //   //unselectedColor: Grey200,
+              //   padding: EdgeInsets.symmetric(vertical: DeviceHeight * 0.02),
+              //   children: tabBarWidget,
+              //   onValueChanged: (int val) {
+              //     setState(() {
+              //       foods[currentSelected - 1].storeLevel = val;
+              //       tabValue = foods[currentSelected - 1].storeLevel;
+              //     });
+              //   },
+              //   groupValue: tabValue,
+              // ),
+              ),
           Container(
             child: Row(
               children: <Widget>[
@@ -252,6 +378,7 @@ class _ItemCreateState extends State<ItemCreate> {
                   onChanged: (int val) {
                     setState(() {
                       radioValue = val;
+                      foods[currentSelected - 1].isSelected = false;
                     });
                   },
                 ),
@@ -262,6 +389,7 @@ class _ItemCreateState extends State<ItemCreate> {
                   onChanged: (int val) {
                     setState(() {
                       radioValue = val;
+                      foods[currentSelected - 1].isSelected = true;
                     });
                   },
                 ),
@@ -270,16 +398,16 @@ class _ItemCreateState extends State<ItemCreate> {
             ),
           ),
           radioValue == 0
-              ? showSelectField('유통기한', 'not yet')
-              : showSelectField('구매일', 'not yet'),
+              ? showSelectField(addFoodList, '유통기한', 'not yet')
+              : showSelectField(addFoodList, '구매일', 'not yet'),
         ],
       ),
     );
   }
 
-  Widget showSelectField(String info, String content) {
+  Widget showSelectField(List<Food> foods, String info, String content) {
     return Container(
-      height: 60, // TODO. DeviceHeight
+      height: 60 * DeviceHeight / 812,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -297,9 +425,9 @@ class _ItemCreateState extends State<ItemCreate> {
               icon: Icon(Icons.arrow_drop_down),
               onPressed: () {
                 if (info == '수량')
-                  showCupertinoPicker(1);
+                  showCupertinoPicker(foods, 1);
                 else if (info == '카테고리')
-                  showCategoryPicker();
+                  showCategoryPicker(foods);
                 else
                   // showCupertinoDatePicker(info);
                   showDatePicker();
@@ -311,8 +439,7 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-  void showAlertDialog(
-      String title, String subtitle, String button1, String button2) async {
+  void showAlertDialog(List<Food> foods) async {
     String result = await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -329,11 +456,12 @@ class _ItemCreateState extends State<ItemCreate> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    title,
+                    '품목 수정을 완료하시겠습니까?',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: DeviceHeight * 0.01),
-                  Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
+                  Text('품목의 정보가 수정됩니다.',
+                      style: Theme.of(context).textTheme.bodyText2),
                   SizedBox(
                     height: DeviceHeight * 0.05,
                   ),
@@ -350,7 +478,7 @@ class _ItemCreateState extends State<ItemCreate> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                button1,
+                                '취소',
                               ),
                               color: Theme.of(context).buttonColor,
                             ),
@@ -364,11 +492,12 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.06,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    '/', ModalRoute.withName('/'));
+                                foods.clear();
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, HOME, (route) => false);
                               },
                               child: Text(
-                                button2,
+                                '완료',
                               ),
                               color: Theme.of(context).accentColor,
                             ),
@@ -386,7 +515,7 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-  Future<dynamic> showCupertinoPicker(int index) {
+  Future<dynamic> showCupertinoPicker(List<Food> foods, int index) {
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -411,7 +540,7 @@ class _ItemCreateState extends State<ItemCreate> {
                     itemExtent: 32,
                     onSelectedItemChanged: (int newValue) {
                       setState(() {
-                        Foods[currentSelected-1].num = newValue + 1;
+                        foods[currentSelected - 1].num = newValue + 1;
                       });
                     },
                     children: List<Widget>.generate(20, (int index) {
@@ -421,7 +550,7 @@ class _ItemCreateState extends State<ItemCreate> {
                       );
                     }),
                     scrollController: FixedExtentScrollController(
-                        initialItem: Foods[index-1].num-1),
+                        initialItem: foods[index - 1].num - 1),
                   ),
                 ),
               ],
@@ -430,7 +559,7 @@ class _ItemCreateState extends State<ItemCreate> {
         });
   }
 
-  Future<dynamic> showCategoryPicker() {
+  Future<dynamic> showCategoryPicker(List<Food> foods) {
     int currentSelectedCategory = 0; // mj: 선택된 카테고리
 
     return showModalBottomSheet(
@@ -491,40 +620,19 @@ class _ItemCreateState extends State<ItemCreate> {
                       selectedColor: Theme.of(context).accentColor,
                       buttonWidth: DeviceWidth * 0.27,
                       buttonHeight: DeviceHeight * 0.05,
-                      initialSelection: 2, //TODO.
-                      radioButtonValue: (value,index){
+                      fontSize: 12.0,
+                      initialSelection:
+                          CallIndex(foods[currentSelected - 1]), //TODO.
+                      radioButtonValue: (value, index) {
                         setState(() {
-                          Foods[currentSelected-1].category = value;
+                          foods[currentSelected - 1].category = value;
+
+                          print(
+                              'name - ${foods[currentSelected - 1].name} / category -  ${foods[currentSelected - 1].category}');
                         });
                       },
-                      buttonLables: [
-                        '과일',
-                        '채소',
-                        '우유/유제품',
-                        '수산물',
-                        '곡물',
-                        '조미료/양념',
-                        '냉장식품',
-                        '냉동식품',
-                        '베이커리',
-                        '김치/반찬',
-                        '즉석식품',
-                        '물/음료',
-                      ],
-                      buttonValues: [
-                        '과일',
-                        '채소',
-                        '우유/유제품',
-                        '수산물',
-                        '곡물',
-                        '조미료/양념',
-                        '냉장식품',
-                        '냉동식품',
-                        '베이커리',
-                        '김치/반찬',
-                        '즉석식품',
-                        '물/음료',
-                      ],
+                      buttonLables: categories,
+                      buttonValues: categories,
                     ),
                   ),
                 ),
@@ -538,8 +646,7 @@ class _ItemCreateState extends State<ItemCreate> {
     return DatePicker.showDatePicker(context,
         showTitleActions: true,
         locale: LocaleType.ko,
-        currentTime: DateTime.now(),
-        onConfirm: (date) {
+        currentTime: DateTime.now(), onConfirm: (date) {
       print('confirm $date'); //TODO.
     });
   }
@@ -580,4 +687,25 @@ class _ItemCreateState extends State<ItemCreate> {
           );
         });
   }
+
+  final Map<int, Widget> tabBarWidget = const <int, Widget>{
+    0: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '냉장',
+          style: TextStyle(fontSize: 15),
+        )),
+    1: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '냉동',
+          style: TextStyle(fontSize: 15),
+        )),
+    2: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '실온',
+          style: TextStyle(fontSize: 15),
+        )),
+  };
 }
