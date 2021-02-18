@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mango_test/Chat/calendar.dart';
 
 String _name = 'Your Name';
 
@@ -13,24 +14,28 @@ class _ChatRoomState extends State<ChatRoom> {
   bool _isComposing = false;
   final FocusNode _focusNode = FocusNode();
 
-  bool me = true;
-
   @override
   Widget build(BuildContext context) {
-    me = false;
-    // me = true;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
-            Navigator.pop(context);
           },
         ),
         title: Text('민주'),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.calendar_today_outlined),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Calendar()));
+              })
+        ],
       ),
       body: Container(
         child: Column(
@@ -38,15 +43,16 @@ class _ChatRoomState extends State<ChatRoom> {
             Flexible(
                 child: ListView(
               children: [
-                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ '),
-                _buildTextMSG(true, '정현', '싫은데요 '),
-                _buildTextMSG(true, '정현', '뭐 맛있는거 해먹을라고 ?-?'),
-                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ '),
-                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ '),
-                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ '),
-                _buildTextMSG(true, '정현', '싫은데요 '),
-                _buildTextMSG(true, '정현', '싫은데요 '),
-                _buildTextMSG(true, '정현', '싫어싫어싫어싫어싫어싫어싫어싫어싫\n어싫어싫어싫어싫어싫어싫다고!! '),
+                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ ', '오후 4:30'),
+                _buildTextMSG(true, '정현', '싫은데요 ', '오후 4:31'),
+                _buildTextMSG(true, '정현', '뭐 맛있는거 해먹을라고 ?-?', '오후 4:31'),
+                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ ', '오후 4:35'),
+                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ ', '오후 4:35'),
+                _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ ', '오후 4:36'),
+                _buildTextMSG(true, '정현', '싫은데요 ', '오후 4:40'),
+                _buildTextMSG(true, '정현', '싫은데요 ', '오후 4:41'),
+                _buildTextMSG(true, '정현',
+                    '싫어싫어싫어싫어싫어싫어싫어싫어싫\n어싫어싫어싫어싫어싫어싫다고!! ', '오후 4:45'),
               ],
             )),
             Divider(height: 1.0),
@@ -115,53 +121,83 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
-  Widget _buildTextMSG(bool me, String sender, String text) {
+  Widget _buildTextMSG(bool me, String sender, String text, String time) {
     return Material(
-      child: Row(
-          mainAxisAlignment:
-              me ? MainAxisAlignment.end : MainAxisAlignment.start,
-          children: [
-            !me
-                ? CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('images/users/photo_mj.jpeg'),
-                    backgroundColor: Colors.white60,
-                  )
-                : SizedBox(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  crossAxisAlignment:
-                      me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(sender),
-                    Container(
-                      margin: me
-                          ? EdgeInsets.only(left: 30)
-                          : EdgeInsets.only(right: 30),
-                      child: Material(
-                        color: me
-                            ? Theme.of(context).accentColor
-                            : Colors.grey[300],
-                        borderRadius: BorderRadius.circular(10.0),
-                        elevation: 6.0,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
-                          child: Text(text),
-                        ),
-                      ),
-                    ),
-                  ]),
-            ),
-            me
-                ? CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('images/users/photo_jh.jpeg'),
-                    backgroundColor: Colors.white60,
-                  )
-                : SizedBox(),
-          ]),
+      // animationDuration: ,
+      child: Container(
+        margin: me ? EdgeInsets.only(left: 10) : EdgeInsets.only(right: 10),
+        child: Row(
+            mainAxisAlignment:
+                me ? MainAxisAlignment.end : MainAxisAlignment.start,
+            children: [
+              !me
+                  ? CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('images/users/photo_mj.jpeg'),
+                      backgroundColor: Colors.white60,
+                    )
+                  : SizedBox(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment:
+                        me ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(sender),
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            me
+                                ? Text(
+                                    time,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .overline
+                                        .copyWith(
+                                            color: Color(0xFF666666)
+                                                .withOpacity(0.6)),
+                                  )
+                                : SizedBox(),
+                            Container(
+                              margin: me
+                                  ? EdgeInsets.only(left: 10)
+                                  : EdgeInsets.only(right: 10),
+                              child: Material(
+                                color: me
+                                    ? Theme.of(context).accentColor
+                                    : Colors.grey[300],
+                                borderRadius: BorderRadius.circular(10.0),
+                                elevation: 1.0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 10.0),
+                                  child: Text(text),
+                                ),
+                              ),
+                            ),
+                            !me
+                                ? Text(
+                                    '오후 4:31',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .overline
+                                        .copyWith(
+                                            color: Color(0xFF666666)
+                                                .withOpacity(0.6)),
+                                  )
+                                : SizedBox(),
+                          ]),
+                    ]),
+              ),
+              me
+                  ? CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage('images/users/photo_jh.jpeg'),
+                      backgroundColor: Colors.white60,
+                    )
+                  : SizedBox(),
+            ]),
+      ),
     );
   }
 }

@@ -12,6 +12,13 @@ class _ManageFriendState extends State<ManageFriend> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
         title: Text('친구 관리'),
         centerTitle: true,
       ),
