@@ -82,6 +82,8 @@ flutter:
     - images/login/kakao.png
     - images/users/
     - images/category/
+    - images/emptyRefrigerator.png
+
   fonts:
     - family: IBMPlexSans
       fonts:

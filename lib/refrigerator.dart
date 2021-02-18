@@ -92,192 +92,201 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   Widget showTap1(UserRefrigerator userRefrigerator) {
     List<Food> foods = userRefrigerator.Foods;
-    return Column(
-      children: <Widget>[
-        Container(
-            padding: EdgeInsets.all(DeviceWidth * 0.04),
-            child: Row(
-              children: [
-                Container(
-                    child: Text(
-                  '전체 ${foods.length}개',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: Color(0xFF666666)),
-                )),
-                isEdited == true
-                    ? Container(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          '선택 ${modifyFoodList.length}개',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(color: Color(0xFF666666)),
-                        ))
-                    : Text(''),
-                Spacer(),
-                isEdited == false
-                    ? Row(
-                        children: <Widget>[
-                          isAllFold == true
-                              ? InkWell(
-                                  child: Text(
-                                    '모두 펼치기',
-                                    style: Theme.of(context).textTheme.caption,
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      isAllFold = false;
-                                      foldNum = 0;
-                                      items.forEach((element) {
-                                        element.isExpanded = true;
-                                      });
-                                    });
-                                  },
-                                )
-                              : InkWell(
-                                  child: Text('모두 접기',
+    if (foods == null || foods.isEmpty) {
+      return Column(
+        children: [
+          Spacer(),
+          Center(
+              child: Column(
+            children: [
+              Image.asset(
+                'images/emptyRefrigerator.png',
+                height: DeviceHeight * 130 / 812,
+              ),
+              Text(
+                '냉장고 칸이 비어있습니다.',
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .color
+                        .withOpacity(0.6)),
+              )
+            ],
+          )),
+          Spacer(),
+        ],
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          Container(
+              padding: EdgeInsets.all(DeviceWidth * 0.04),
+              child: Row(
+                children: [
+                  Container(
+                      child: Text(
+                    '전체 ${foods.length}개',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(color: Color(0xFF666666)),
+                  )),
+                  isEdited == true
+                      ? Container(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            '선택 ${modifyFoodList.length}개',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                .copyWith(color: Color(0xFF666666)),
+                          ))
+                      : Text(''),
+                  Spacer(),
+                  isEdited == false
+                      ? Row(
+                          children: <Widget>[
+                            isAllFold == true
+                                ? InkWell(
+                                    child: Text(
+                                      '모두 펼치기',
                                       style:
-                                          Theme.of(context).textTheme.caption),
-                                  onTap: () {
-                                    setState(() {
-                                      isAllFold = true;
-                                      foldNum = items.length;
-                                      items.forEach((element) {
-                                        element.isExpanded = false;
+                                          Theme.of(context).textTheme.caption,
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        isAllFold = false;
+                                        foldNum = 0;
+                                        items.forEach((element) {
+                                          element.isExpanded = true;
+                                        });
                                       });
-                                    });
-                                  },
-                                ),
-                          SizedBox(
-                            width: DeviceWidth * 0.05,
-                          ),
-                          InkWell(
-                            child: Text('선택 ✓',
-                                style: Theme.of(context).textTheme.caption),
-                            onTap: () {
-                              setState(() {
-                                isEdited = true;
-                                isAllFold = false;
-                                items.forEach((element) {
-                                  element.isExpanded = true;
+                                    },
+                                  )
+                                : InkWell(
+                                    child: Text('모두 접기',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption),
+                                    onTap: () {
+                                      setState(() {
+                                        isAllFold = true;
+                                        foldNum = items.length;
+                                        items.forEach((element) {
+                                          element.isExpanded = false;
+                                        });
+                                      });
+                                    },
+                                  ),
+                            SizedBox(
+                              width: DeviceWidth * 0.05,
+                            ),
+                            InkWell(
+                              child: Text('선택 ✓',
+                                  style: Theme.of(context).textTheme.caption),
+                              onTap: () {
+                                setState(() {
+                                  isEdited = true;
+                                  isAllFold = false;
+                                  items.forEach((element) {
+                                    element.isExpanded = true;
+                                  });
                                 });
-                              });
-                            },
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: <Widget>[
-                          InkWell(
-                            child: Text('수정',
+                              },
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: <Widget>[
+                            InkWell(
+                              child: Text('수정',
+                                  style: modifyFoodList.length > 0
+                                      ? Theme.of(context).textTheme.caption
+                                      : Theme.of(context)
+                                          .textTheme
+                                          .caption
+                                          .copyWith(
+                                            color: Color(0xFF929292),
+                                          )),
+                              onTap: () {
+                                if (modifyFoodList.length <= 0) {
+                                } else {
+                                  Navigator.pushNamed(context, ITEMCREATE,
+                                      arguments: '냉장고 품목 수정');
+                                }
+                              },
+                            ),
+                            SizedBox(
+                              width: DeviceWidth * 0.05,
+                            ),
+                            InkWell(
+                              child: Text(
+                                '삭제',
                                 style: modifyFoodList.length > 0
                                     ? Theme.of(context).textTheme.caption
                                     : Theme.of(context)
                                         .textTheme
                                         .caption
-                                        .copyWith(
-                                          color: Color(0xFF929292),
-                                        )),
-                            onTap: () {
-                              if (modifyFoodList.length <= 0) {
-                              } else {
-                                Navigator.pushNamed(context, ITEMCREATE,
-                                    arguments: modifyFoodList);
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            width: DeviceWidth * 0.05,
-                          ),
-                          InkWell(
-                            child: Text(
-                              '삭제',
-                              style: modifyFoodList.length > 0
-                                  ? Theme.of(context).textTheme.caption
-                                  : Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .copyWith(color: Color(0xFF929292)),
+                                        .copyWith(color: Color(0xFF929292)),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  if (modifyFoodList.length > 0) {
+                                    showDeleteAlert(userRefrigerator);
+                                    isEdited = !isEdited;
+                                  } else {}
+                                });
+                              },
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (modifyFoodList.length > 0) {
-                                  for (int i = 0;
-                                      i < modifyFoodList.length;
-                                      i++) {
-                                    userRefrigerator.Foods.remove(
-                                        modifyFoodList[i]);
-                                  }
-
-                                  userRefrigerator.RefrigerationFoods.clear();
-                                  userRefrigerator.RefrigerationFoods =
-                                      userRefrigerator.Foods;
-                                  userRefrigerator.FrozenFoods.clear();
-                                  userRefrigerator.FrozenFoods =
-                                      userRefrigerator.Foods;
-                                  userRefrigerator.RoomTempFoods.clear();
-                                  userRefrigerator.RoomTempFoods =
-                                      userRefrigerator.Foods;
-
-                                  print(
-                                      '총  - ${userRefrigerator.Foods.length} / ${userRefrigerator.RefrigerationFoods.length} / ${userRefrigerator.FrozenFoods.length} / ${userRefrigerator.RoomTempFoods.length}');
-
+                            SizedBox(
+                              width: DeviceWidth * 0.05,
+                            ),
+                            InkWell(
+                              child: Text('취소',
+                                  style: Theme.of(context).textTheme.caption),
+                              onTap: () {
+                                setState(() {
+                                  isEdited = false;
                                   modifyFoodList.clear();
-                                  isEdited = !isEdited;
-                                } else {}
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            width: DeviceWidth * 0.05,
-                          ),
-                          InkWell(
-                            child: Text('취소',
-                                style: Theme.of(context).textTheme.caption),
-                            onTap: () {
-                              setState(() {
-                                isEdited = false;
-                                modifyFoodList.clear();
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-              ],
-            )),
-        Expanded(
-          child: ListView.builder(
-            //padding: EdgeInsets.all(DeviceWidth * 0.05),
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return ExpansionTile(
-                key: GlobalKey(),
-                title: Text('${items[index].headerValue}'),
-                initiallyExpanded: items[index].isExpanded,
-                children: <Widget>[
-                  contents(userRefrigerator, index),
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                 ],
-                onExpansionChanged: ((newState) {
-                  setState(() {
-                    items[index].isExpanded = !items[index].isExpanded;
-                    if (items[index].isExpanded == false)
-                      foldNum++;
-                    else
-                      foldNum--;
-                    if (foldNum == items.length)
-                      isAllFold = true;
-                    else if (foldNum == 0) isAllFold = false;
-                  });
-                }),
-              );
-            },
+              )),
+          Expanded(
+            child: ListView.builder(
+              //padding: EdgeInsets.all(DeviceWidth * 0.05),
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int index) {
+                return ExpansionTile(
+                  key: GlobalKey(),
+                  title: Text('${items[index].headerValue}'),
+                  initiallyExpanded: items[index].isExpanded,
+                  children: <Widget>[
+                    contents(userRefrigerator, index),
+                  ],
+                  onExpansionChanged: ((newState) {
+                    setState(() {
+                      items[index].isExpanded = !items[index].isExpanded;
+                      if (items[index].isExpanded == false)
+                        foldNum++;
+                      else
+                        foldNum--;
+                      if (foldNum == items.length)
+                        isAllFold = true;
+                      else if (foldNum == 0) isAllFold = false;
+                    });
+                  }),
+                );
+              },
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 
   Widget showTap2(UserRefrigerator userRefrigerator) {
@@ -387,8 +396,9 @@ class _RefrigeratorState extends State<Refrigerator> {
         : idx == 1
             ? userRefrigerator.FrozenFoods
             : userRefrigerator.RoomTempFoods;
+
     if (foods == null || foods.isEmpty) {
-      return emptyList();
+      return emptyStorageList();
     } else {
       return Container(
         height: DeviceHeight * 0.5, //mj: ListView 내의 ListView = Height가 정해진다.
@@ -401,16 +411,24 @@ class _RefrigeratorState extends State<Refrigerator> {
                 Container(
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
-                    color: modifyFoodList.contains(foods[index])
-                        ? Orange100
+                    color: isEdited
+                        ? modifyFoodList.contains(foods[index])
+                            ? Orange100
+                            : foods[index].DueDate > 0
+                                ? Grey200
+                                : foods[index].isSelected
+                                    ? Blue100.withOpacity(0.6)
+                                    : Red200.withOpacity(0.4)
                         : foods[index].DueDate > 0
                             ? Grey200
                             : foods[index].isSelected
                                 ? Blue100.withOpacity(0.6)
                                 : Red200.withOpacity(0.4),
                     border: Border.all(
-                      color: modifyFoodList.contains(foods[index])
-                          ? Orange500
+                      color: isEdited
+                          ? modifyFoodList.contains(foods[index])
+                              ? Orange500
+                              : Color(0xFFF9F8F6)
                           : Color(0xFFF9F8F6),
                     ),
                     borderRadius: BorderRadius.all(
@@ -544,7 +562,7 @@ class _RefrigeratorState extends State<Refrigerator> {
     bool isTitle = true;
 
     if (foods == null || foods.isEmpty) {
-      return emptyList();
+      return emptyStorageList();
     } else {
       return Container(
         height: DeviceHeight * 0.5, //mj: ListView 내의 ListView = Height가 정해진다.
@@ -706,9 +724,27 @@ class _RefrigeratorState extends State<Refrigerator> {
     );
   }
 
-  Widget emptyList() {
+  Widget emptyStorageList() {
     //TODO: Make Empty Information
-    return Center(child: Text('냉장고 칸이 비어있습니다.'));
+    return Container(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Image.asset(
+              'images/emptyRefrigerator.png',
+              height: DeviceHeight * 80 / 812,
+            ),
+            Text(
+              '냉장고 칸이 비어있습니다.',
+              style: Theme.of(context).textTheme.subtitle2.copyWith(
+                  color: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      .color
+                      .withOpacity(0.6)),
+            )
+          ],
+        ));
   }
 
   Future<dynamic> showCupertinoPicker(
@@ -760,6 +796,84 @@ class _RefrigeratorState extends State<Refrigerator> {
                   ),
                 ),
               ],
+            ),
+          );
+        });
+  }
+
+  void showDeleteAlert(UserRefrigerator userRefrigerator) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              width: DeviceWidth * 332 / 375,
+              height: DeviceHeight * 180 / 812,
+              child: Column(
+                children: [
+                  Spacer(
+                    flex: 11,
+                  ),
+                  Text(
+                    '해당 품목을 삭제하시겠습니까?',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Spacer(
+                    flex: 3,
+                  ),
+                  Text('품목의 모든 정보가 삭제됩니다.',
+                      style: Theme.of(context).textTheme.subtitle2),
+                  Spacer(
+                    flex: 10,
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      ButtonTheme(
+                        minWidth: 140,
+                        height: 45,
+                        buttonColor: Theme.of(context).buttonColor,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            '취소',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      ButtonTheme(
+                        minWidth: 140,
+                        height: 45,
+                        buttonColor: Orange500,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            setState(() {
+                              userRefrigerator.DeleteFoodList(modifyFoodList);
+                              modifyFoodList.clear();
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Text(
+                            '삭제',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                  Spacer(
+                    flex: 6,
+                  ),
+                ],
+              ),
             ),
           );
         });
