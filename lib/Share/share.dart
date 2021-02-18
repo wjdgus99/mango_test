@@ -236,7 +236,7 @@ class _ShareState extends State<Share> {
           child: Container(
             height: 200,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20,10,20,5),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -279,12 +279,11 @@ class _ShareState extends State<Share> {
                           child: Container(
                             height: 40,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)
-                            ),
+                                borderRadius: BorderRadius.circular(20)),
                             child: FlatButton(
-
                               onPressed: () {
-                                Navigator.pushReplacementNamed(context, '/chatRoom');
+                                Navigator.pushReplacementNamed(
+                                    context, '/chatRoom');
                               },
                               child: Text(
                                 '생성',
