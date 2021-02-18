@@ -9,7 +9,7 @@ class Analytics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Orange500,
+        backgroundColor: Color(0xFFFFDB7D),
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.line_weight),
