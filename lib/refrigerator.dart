@@ -484,7 +484,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                               ),
                               Text(
                                 foods[index].isSelected
-                                    ? '${foods[index].registerDate.year}년 ${foods[index].registerDate.month}월 ${foods[index].registerDate.day}일 등록 '
+                                    ? '${foods[index].purchaseDate.year}년 ${foods[index].purchaseDate.month}월 ${foods[index].purchaseDate.day}일 구매'
                                     : '${foods[index].shelfLife.year}년 ${foods[index].shelfLife.month}월 ${foods[index].shelfLife.day}일 까지 ',
                                 style: Theme.of(context)
                                     .textTheme

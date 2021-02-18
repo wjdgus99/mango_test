@@ -39,12 +39,16 @@ class _ItemCreateState extends State<ItemCreate> {
 
   @override
   Widget build(BuildContext context) {
-
     String appTitle = ModalRoute.of(context).settings.arguments;
 
     if (appTitle.contains('수정')) {
       addFoodList = modifyFoodList;
-    }
+      if (addFoodList[currentSelected - 1].isSelected) {
+        radioValue = 1;
+      } else {
+        radioValue = 0;
+      }
+    } else {}
 
     // List<Food> modifyFoods = ModalRoute.of(context).settings.arguments;
 
@@ -75,10 +79,19 @@ class _ItemCreateState extends State<ItemCreate> {
                 padding: EdgeInsets.only(left: DeviceWidth * 0.05),
                 child: InkWell(
                   child: Text(
-                    '품목삭제',
+                    '품목 삭제',
                     style: TextStyle(color: Theme.of(context).errorColor),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      showDeleteAlert(
+                          userRefrigerator, addFoodList[currentSelected - 1]);
+                      if (addFoodList.length == 1) {
+                        appTitle = '냉장고 품목 등록';
+                        // addFoodList.removeAt(currentSelected - 1);
+                      }
+                    });
+                  },
                 ),
               ),
             ),
@@ -94,7 +107,7 @@ class _ItemCreateState extends State<ItemCreate> {
                   color: Theme.of(context).accentColor,
                   child: Text('등록'),
                   onPressed: () {
-                    showAlertDialog(addFoodList);
+                    showAlertDialog(userRefrigerator, addFoodList);
                   },
                 ),
               ),
@@ -398,8 +411,10 @@ class _ItemCreateState extends State<ItemCreate> {
             ),
           ),
           radioValue == 0
-              ? showSelectField(addFoodList, '유통기한', 'not yet')
-              : showSelectField(addFoodList, '구매일', 'not yet'),
+              ? showSelectField(addFoodList, '유통기한',
+                  '${foods[currentSelected - 1].shelfLife.year}년 ${foods[currentSelected - 1].shelfLife.month}월 ${foods[currentSelected - 1].shelfLife.day}일')
+              : showSelectField(addFoodList, '구매일',
+                  '${foods[currentSelected - 1].purchaseDate.year}년 ${foods[currentSelected - 1].purchaseDate.month}월 ${foods[currentSelected - 1].purchaseDate.day}일'),
         ],
       ),
     );
@@ -429,8 +444,8 @@ class _ItemCreateState extends State<ItemCreate> {
                 else if (info == '카테고리')
                   showCategoryPicker(foods);
                 else
-                  // showCupertinoDatePicker(info);
-                  showDatePicker();
+                  showDatePicker(foods[currentSelected - 1]);
+                // showCupertinoDatePicker(info);
               },
             ),
           ],
@@ -439,7 +454,8 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-  void showAlertDialog(List<Food> foods) async {
+  void showAlertDialog(
+      UserRefrigerator userRefrigerator, List<Food> foods) async {
     String result = await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -492,9 +508,9 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.06,
                             child: FlatButton(
                               onPressed: () {
+                                userRefrigerator.LoadFoods();
                                 foods.clear();
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, HOME, (route) => false);
+                                Navigator.pushNamed(context, HOME);
                               },
                               child: Text(
                                 '완료',
@@ -621,8 +637,7 @@ class _ItemCreateState extends State<ItemCreate> {
                       buttonWidth: DeviceWidth * 0.27,
                       buttonHeight: DeviceHeight * 0.05,
                       fontSize: 12.0,
-                      initialSelection:
-                          CallIndex(foods[currentSelected - 1]), //TODO.
+                      initialSelection: CallIndex(foods[currentSelected - 1]),
                       radioButtonValue: (value, index) {
                         setState(() {
                           foods[currentSelected - 1].category = value;
@@ -642,12 +657,22 @@ class _ItemCreateState extends State<ItemCreate> {
         });
   }
 
-  Future<dynamic> showDatePicker() {
+  Future<dynamic> showDatePicker(Food food) {
     return DatePicker.showDatePicker(context,
         showTitleActions: true,
         locale: LocaleType.ko,
-        currentTime: DateTime.now(), onConfirm: (date) {
+        currentTime: food.isSelected ? food.purchaseDate : food.shelfLife,
+        onConfirm: (date) {
       print('confirm $date'); //TODO.
+      setState(() {
+        if (food.isSelected) {
+          food.purchaseDate = date;
+          print('purchaseDate = ${food.purchaseDate}');
+        } else {
+          food.shelfLife = date;
+          print('shelfLife = ${food.shelfLife}');
+        }
+      });
     });
   }
 
@@ -688,24 +713,86 @@ class _ItemCreateState extends State<ItemCreate> {
         });
   }
 
-  final Map<int, Widget> tabBarWidget = const <int, Widget>{
-    0: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉장',
-          style: TextStyle(fontSize: 15),
-        )),
-    1: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉동',
-          style: TextStyle(fontSize: 15),
-        )),
-    2: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '실온',
-          style: TextStyle(fontSize: 15),
-        )),
-  };
+  void showDeleteAlert(UserRefrigerator userRefrigerator, Food food) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              width: DeviceWidth * 332 / 375,
+              height: DeviceHeight * 180 / 812,
+              child: Column(
+                children: [
+                  Spacer(
+                    flex: 11,
+                  ),
+                  Text(
+                    '해당 품목을 삭제하시겠습니까?',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Spacer(
+                    flex: 3,
+                  ),
+                  Text('품목의 모든 정보가 삭제됩니다.',
+                      style: Theme.of(context).textTheme.subtitle2),
+                  Spacer(
+                    flex: 10,
+                  ),
+                  Row(
+                    children: [
+                      Spacer(),
+                      ButtonTheme(
+                        minWidth: 140,
+                        height: 45,
+                        buttonColor: Theme.of(context).buttonColor,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            '취소',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      ButtonTheme(
+                        minWidth: 140,
+                        height: 45,
+                        buttonColor: Orange500,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onPressed: () {
+                            setState(() {
+                              List<Food> deleteFood = new List<Food>();
+                              deleteFood.add(food);
+                              print('before : ${addFoodList.length}');
+                              userRefrigerator.DeleteFoodList(deleteFood);
+                              print('after : ${addFoodList.length}');
+
+                              modifyFoodList.clear();
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Text(
+                            '삭제',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                  Spacer(
+                    flex: 6,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 }
