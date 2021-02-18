@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mango_test/app.dart';
 import 'package:intl/intl.dart';
+import 'package:mango_test/model/catogories.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
 import 'package:mango_test/refrigerator.dart';
@@ -30,26 +31,7 @@ class _ItemCreateState extends State<ItemCreate> {
 
   List<Food> Foods = localRefrigerator.loadFood();
 
-  final Map<int, Widget> tabBarWidget = const <int, Widget>{
-    0: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉장',
-          style: TextStyle(fontSize: 15),
-        )),
-    1: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '냉동',
-          style: TextStyle(fontSize: 15),
-        )),
-    2: Padding(
-        padding: EdgeInsets.all(10),
-        child: Text(
-          '실온',
-          style: TextStyle(fontSize: 15),
-        )),
-  };
+  final List<String> categories = imageMatching.keys.toList();
 
   final List<String> category = [
     '과일',
@@ -65,7 +47,6 @@ class _ItemCreateState extends State<ItemCreate> {
     '즉석식품',
     '물/음료',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -158,14 +139,14 @@ class _ItemCreateState extends State<ItemCreate> {
                 return Padding(
                     padding: EdgeInsets.all(5),
                     child: Container(
-                      width: Foods[index-1].name.length * 25.0,
+                      width: Foods[index - 1].name.length * 25.0,
                       child: FlatButton(
                         color: currentSelected == index
                             ? Theme.of(context).accentColor
                             : Grey200,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50)),
-                        child: Text('${Foods[index-1].name}'),
+                        child: Text('${Foods[index - 1].name}'),
                         onPressed: () {
                           setState(() {
                             currentSelected = index;
@@ -192,7 +173,7 @@ class _ItemCreateState extends State<ItemCreate> {
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               border: OutlineInputBorder(),
-              hintText: Foods[currentSelected-1].name,
+              hintText: Foods[currentSelected - 1].name,
               prefixIcon: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 10, 0),
                 child: Text('품명'), // myIcon is a 48px-wide widget.
@@ -211,13 +192,13 @@ class _ItemCreateState extends State<ItemCreate> {
           ),
           Row(
             children: <Widget>[
-              showSelectField('수량', Foods[currentSelected-1].num.toString()),
+              showSelectField('수량', Foods[currentSelected - 1].num.toString()),
               SizedBox(
                 width: DeviceHeight * 0.02,
               ),
               Expanded(
-                  child:
-                      showSelectField('카테고리', Foods[currentSelected-1].category)),
+                  child: showSelectField(
+                      '카테고리', Foods[currentSelected - 1].category)),
             ],
           ),
           Container(
@@ -364,8 +345,8 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.06,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    '/', ModalRoute.withName('/'));
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, '/', ModalRoute.withName('/'));
                               },
                               child: Text(
                                 button2,
@@ -411,7 +392,7 @@ class _ItemCreateState extends State<ItemCreate> {
                     itemExtent: 32,
                     onSelectedItemChanged: (int newValue) {
                       setState(() {
-                        Foods[currentSelected-1].num = newValue + 1;
+                        Foods[currentSelected - 1].num = newValue + 1;
                       });
                     },
                     children: List<Widget>.generate(20, (int index) {
@@ -421,7 +402,7 @@ class _ItemCreateState extends State<ItemCreate> {
                       );
                     }),
                     scrollController: FixedExtentScrollController(
-                        initialItem: Foods[index-1].num-1),
+                        initialItem: Foods[index - 1].num - 1),
                   ),
                 ),
               ],
@@ -492,9 +473,9 @@ class _ItemCreateState extends State<ItemCreate> {
                       buttonWidth: DeviceWidth * 0.27,
                       buttonHeight: DeviceHeight * 0.05,
                       initialSelection: 2, //TODO.
-                      radioButtonValue: (value,index){
+                      radioButtonValue: (value, index) {
                         setState(() {
-                          Foods[currentSelected-1].category = value;
+                          Foods[currentSelected - 1].category = value;
                         });
                       },
                       buttonLables: [
@@ -538,8 +519,7 @@ class _ItemCreateState extends State<ItemCreate> {
     return DatePicker.showDatePicker(context,
         showTitleActions: true,
         locale: LocaleType.ko,
-        currentTime: DateTime.now(),
-        onConfirm: (date) {
+        currentTime: DateTime.now(), onConfirm: (date) {
       print('confirm $date'); //TODO.
     });
   }
@@ -580,4 +560,25 @@ class _ItemCreateState extends State<ItemCreate> {
           );
         });
   }
+
+  final Map<int, Widget> tabBarWidget = const <int, Widget>{
+    0: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '냉장',
+          style: TextStyle(fontSize: 15),
+        )),
+    1: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '냉동',
+          style: TextStyle(fontSize: 15),
+        )),
+    2: Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          '실온',
+          style: TextStyle(fontSize: 15),
+        )),
+  };
 }

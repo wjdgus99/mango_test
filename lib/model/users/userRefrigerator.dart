@@ -158,8 +158,20 @@ class UserRefrigerator extends ChangeNotifier {
       } else {
         Foods[i].DueDate = Foods[i].shelfLife.difference(DateTime.now()).inDays;
       }
-      print(Foods[i].name);
-      print(Foods[i].DueDate);
     }
+  }
+
+  void DeleteFoodList(List<Food> deleteFoods) {
+    print(deleteFoods.length);
+    for (int i = 0; i < deleteFoods.length; i++) {
+      Foods.remove(deleteFoods[i]);
+    }
+
+    this.RefrigerationFoods.clear();
+    this.RefrigerationFoods = this.Foods;
+    this.FrozenFoods.clear();
+    this.FrozenFoods = this.Foods;
+    this.RoomTempFoods.clear();
+    this.RoomTempFoods = this.Foods;
   }
 }
