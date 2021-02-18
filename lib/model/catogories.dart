@@ -19,3 +19,15 @@ var imageMatching = {
 String CallImage(Food food) {
   return imageMatching[food.category];
 }
+
+int CallIndex(Food food) {
+  int idx = 0, result;
+  imageMatching.forEach((key, value) {
+    print(key);
+    if (key == food.category) {
+      result = idx;
+    }
+    idx++;
+  });
+  return result;
+}

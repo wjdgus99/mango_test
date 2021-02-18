@@ -213,7 +213,7 @@ class _RefrigeratorState extends State<Refrigerator> {
                                 if (modifyFoodList.length <= 0) {
                                 } else {
                                   Navigator.pushNamed(context, ITEMCREATE,
-                                      arguments: modifyFoodList);
+                                      arguments: '냉장고 품목 수정');
                                 }
                               },
                             ),
