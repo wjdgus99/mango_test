@@ -12,16 +12,34 @@ class _EmailState extends State<Email> {
 
   bool _isComposing = false;
 
+  void _deleteInput() {
+    _myController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
         title: Text('이메일로 추가'),
         centerTitle: true,
+        actions: [
+          FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Text(
+                '확인',
+                style: Theme.of(context).textTheme.button,
+              )),
+        ],
       ),
       body: ListView(children: [
         SizedBox(height: 40),
@@ -38,16 +56,30 @@ class _EmailState extends State<Email> {
                 },
                 controller: _myController,
                 decoration: InputDecoration(
+                  // helperText: '- 없이 숫자만 입력해 주세요.',
                   isCollapsed: true,
-                  prefix: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Text('이메일'),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 13.0, horizontal: 4.0),
+                    child: Text(
+                      '이메일',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(color: Color(0xFF666666).withOpacity(0.6)),
+                    ),
                   ),
                   suffixIcon: _isComposing
-                      ? Icon(
-                          Icons.cancel,
-                          color: Colors.grey,
-                          size: 13,
+                      ? IconButton(
+                    onPressed: (){
+                      _deleteInput();
+                    },
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.grey,
+                            size: 13,
+                          ),
                         )
                       : Icon(
                           Icons.cancel_outlined,
