@@ -144,15 +144,15 @@ class UserRefrigerator extends ChangeNotifier {
       if (Foods[i].isSelected) {
         if (Foods[i].storeLevel == 0) {
           Foods[i].DueDate =
-              Foods[i].registerDate.difference(DateTime.now()).inDays +
+              Foods[i].purchaseDate.difference(DateTime.now()).inDays +
                   RefrigerationAlarm;
         } else if (Foods[i].storeLevel == 1) {
           Foods[i].DueDate =
-              Foods[i].registerDate.difference(DateTime.now()).inDays +
+              Foods[i].purchaseDate.difference(DateTime.now()).inDays +
                   FrozenAlarm;
         } else {
           Foods[i].DueDate =
-              Foods[i].registerDate.difference(DateTime.now()).inDays +
+              Foods[i].purchaseDate.difference(DateTime.now()).inDays +
                   RoomTempAlarm;
         }
       } else {
@@ -172,6 +172,18 @@ class UserRefrigerator extends ChangeNotifier {
     this.FrozenFoods.clear();
     this.FrozenFoods = this.Foods;
     this.RoomTempFoods.clear();
+    this.RoomTempFoods = this.Foods;
+  }
+
+  void LoadFoods() {
+    this.updateDuedate();
+
+    this.RefrigerationFoods.clear();
+    this.FrozenFoods.clear();
+    this.RoomTempFoods.clear();
+
+    this.RefrigerationFoods = this.Foods;
+    this.FrozenFoods = this.Foods;
     this.RoomTempFoods = this.Foods;
   }
 }
