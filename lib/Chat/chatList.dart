@@ -140,7 +140,7 @@ class _ChatListState extends State<ChatList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('채팅 목록'),
+          title: Text('채팅'),
           centerTitle: true,
           actions: [
             IconButton(
@@ -211,7 +211,10 @@ class _ChatListState extends State<ChatList> {
             radius: 30,
             backgroundImage: AssetImage('images/users/photo_$user.jpeg'),
           ),
-          title: Text(user),
+          title: Text(
+            user,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
           subtitle: Text(
             text,
             maxLines: 2,
@@ -219,13 +222,26 @@ class _ChatListState extends State<ChatList> {
           ),
           trailing: Column(
             children: [
-              Text(time),
+              Text(
+                time,
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    .copyWith(color: Color(0xFFBFBFBF)),
+              ),
               if (message != 0)
-                CircleAvatar(
-                  radius: 12,
-                  backgroundColor: Colors.red,
-                  child: Text(
-                    message.toString(),
+                Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: Colors.red,
+                    child: Text(
+                      message.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(color: Color(0xFFBFBFBF)),
+                    ),
                   ),
                 )
             ],

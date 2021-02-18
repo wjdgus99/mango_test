@@ -40,9 +40,34 @@ class _ChatRoomState extends State<ChatRoom> {
       body: Container(
         child: Column(
           children: [
+            Material(
+                elevation: 1.0,
+                child: ExpansionTile(
+                  title: Text('거래 중 항목'),
+                  children: ListTile.divideTiles(context: context, tiles: [
+                    _buildExpansionTile(),
+                    _buildExpansionTile(),
+                  ]).toList(),
+                )),
             Flexible(
                 child: ListView(
               children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    children: [
+                      Expanded(child: Divider()),
+                      Text(
+                        '2021년 02월 18일',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            .copyWith(color: Color(0xFFBFBFBF)),
+                      ),
+                      Expanded(child: Divider()),
+                    ],
+                  ),
+                ),
                 _buildTextMSG(false, '민주', '오이 좀 나눠 주세요..ㅎㅎ ', '오후 4:30'),
                 _buildTextMSG(true, '정현', '싫은데요 ', '오후 4:31'),
                 _buildTextMSG(true, '정현', '뭐 맛있는거 해먹을라고 ?-?', '오후 4:31'),
@@ -117,6 +142,33 @@ class _ChatRoomState extends State<ChatRoom> {
                 )),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildExpansionTile() {
+    return ListTile(
+      title: Text(
+        '김민주님께서 ‘레몬 2개’에 대한 채팅을 요청하였습니다. 거래가 완료되면 버튼을 클릭해주세요.',
+        style: Theme.of(context)
+            .textTheme
+            .overline
+            .copyWith(color: Color(0xFF929292)),
+      ),
+      trailing: FlatButton(
+        onPressed: () {},
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 7, horizontal: 8),
+            decoration: BoxDecoration(
+                border: Border.all(color: Theme.of(context).accentColor),
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Text(
+              '거래완료',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(color: Theme.of(context).accentColor),
+            )),
       ),
     );
   }
