@@ -52,7 +52,6 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer2<localUser.User, UserRefrigerator>(
       builder: (context, user, userRefrigerator, child) {
         return DefaultTabController(
