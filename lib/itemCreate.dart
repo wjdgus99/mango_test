@@ -39,6 +39,7 @@ class _ItemCreateState extends State<ItemCreate> {
 
   @override
   Widget build(BuildContext context) {
+
     String appTitle = ModalRoute.of(context).settings.arguments;
 
     if (appTitle.contains('수정')) {
@@ -187,7 +188,7 @@ class _ItemCreateState extends State<ItemCreate> {
 
   Widget showInfo(List<Food> foods, UserRefrigerator userRefrigerator) {
     return Container(
-      color: Colors.white,
+      color: White,
       padding: EdgeInsets.all(DeviceWidth * 0.05),
       child: Column(
         children: <Widget>[
@@ -479,7 +480,7 @@ class _ItemCreateState extends State<ItemCreate> {
                               child: Text(
                                 '취소',
                               ),
-                              color: Colors.grey,
+                              color: Theme.of(context).buttonColor,
                             ),
                           ),
                         ),
