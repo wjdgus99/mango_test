@@ -72,7 +72,7 @@ ThemeData _buildMangoTheme() {
   return base.copyWith(
     accentColor: Orange400,
     primaryColor: White,
-    //hoverColor: Orange400,
+    hoverColor: Orange400,
     errorColor: Red500,
     // toggleableActiveColor: Orange400,
     cursorColor: Orange400,
