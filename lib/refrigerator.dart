@@ -52,6 +52,7 @@ class _RefrigeratorState extends State<Refrigerator> {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer2<localUser.User, UserRefrigerator>(
       builder: (context, user, userRefrigerator, child) {
         return DefaultTabController(
@@ -214,7 +215,6 @@ class _RefrigeratorState extends State<Refrigerator> {
                                 } else {
                                   Navigator.pushNamed(context, ITEMCREATE,
                                       arguments: modifyFoodList);
-                                  modifyFoodList.clear();
                                 }
                               },
                             ),
@@ -412,16 +412,24 @@ class _RefrigeratorState extends State<Refrigerator> {
                 Container(
                   height: DeviceHeight * 87 / 812,
                   decoration: BoxDecoration(
-                    color: modifyFoodList.contains(foods[index])
-                        ? Orange100
+                    color: isEdited
+                        ? modifyFoodList.contains(foods[index])
+                            ? Orange100
+                            : foods[index].DueDate > 0
+                                ? Grey200
+                                : foods[index].isSelected
+                                    ? Blue100.withOpacity(0.6)
+                                    : Red200.withOpacity(0.4)
                         : foods[index].DueDate > 0
                             ? Grey200
                             : foods[index].isSelected
                                 ? Blue100.withOpacity(0.6)
                                 : Red200.withOpacity(0.4),
                     border: Border.all(
-                      color: modifyFoodList.contains(foods[index])
-                          ? Orange500
+                      color: isEdited
+                          ? modifyFoodList.contains(foods[index])
+                              ? Orange500
+                              : Color(0xFFF9F8F6)
                           : Color(0xFFF9F8F6),
                     ),
                     borderRadius: BorderRadius.all(

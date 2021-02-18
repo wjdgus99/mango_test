@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mango_test/app.dart';
 import 'package:intl/intl.dart';
+import 'package:mango_test/home.dart';
 import 'package:mango_test/model/catogories.dart';
 
 import 'package:mango_test/model/exampleRefrigerator.dart';
@@ -33,23 +34,12 @@ class _ItemCreateState extends State<ItemCreate> {
 
   final List<String> categories = imageMatching.keys.toList();
 
-  final List<String> category = [
-    '과일',
-    '채소',
-    '우유/유제품',
-    '수산물',
-    '곡물',
-    '조미료/양념',
-    '냉장식품',
-    '냉동식품',
-    '베이커리',
-    '김치/반찬',
-    '즉석식품',
-    '물/음료',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<Food> modifyFoods = ModalRoute.of(context).settings.arguments;
+
+    print(modifyFoods.length);
+
     return Scaffold(
       backgroundColor: Grey200,
       appBar: AppBar(
@@ -94,8 +84,7 @@ class _ItemCreateState extends State<ItemCreate> {
                 color: Theme.of(context).accentColor,
                 child: Text('등록'),
                 onPressed: () {
-                  showAlertDialog(
-                      '품목 수정을 완료하시겠습니까?', '품목의 정보가 수정됩니다.', '취소', '완료');
+                  showAlertDialog(modifyFoods);
                 },
               ),
             ),
@@ -292,8 +281,7 @@ class _ItemCreateState extends State<ItemCreate> {
     );
   }
 
-  void showAlertDialog(
-      String title, String subtitle, String button1, String button2) async {
+  void showAlertDialog(List<Food> foods) async {
     String result = await showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -310,11 +298,12 @@ class _ItemCreateState extends State<ItemCreate> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    title,
+                    '품목 수정을 완료하시겠습니까?',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(height: DeviceHeight * 0.01),
-                  Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
+                  Text('품목의 정보가 수정됩니다.',
+                      style: Theme.of(context).textTheme.bodyText2),
                   SizedBox(
                     height: DeviceHeight * 0.05,
                   ),
@@ -331,7 +320,7 @@ class _ItemCreateState extends State<ItemCreate> {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                button1,
+                                '취소',
                               ),
                               color: Colors.grey,
                             ),
@@ -345,11 +334,12 @@ class _ItemCreateState extends State<ItemCreate> {
                             height: DeviceHeight * 0.06,
                             child: FlatButton(
                               onPressed: () {
+                                foods.clear();
                                 Navigator.pushNamedAndRemoveUntil(
-                                    context, '/', ModalRoute.withName('/'));
+                                    context, HOME, (route) => false);
                               },
                               child: Text(
-                                button2,
+                                '완료',
                               ),
                               color: Theme.of(context).accentColor,
                             ),
@@ -472,40 +462,29 @@ class _ItemCreateState extends State<ItemCreate> {
                       selectedColor: Theme.of(context).accentColor,
                       buttonWidth: DeviceWidth * 0.27,
                       buttonHeight: DeviceHeight * 0.05,
+                      fontSize: 12.0,
                       initialSelection: 2, //TODO.
                       radioButtonValue: (value, index) {
                         setState(() {
                           Foods[currentSelected - 1].category = value;
                         });
                       },
-                      buttonLables: [
-                        '과일',
-                        '채소',
-                        '우유/유제품',
-                        '수산물',
-                        '곡물',
-                        '조미료/양념',
-                        '냉장식품',
-                        '냉동식품',
-                        '베이커리',
-                        '김치/반찬',
-                        '즉석식품',
-                        '물/음료',
-                      ],
-                      buttonValues: [
-                        '과일',
-                        '채소',
-                        '우유/유제품',
-                        '수산물',
-                        '곡물',
-                        '조미료/양념',
-                        '냉장식품',
-                        '냉동식품',
-                        '베이커리',
-                        '김치/반찬',
-                        '즉석식품',
-                        '물/음료',
-                      ],
+                      buttonLables: categories,
+                      buttonValues: categories,
+                      // [
+                      //   '과일',
+                      //   '채소',
+                      //   '우유/유제품',
+                      //   '수산물',
+                      //   '곡물',
+                      //   '조미료/양념',
+                      //   '냉장식품',
+                      //   '냉동식품',
+                      //   '베이커리',
+                      //   '김치/반찬',
+                      //   '즉석식품',
+                      //   '물/음료',
+                      // ],
                     ),
                   ),
                 ),
