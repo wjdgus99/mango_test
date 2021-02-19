@@ -1,3 +1,4 @@
+import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mango_test/Chat/chatList.dart';
@@ -72,48 +73,35 @@ class _ShareState extends State<Share> {
                     ),
                   ]),
             )
-          // : ListView(
-          //     children: [
-          // IconButton(
-          //     icon: Icon(Icons.search),
-          //     onPressed: () {
-          //       showSearch(context: context, delegate: Search(list));
-          //     }),
           : SizedBox.expand(
               child: SafeArea(
                 minimum: EdgeInsets.all(0.1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SearchBar<StoreFood>(
-                    placeHolder: ListView(
-                      children: <Widget>[
-                        buildCard('lemon', 'mj', 12, '과일/채소', 3,
-                            DateTime(2021, DateTime.january, 9)),
-                        buildCard('pepper', 'is', 32, '과일/채소', 1,
-                            DateTime(2021, DateTime.august, 11)),
-                        buildCard('paprika', 'jh', 60, '과일/채소', 3,
-                            DateTime(2021, DateTime.january, 1)),
-                        buildCard('cucumber', 'si', 70, '과일/채소', 5,
-                            DateTime(2021, DateTime.february, 4)),
-                        buildCard('apple', 'yg', 130, '과일/채소', 4,
-                            DateTime(2021, DateTime.january, 20)),
-                      ],
-                    ),
-                    onSearch: search,
-                    minimumChars: 1,
-                    onItemFound: (StoreFood food, int index) {
-                      return food.name == ''
-                          ? SizedBox()
-                          : buildCard(food.name, food.owner, food.registTime,
-                              food.category, food.num, food.shelfLife);
-                      // : ListTile(
-                      //     title: Text(food.name),
-                      //     subtitle: Text(food.num.toString()),
-                      //     trailing: Text(food.category),
-                      //     // trailing: Text($search),
-                      //   );
-                    },
+                child: SearchBar<StoreFood>(
+                  cancellationWidget: Text('취소'),
+                  searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
+                  searchBarStyle: SearchBarStyle(padding: EdgeInsets.zero),
+                  placeHolder: ListView(
+                    children: <Widget>[
+                      buildCard('lemon', 'mj', 12, '레몬 넘 많이 남아서 나눔해용', 3,
+                          DateTime(2021, DateTime.january, 9)),
+                      buildCard('pepper', 'is', 32, '과일/채소', 1,
+                          DateTime(2021, DateTime.august, 11)),
+                      buildCard('paprika', 'jh', 60, '과일/채소', 3,
+                          DateTime(2021, DateTime.january, 1)),
+                      buildCard('cucumber', 'si', 70, '과일/채소', 5,
+                          DateTime(2021, DateTime.february, 4)),
+                      buildCard('apple', 'yg', 130, '과일/채소', 4,
+                          DateTime(2021, DateTime.january, 20)),
+                    ],
                   ),
+                  onSearch: search,
+                  minimumChars: 1,
+                  onItemFound: (StoreFood food, int index) {
+                    return food.name == ''
+                        ? SizedBox()
+                        : buildCard(food.name, food.owner, food.registTime,
+                            food.bodyText, food.num, food.shelfLife);
+                  },
                 ),
               ),
             ),
@@ -124,8 +112,9 @@ class _ShareState extends State<Share> {
       String food, String owner, int min, String text, int num, DateTime due) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Grey200, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+        border: Border.all(color: Grey200, width: 1),
+      ),
+      // borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

@@ -9,6 +9,7 @@ class StoreFood {
     @required this.owner,
     @required this.shelfLife,
     @required this.registTime,
+    @required this.bodyText,
   });
 
   String name; //제품명
@@ -16,5 +17,6 @@ class StoreFood {
   int num; //수량
   String owner; //올린사람
   DateTime shelfLife; //유통기한
-  int registTime; //게시글 등록 시간
+  int registTime;
+  String bodyText; //게시글 등록 시간
 }
