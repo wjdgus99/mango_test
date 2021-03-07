@@ -1,16 +1,13 @@
+import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mango_test/Chat/chatList.dart';
-import 'package:mango_test/Chat/chatRoom.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
 import 'package:mango_test/Share/history.dart';
-import 'package:mango_test/model/exampleRefrigerator.dart';
-import 'package:mango_test/model/users/food.dart';
 import 'package:mango_test/test_model/exampleShareFood.dart';
 import 'package:mango_test/test_model/storeFood.dart';
 import '../app.dart';
-import './search.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class Share extends StatefulWidget {
@@ -72,48 +69,40 @@ class _ShareState extends State<Share> {
                     ),
                   ]),
             )
-          // : ListView(
-          //     children: [
-          // IconButton(
-          //     icon: Icon(Icons.search),
-          //     onPressed: () {
-          //       showSearch(context: context, delegate: Search(list));
-          //     }),
           : SizedBox.expand(
               child: SafeArea(
                 minimum: EdgeInsets.all(0.1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SearchBar<StoreFood>(
-                    placeHolder: ListView(
-                      children: <Widget>[
-                        buildCard('lemon', 'mj', 12, '과일/채소', 3,
-                            DateTime(2021, DateTime.january, 9)),
-                        buildCard('pepper', 'is', 32, '과일/채소', 1,
-                            DateTime(2021, DateTime.august, 11)),
-                        buildCard('paprika', 'jh', 60, '과일/채소', 3,
-                            DateTime(2021, DateTime.january, 1)),
-                        buildCard('cucumber', 'si', 70, '과일/채소', 5,
-                            DateTime(2021, DateTime.february, 4)),
-                        buildCard('apple', 'yg', 130, '과일/채소', 4,
-                            DateTime(2021, DateTime.january, 20)),
-                      ],
-                    ),
-                    onSearch: search,
-                    minimumChars: 1,
-                    onItemFound: (StoreFood food, int index) {
-                      return food.name == ''
-                          ? SizedBox()
-                          : buildCard(food.name, food.owner, food.registTime,
-                              food.category, food.num, food.shelfLife);
-                      // : ListTile(
-                      //     title: Text(food.name),
-                      //     subtitle: Text(food.num.toString()),
-                      //     trailing: Text(food.category),
-                      //     // trailing: Text($search),
-                      //   );
-                    },
+                child: SearchBar<StoreFood>(
+                  cancellationWidget: Text('취소'),
+                  searchBarPadding: EdgeInsets.symmetric(horizontal: 10),
+                  searchBarStyle: SearchBarStyle(padding: EdgeInsets.zero),
+                  placeHolder: ListView(
+                    children: <Widget>[
+                      buildCard('lemon', 'mj', 12, '레몬 넘 많이 남아서 나눔해용', 3,
+                          DateTime(2021, DateTime.january, 9)),
+                      buildCard('pepper', 'is', 32, '요리하다 남았어요', 1,
+                          DateTime(2021, DateTime.august, 11)),
+                      buildCard(
+                          'paprika',
+                          'jh',
+                          60,
+                          '파프리카 다 못먹을 것 같습니다. 도와주실 분',
+                          3,
+                          DateTime(2021, DateTime.january, 1)),
+                      buildCard('cucumber', 'si', 70, '오이 나눔 해요', 5,
+                          DateTime(2021, DateTime.february, 4)),
+                      buildCard('apple', 'yg', 130, '애플 아닙니다.ㅎㅎ 먹는 사과 드릴게요~', 4,
+                          DateTime(2021, DateTime.january, 20)),
+                    ],
                   ),
+                  onSearch: search,
+                  minimumChars: 1,
+                  onItemFound: (StoreFood food, int index) {
+                    return food.name == ''
+                        ? SizedBox()
+                        : buildCard(food.name, food.owner, food.registTime,
+                            food.bodyText, food.num, food.shelfLife);
+                  },
                 ),
               ),
             ),
@@ -124,8 +113,9 @@ class _ShareState extends State<Share> {
       String food, String owner, int min, String text, int num, DateTime due) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Grey200, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+        border: Border.all(color: Grey200, width: 1),
+      ),
+      // borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -309,7 +299,6 @@ class _ShareState extends State<Share> {
 Future<List<StoreFood>> search(String search) async {
   await Future.delayed(Duration(seconds: 2));
   return List.generate(StoreFoodList.length, (int index) {
-    print('hello' + search + '!');
     return StoreFoodList[index]
             .name
             .toLowerCase()
@@ -317,6 +306,7 @@ Future<List<StoreFood>> search(String search) async {
         ? StoreFood(
             name: StoreFoodList[index].name,
             category: StoreFoodList[index].category,
+            bodyText: StoreFoodList[index].bodyText,
             num: StoreFoodList[index].num,
             shelfLife: StoreFoodList[index].shelfLife,
             registTime: StoreFoodList[index].registTime,
@@ -324,6 +314,7 @@ Future<List<StoreFood>> search(String search) async {
         : StoreFood(
             name: '',
             category: '',
+            bodyText: '',
             num: 0,
             shelfLife: DateTime(0),
             owner: '',

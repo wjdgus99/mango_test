@@ -9,7 +9,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  int currentSelected = 1;
+  List<String> _list2 = ['5분 전', '10분 전', '15분 전', '30분 전', '1시간 전', '2시간 전'];
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +98,8 @@ class _CalendarState extends State<Calendar> {
   }
 
   bool isSwitched = true;
+  DateTime date = DateTime.now();
+  String time = '시간 설정';
 
   Widget showSelectField(int type) {
     return Padding(
@@ -115,12 +117,18 @@ class _CalendarState extends State<Calendar> {
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                 child: type == 1 ? Text('약속 시간') : Text('알림 시간'),
               ),
-              Text(DateTime.now().toString().substring(0, 10)),
+              type == 1
+                  ? Text(date.year.toString() +
+                      '-' +
+                      date.month.toString() +
+                      '-' +
+                      date.day.toString())
+                  : Text(time),
               Expanded(child: SizedBox()),
               IconButton(
                 icon: Icon(Icons.arrow_drop_down),
                 onPressed: () {
-                  type == 1 ? showDatePicker() : showCupertinoPicker(1);
+                  type == 1 ? showDatePicker() : showTimePicker(1);
                 },
               ),
             ],
@@ -134,12 +142,14 @@ class _CalendarState extends State<Calendar> {
     return DatePicker.showDatePicker(context,
         showTitleActions: true,
         locale: LocaleType.ko,
-        currentTime: DateTime.now(), onConfirm: (date) {
-      print('confirm $date');
+        currentTime: DateTime.now(), onConfirm: (_date) {
+      setState(() {
+        date = _date;
+      });
     });
   }
 
-  Future<dynamic> showCupertinoPicker(int index) {
+  Future<dynamic> showTimePicker(int index) {
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -161,20 +171,19 @@ class _CalendarState extends State<Calendar> {
                 ),
                 Expanded(
                   child: CupertinoPicker(
-                    itemExtent: 32,
+                    itemExtent: 40,
                     onSelectedItemChanged: (int newValue) {
                       setState(() {
-                        currentSelected = newValue + 1;
+                        time = _list2[newValue];
                       });
                     },
-                    children: List<Widget>.generate(20, (int index) {
+                    children: List<Widget>.generate(5, (int index) {
                       return Text(
-                        (++index).toString(),
-                        style: Theme.of(context).textTheme.headline5,
+                        _list2[index++],
                       );
                     }),
-                    scrollController: FixedExtentScrollController(
-                        initialItem: currentSelected),
+                    scrollController:
+                        FixedExtentScrollController(initialItem: 0),
                   ),
                 ),
               ],
