@@ -8,6 +8,7 @@ import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
 
 import 'HHome.dart';
+import 'InitInfo/initInfo.dart';
 import 'app.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -134,6 +135,12 @@ class LoginPage extends StatelessWidget {
                 ),
                 Spacer(
                   flex: 12,
+                ),
+                RaisedButton(
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/initInfo');
+                  },
+                  child: Text('정현이 바보'),
                 )
               ],
             ),

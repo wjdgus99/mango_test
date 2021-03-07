@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mango_test/HHome.dart';
+import 'package:mango_test/InitInfo/initInfo.dart';
 import 'package:mango_test/camera.dart';
 import 'package:mango_test/colors.dart';
 import 'package:mango_test/Friend/friendList.dart';
@@ -60,6 +61,7 @@ class MangoApp extends StatelessWidget {
         '/HHOME': (context) => HHOME(),
         '/chatRoom': (context) => ChatRoom(),
         '/refriger': (context) => Refrigerator(),
+        '/initInfo': (context) => InitInfo(),
       },
     );
   }
