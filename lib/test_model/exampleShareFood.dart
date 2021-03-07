@@ -1,16 +1,14 @@
 import 'package:mango_test/test_model/storeFood.dart';
 
-import '../model/users/food.dart';
-
 List<StoreFood> StoreFoodList = <StoreFood>[
   StoreFood(
       name: 'lemon',
-      category: '과일/채소',
+      category: '과일/바보',
       num: 3,
       owner: 'mj',
       shelfLife: DateTime(2021, DateTime.january, 9),
       registTime: 12,
-      bodyText: '레몬 넘 많이 남아서 나눔해용'),
+      bodyText: '레몬 넘 많아서 나눔해용'),
   StoreFood(
       name: 'pepper',
       category: '과일/채소',
