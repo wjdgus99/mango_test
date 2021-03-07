@@ -41,9 +41,13 @@ class _ItemCreateState extends State<ItemCreate> {
   Widget build(BuildContext context) {
     String appTitle = ModalRoute.of(context).settings.arguments;
 
-    if (appTitle.contains('수정')) {
+    if (appTitle == null) {
+      appTitle = '냉장고 품목 추가';
+    } else if (appTitle.contains('수정')) {
       addFoodList = modifyFoodList;
-      if (addFoodList[currentSelected - 1].isSelected) {
+      if (addFoodList.length != 0 &&
+          addFoodList[currentSelected - 1].isSelected) {
+        print(addFoodList.length);
         radioValue = 1;
       } else {
         radioValue = 0;
