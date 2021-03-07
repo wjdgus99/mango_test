@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mango_test/Chat/editChatList.dart';
+import 'package:mango_test/app.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../colors.dart';
 import 'chatRoom.dart';
 
 class ChatList extends StatefulWidget {
@@ -151,99 +152,121 @@ class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: _isEdited
-            ? AppBar(
-                title: Text('편집'),
-                centerTitle: true,
-                leading: TextButton(
+      appBar: _isEdited
+          ? AppBar(
+              title: Text('편집'),
+              centerTitle: true,
+              leading: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isEdited = false;
+                    for (int i = 0; i < isSelected.length; i++) {
+                      setState(() {
+                        isSelected[i] = false;
+                      });
+                    }
+                  });
+                },
+                child: Text(
+                  '완료',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ),
+              actions: [
+                TextButton(
                   onPressed: () {
                     setState(() {
                       _isEdited = false;
-                      for(int i= 0; i<isSelected.length; i++){setState(() {
-                        isSelected[i] = false;
-                      });}
+                      for (int i = 0; i < isSelected.length; i++) {
+                        setState(() {
+                          isSelected[i] = false;
+                        });
+                      }
                     });
                   },
-                  child: Text(
-                    '완료',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
+                  child: Text('취소',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(color: Color(0xFF929292))),
                 ),
-                actions: [
-                  TextButton(
+              ],
+            )
+          : AppBar(
+              title: Text('채팅'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.settings),
                     onPressed: () {
-                      setState(() {
-                        _isEdited = false;
-                        for(int i= 0; i<isSelected.length; i++){setState(() {
-                          isSelected[i] = false;
-                        });}
-                      });
-                    },
-                    child: Text('취소',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(color: Color(0xFF929292))),
-                  ),
-                ],
-              )
-            : AppBar(
-                title: Text('채팅'),
-                centerTitle: true,
-                actions: [
-                  IconButton(
-                      icon: Icon(Icons.settings),
-                      onPressed: () {
-                        showMaterialModalBottomSheet(
-                            useRootNavigator: true,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            context: context,
-                            builder: buildBottomSheet);
-                      })
-                ],
-              ),
-        body: _sort
-            ? ListView(
-                children: ListTile.divideTiles(context: context, tiles: [
-                  _buildChatList(
-                      0,
-                      'si',
-                      '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라',
-                      '오전 11:25',
-                      1),
-                  _buildChatList(1, 'mj', '인석아 밥해줘....', '오전 11:22', 0),
-                  _buildChatList(
-                      2, 'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:18', 1),
-                  _buildChatList(
-                    3,
-                    'yg', // user name
-                    '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
-                    '오전 11:12', //time
-                    3, // unread message
-                  ),
-                ]).toList(),
-              )
-            : ListView(
-                children: ListTile.divideTiles(context: context, tiles: [
-                  _buildChatList(
-                    3,
-                    'yg', // user name
-                    '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
-                    '오전 11:22', //time
-                    3, // unread message
-                  ),
-                  _buildChatList(
-                      0,
-                      'si',
-                      '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라',
-                      '오전 11:18',
-                      1),
-                  _buildChatList(
-                      2, 'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:12', 1),
-                  _buildChatList(1, 'mj', '인석아 밥해줘....', '오전 11:25', 0),
-                ]).toList(),
-              ));
+                      showMaterialModalBottomSheet(
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          context: context,
+                          builder: buildBottomSheet);
+                    })
+              ],
+            ),
+      body: _sort
+          ? ListView(
+              children: ListTile.divideTiles(context: context, tiles: [
+                _buildChatList(0, 'si',
+                    '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라', '오전 11:25', 1),
+                _buildChatList(1, 'mj', '인석아 밥해줘....', '오전 11:22', 0),
+                _buildChatList(
+                    2, 'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:18', 1),
+                _buildChatList(
+                  3,
+                  'yg', // user name
+                  '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
+                  '오전 11:12', //time
+                  3, // unread message
+                ),
+              ]).toList(),
+            )
+          : ListView(
+              children: ListTile.divideTiles(context: context, tiles: [
+                _buildChatList(
+                  3,
+                  'yg', // user name
+                  '오빠 고집피우지말고 안먹는 과일 나 줘.. 나 다이어트중이란말이야!!', //body content
+                  '오전 11:22', //time
+                  3, // unread message
+                ),
+                _buildChatList(0, 'si',
+                    '친구야 내가 오이로 생선회 비린내를 없애려고 하는데 이거 버릴거면 나 주라', '오전 11:18', 1),
+                _buildChatList(
+                    2, 'jh', '내 모닝빵이랑 초코우유랑 혹시 바꾸지 않을래?-?', '오전 11:12', 1),
+                _buildChatList(1, 'mj', '인석아 밥해줘....', '오전 11:25', 0),
+              ]).toList(),
+            ),
+      bottomNavigationBar: _isEdited
+          ? ButtonBar(
+              alignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              buttonMinWidth: DeviceWidth * 0.4,
+              buttonPadding: EdgeInsets.all(DeviceHeight * 0.02),
+              buttonTextTheme: ButtonTextTheme.normal,
+              children: <Widget>[
+                FlatButton(
+                  onPressed: () {},
+                  child: Text('모두 읽기'),
+                  color: Theme.of(context).buttonColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                FlatButton(
+                  onPressed: () {},
+                  child: Text('채팅방 나가기'),
+                  color: Theme.of(context).accentColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+              ],
+            )
+          : null,
+    );
   }
 
   Widget _buildChatList(
@@ -251,7 +274,6 @@ class _ChatListState extends State<ChatList> {
     return InkWell(
       onTap: () {
         print(Navigator.defaultRouteName);
-
         _isEdited
             ? null
             : Navigator.push(
@@ -261,49 +283,57 @@ class _ChatListState extends State<ChatList> {
       },
       child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ListTile(
-              // isThreeLine: true,
-              contentPadding: EdgeInsets.all(2),
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage('images/users/photo_$user.jpeg'),
+          Container(
+            decoration: BoxDecoration(
+              color: isSelected[index] ? Orange100 : null,
+              border: Border.all(
+                color: isSelected[index] ? Orange500 : Grey200,
               ),
-              title: Text(
-                user,
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-              subtitle: Text(
-                text,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: Column(
-                children: [
-                  Text(
-                    time,
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(color: Color(0xFFBFBFBF)),
-                  ),
-                  if (message != 0)
-                    Padding(
-                      padding: const EdgeInsets.all(7.0),
-                      child: CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          message.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(color: Color(0xFFBFBFBF)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListTile(
+                // isThreeLine: true,
+                contentPadding: EdgeInsets.all(2),
+                leading: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage('images/users/photo_$user.jpeg'),
+                ),
+                title: Text(
+                  user,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                subtitle: Text(
+                  text,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: Column(
+                  children: [
+                    Text(
+                      time,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Color(0xFFBFBFBF)),
+                    ),
+                    if (message != 0)
+                      Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Colors.red,
+                          child: Text(
+                            message.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                .copyWith(color: Color(0xFFBFBFBF)),
+                          ),
                         ),
-                      ),
-                    )
-                ],
+                      )
+                  ],
+                ),
               ),
             ),
           ),

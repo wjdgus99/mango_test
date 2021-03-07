@@ -16,9 +16,9 @@ import 'package:mango_test/test_model/testUser.dart';
 import 'package:top_sheet/top_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../colors.dart';
 import 'add/ID.dart';
 import 'add/phone.dart';
-import 'editFriend.dart';
 
 class FriendList extends StatefulWidget {
   @override
@@ -27,6 +27,7 @@ class FriendList extends StatefulWidget {
 
 class _FriendListState extends State<FriendList> {
   TestUser user = localTestUser.loadUser();
+  bool _isEdited = false;
 
   Widget buildManageBottomSheet(BuildContext context) {
     return Container(
@@ -52,10 +53,10 @@ class _FriendListState extends State<FriendList> {
           ]),
           InkWell(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => EditFriend()));
+              setState(() {
+                _isEdited = true;
+                Navigator.pop(context);
+              });
             },
             child: ListTile(
               title: Text(
@@ -171,32 +172,48 @@ class _FriendListState extends State<FriendList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('친구'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.person_add_alt),
-              onPressed: () {
-                showMaterialModalBottomSheet(
-                    useRootNavigator: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    context: context,
-                    builder: buildEditBottomSheet);
-              }),
-          IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                showMaterialModalBottomSheet(
-                    useRootNavigator: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    context: context,
-                    builder: buildManageBottomSheet);
-              })
-        ],
-      ),
+      appBar: _isEdited
+          ? AppBar(
+              title: Text('편집'),
+              centerTitle: true,
+              leading: TextButton(
+                child: Text(
+                  '완료',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isEdited = false;
+                  });
+                },
+              ),
+            )
+          : AppBar(
+              title: Text('친구'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.person_add_alt),
+                    onPressed: () {
+                      showMaterialModalBottomSheet(
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          context: context,
+                          builder: buildEditBottomSheet);
+                    }),
+                IconButton(
+                    icon: Icon(Icons.settings),
+                    onPressed: () {
+                      showMaterialModalBottomSheet(
+                          useRootNavigator: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          context: context,
+                          builder: buildManageBottomSheet);
+                    })
+              ],
+            ),
       body: SizedBox.expand(
         child: SafeArea(
           minimum: EdgeInsets.all(0.1),
@@ -232,10 +249,56 @@ class _FriendListState extends State<FriendList> {
             user.FriendList[index].Name,
             style: Theme.of(context).textTheme.subtitle1,
           ),
+          trailing: _isEdited
+              ? Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: ButtonTheme.fromButtonThemeData(
+                    data: Theme.of(context).buttonTheme.copyWith(
+                          minWidth: 70,
+                        ),
+                    child: FlatButton(
+                      color: Accent2Color.withOpacity(0.08),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      onPressed: () => print('hide from freind list'),
+                      child: Text('숨김', style: TextStyle(color: Theme.of(context).accentColor),),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ),
       ),
     );
   }
+
+  // return Container(
+  // // decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 0.2))),
+  // child: Padding(
+  // padding: const EdgeInsets.all(10.0),
+  // child: ListTile(
+  // leading: CircleAvatar(
+  // radius: 30,
+  // backgroundImage: AssetImage(user.FriendList[index].Image),
+  // ),
+  // title: Text(user.FriendList[index].Name),
+  // trailing: Padding(
+  // padding: const EdgeInsets.all(4.0),
+  // child: ButtonTheme.fromButtonThemeData(
+  // data: Theme.of(context).buttonTheme.copyWith(
+  // minWidth: 70,
+  // ),
+  // child: FlatButton(
+  // color: Theme.of(context).accentColor,
+  // shape: RoundedRectangleBorder(
+  // borderRadius: BorderRadius.circular(30)),
+  // onPressed: () => print('hide from freind list'),
+  // child: Text('숨김'),
+  // ),
+  // ),
+  // ),
+  // ),
+  // ),
+  // );
 
   Widget _topSheet() {
     TopSheet.show(
