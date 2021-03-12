@@ -6,6 +6,8 @@ import 'package:mango_test/model/exampleUser.dart';
 import 'package:mango_test/model/users/user.dart' as localUser;
 import 'package:mango_test/model/users/userRefrigerator.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import 'HHome.dart';
 import 'InitInfo/initInfo.dart';
@@ -170,13 +172,26 @@ class LoginPage extends StatelessWidget {
 
         print(userCredential.user);
 
+        //mj: DB에 넣는 작업.
+        var people = FirebaseFirestore.instance.collection('People');
+        await FirebaseFirestore.instance.collection('People').doc(userCredential.user.uid)
+        .get().then((DocumentSnapshot ds) async{
+          if (!ds.exists){ //이전에 로그인이 없을 경우!
+            await people.doc(userCredential.user.uid).set({
+              'name': userCredential.user.displayName,
+              'phone': userCredential.user.phoneNumber,
+              'ref_id': 'ff000000', //TODO How to ref_id
+            });
+          }
+        });
         LocalUser.UserID = userCredential.user.uid;
 
-        // IS - TODO: 이 부분은 uid를 받아온 이후 DB에 접근해서 가져오자.
-        LocalUser.Email = userCredential.user.email;
-        LocalUser.Image = userCredential.user.photoURL;
-        LocalUser.Name = userCredential.user.displayName;
-        LocalUser.PhoneNumber = userCredential.user.phoneNumber;
+        var person = FirebaseFirestore.instance.collection('People');
+        await person.doc(userCredential.user.uid).get().then((doc) {
+          LocalUser.RefrigerID = doc.data()['ref_id'];
+          LocalUser.Name = doc.data()['name'];
+          LocalUser.PhoneNumber = doc.data()['phone'];
+        });
 
         userRefrigerator.RefrigeratorID = LocalUser.RefrigerID;
 
